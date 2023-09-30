@@ -28,6 +28,7 @@ export const useAuthStore = defineStore('auth', {
                 this.status.success = true
                 this.status.loading = false
                 this.status.error = false
+                window.location.reload()
             } catch (error: any) {
                 this.handleError(error)
                 throw error
@@ -41,6 +42,7 @@ export const useAuthStore = defineStore('auth', {
                 this.status.success = true
                 this.status.loading = false
                 this.status.error = false
+                window.location.reload()
             } catch (error: any) {
                 this.handleError(error)
                 throw error

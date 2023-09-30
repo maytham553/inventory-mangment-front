@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md flex justify-around flex-col w-full space-y-8 h-full bg-white px-10  min-h-[450px]  shadow-sm rounded-3xl overflow-hidden  ">
+    <div class="min-h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md flex justify-around flex-col  space-y-8  bg-white px-10  min-h-[450px]  shadow-sm rounded-3xl overflow-hidden  ">
             <div>
                 <!-- <img class="mx-auto h-12 w-auto" src="https://tailwindcss.com/img/logos/workflow-mark-cyan-600.svg"
                     alt="Workflow"> -->
