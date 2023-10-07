@@ -13,7 +13,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const publicRoutes = ['Login'];
-  const authorizedRoutes = ['Home'];
+  const authorizedRoutes = ['Home', 'Customers', 'Suppliers', 'CreateCustomer', 'CreateSupplier'];
   const isPublicRoute = publicRoutes.includes(to.name as string);
   const isAuthorizedRoute = authorizedRoutes.includes(to.name as string);
   const isLoggedIn = localStorage.getItem('token');
