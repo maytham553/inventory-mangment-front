@@ -33,13 +33,7 @@
                         class="group relative w-full flex justify-center gap-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
                         تسجيل الدخول
 
-                        <svg v-if="auth.status.loading" class="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z">
-                            </path>
-                        </svg>
+                       <Loading v-if="auth.status.loading"  />
                     </button>
                 </div>
             </form>
@@ -48,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '@/components/icons/Loading.vue';
 import { useAuthStore } from '@/stores'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
