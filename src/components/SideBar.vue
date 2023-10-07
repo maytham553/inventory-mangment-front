@@ -28,16 +28,22 @@
                 class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 ">
                 <button @click="toggleMenu2"
                     class="focus:outline-none focus:text-indigo-400 text-left text-white flex justify-between items-center w-full py-5 space-x-14">
-                    <p class="text-sm leading-5 uppercase">Menu 2</p>
+                    <p class="text-sm leading-5 uppercase">الموردين</p>
                     <ArrowDown v-if="!menu2Visible" name="arrow-down" />
                     <ArrowUp v-if="menu2Visible" name="arrow-up" />
                 </button>
-                <div v-if="menu2Visible">
+                <div v-if="menu2Visible"
+                    class="flex flex-col justify-between items-center h-full pb-6   px-6  w-full  space-y-32 ">
                     <div class=" flex justify-start flex-col items-start pb-5 ">
-                        <RouterLink to="/test"
+                        <RouterLink to="/suppliers"
                             class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                            <!-- <svg>any svg</svg> -->
-                            <p class="text-base leading-4  ">test</p>
+                            <!-- svg of customers -->
+                            <p class="text-base leading-4  ">كل الموردين</p>
+                        </RouterLink>
+                        <RouterLink to="/suppliers/create"
+                            class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                            <!-- svg of customers -->
+                            <p class="text-base leading-4  ">اضافة مورد</p>
                         </RouterLink>
                     </div>
                 </div>
@@ -48,17 +54,22 @@
                 class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700  ">
                 <button @click="toggleMenu3"
                     class="focus:outline-none focus:text-indigo-400 text-left text-white flex justify-between items-center w-full py-5 space-x-14">
-                    <p class="text-sm leading-5 uppercase">Menu 3</p>
+                    <p class="text-sm leading-5 uppercase">العملاء</p>
                     <ArrowDown v-if="!menu3Visible" name="arrow-down" />
                     <ArrowUp v-if="menu3Visible" name="arrow-up" />
                 </button>
                 <div v-if="menu3Visible"
                     class="flex flex-col justify-between items-center h-full pb-6   px-6  w-full  space-y-32 ">
                     <div class=" flex justify-start flex-col items-start pb-5 ">
-                        <RouterLink to="/test"
+                        <RouterLink to="/customers"
                             class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                            <!-- <svg>any svg</svg> -->
-                            <p class="text-base leading-4  ">test</p>
+                            <!-- svg of customers -->
+                            <p class="text-base leading-4  ">كل العملاء</p>
+                        </RouterLink>
+                        <RouterLink to="/customers/create"
+                            class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                            <!-- svg of customers -->
+                            <p class="text-base leading-4  ">اضافة عميل</p>
                         </RouterLink>
                     </div>
                 </div>
