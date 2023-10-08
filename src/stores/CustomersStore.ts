@@ -1,3 +1,4 @@
+import { TransactionType } from './../Types/Transaction';
 import { defineStore } from 'pinia'
 import { customers } from '@/services/api'
 import type { Customer, Status, Pagination } from '@/Types'
@@ -145,6 +146,15 @@ export const useCustomersStore = defineStore('customers', {
                 success: false,
                 message: '',
             } as Status
+        },
+        updateBalance(id: number, balance: number, type: TransactionType) {
+            if (this.customer.id === id) {
+                if (type === 'credit') {
+                    this.customer.balance! = parseInt(balance) + parseInt(this.customer.balance!)
+                } else {
+                    this.customer.balance! = parseInt(balance) - parseInt(this.customer.balance!)
+                }
+            }
         },
         handleCustomerError(error: any) {
             this.customerStatus.error = true

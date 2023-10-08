@@ -12,12 +12,14 @@
     <PaginationItems v-if="!status.error && suppliers.length" :totalPages="pagination.lastPage"
         :currentPage="pagination.currentPage" :goToPage="suppliersStore.fetchSuppliers" />
     <EmptyDialog v-if="updatePopup" title="تعديل المورد" :close-dialog="closeUpdateDialog">
-        <updateSupplier v-if="updatePopup" :supplier="supplier" :governorates="governoratesStore.governorates" :status="suppliersStore.getSupplierStatus"
-            :close-dialog="closeUpdateDialog" :updateSupplier="suppliersStore.updateSupplier" />
+        <updateSupplier v-if="updatePopup" :supplier="supplier" :governorates="governoratesStore.governorates"
+            :status="suppliersStore.getSupplierStatus" :close-dialog="closeUpdateDialog"
+            :updateSupplier="suppliersStore.updateSupplier" />
     </EmptyDialog>
     <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
-        <ShowSupplier v-if="showPopup" :name="supplier.name" :address="supplier.address" :phone="supplier.phone"
-            :governorate="getGovernorateNameById(supplier.governorate_id)" :balance="formatCurrency(supplier.balance!)" />
+        <ShowSupplier v-if="showPopup" :id="supplier.id!" :name="supplier.name" :address="supplier.address"
+            :phone="supplier.phone" :governorate="getGovernorateNameById(supplier.governorate_id)"
+            :balance="formatCurrency(supplier.balance!)" />
     </EmptyDialog>
 
     <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'"

@@ -16,12 +16,14 @@
     <PaginationItems v-if="!status.error && customers.length" :totalPages="pagination.lastPage"
         :currentPage="pagination.currentPage" :goToPage="customersStore.fetchCustomers" />
     <EmptyDialog v-if="updatePopup" title="تعديل العميل" :close-dialog="closeUpdateDialog">
-        <updateCustomer v-if="updatePopup" :customer="customer" :governorates="governoratesStore.governorates" :status="customersStore.getCustomerStatus"
-            :close-dialog="closeUpdateDialog" :updateCustomer="customersStore.updateCustomer" />
+        <updateCustomer v-if="updatePopup" :customer="customer" :governorates="governoratesStore.governorates"
+            :status="customersStore.getCustomerStatus" :close-dialog="closeUpdateDialog"
+            :updateCustomer="customersStore.updateCustomer" />
     </EmptyDialog>
     <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
-        <ShowCustomer v-if="showPopup" :name="customer.name" :address="customer.address" :phone="customer.phone"
-            :governorate="getGovernorateNameById(customer.governorate_id)" :balance="formatCurrency(customer.balance!)" />
+        <ShowCustomer v-if="showPopup" :id="customer.id!" :name="customer.name" :address="customer.address"
+            :phone="customer.phone" :governorate="getGovernorateNameById(customer.governorate_id)"
+            :balance="formatCurrency(customer.balance!)" />
     </EmptyDialog>
 
     <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'"

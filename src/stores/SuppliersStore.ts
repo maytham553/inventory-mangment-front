@@ -1,3 +1,4 @@
+import { TransactionType } from './../Types';
 import { defineStore } from 'pinia'
 import { suppliers } from '@/services/api'
 import type { Supplier, Status, Pagination } from '@/Types'
@@ -148,6 +149,15 @@ export const useSuppliersStore = defineStore('suppliers', {
                 success: false,
                 message: '',
             } as Status
+        },
+        updateBalance(id: number, amount: number, type: TransactionType) {
+            if (this.supplier.id === id) {
+                if (type === 'credit') {
+                    this.supplier.balance! = parseInt(amount) + parseInt(this.supplier.balance!)
+                } else {
+                    this.supplier.balance! = parseInt(amount) - parseInt(this.supplier.balance!)
+                }
+            }
         },
         handleSupplierError(error: any) {
             this.supplierStatus.error = true
