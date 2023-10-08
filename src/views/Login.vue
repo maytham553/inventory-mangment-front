@@ -1,39 +1,32 @@
-<template>
-    <div class="min-h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md flex justify-around flex-col  space-y-8  bg-white px-10  min-h-[450px]  shadow-sm rounded-3xl overflow-hidden  ">
-            <div>
-                <!-- <img class="mx-auto h-12 w-auto" src="https://tailwindcss.com/img/logos/workflow-mark-cyan-600.svg"
-                    alt="Workflow"> -->
-                <h2 class=" mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    تسجيل الدخول
-                </h2>
-            </div>
-            <form class="mt-8 space-y-6" @submit.prevent="login">
-                <input type="hidden" name="remember" value="true">
-                <div class="rounded-md shadow-sm ">
-                    <div>
-                        <label for="email-address" class="sr-only">البريد الإلكتروني</label>
-                        <input id="email-address" v-model="email" name="email" type="email" autocomplete="email" required
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': auth.status.error }" placeholder="البريد الإلكتروني">
-                    </div>
-                    <div>
-                        <label for="password" class="sr-only">كلمة المرور</label>
-                        <input id="password" v-model="password" name="password" type="password"
-                            autocomplete="current-password" required placeholder="كلمة المرور"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': auth.status.error }">
-                    </div>
-                </div>
-                <div class="text-red-500 text-center h-5 ">
-                    <span v-if="auth.status.error">{{ auth.status.message }}</span>
-                </div>
-                <div>
-                    <button type="submit" :disabled=auth.status.loading
-                        class="group relative w-full flex justify-center gap-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                        تسجيل الدخول
+<template class="font-['apple']">
+    <div class="w-screen h-screen bg-gray-100 grid grid-cols-3">
 
-                        <svg v-if="auth.status.loading" class="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
+    <div class="h-screen col-span-1 p-5 bg-blue-500 flex flex-col justify-center items-center">
+                    <h1 class="text-gray-100 text-3xl">اهلاً بك مجدداً</h1><br>
+                    <p class="text-gray-100">أدخل معلوماتك للدخول الى حسابك</p>
+                </div>
+        <div class="h-screen col-span-2  flex flex-col justify-center items-center pt-16">
+
+                <h1 class="text-blue-500 text-4xl">تسجيل الدخول</h1>
+
+                <form @submit.prevent="login" class="w-full h-screen flex flex-col justify-center items-center">
+                    <input type="hidden" name="remember" value="true">
+
+                    <input id="email-address" v-model="email" name="email" type="email" autocomplete="email" required
+                        class="pr-4 appearance-none border border-gray-400 focus:ring-blue-500 focus:border-blue-500 focus:outline-none 
+                            bg-gray-200 w-2/5 h-10 pl-5 rounded text-gray-500 text-sm placeholder:text-gray-500"
+                        :class="{ 'border-red-500': auth.status.error }" placeholder="البريد الإلكتروني"><br>
+
+                    <input v-model="password" name="password" type="password" autocomplete="current-password" required
+                        class="pr-4 appearance-none border border-gray-400 focus:ring-blue-500 focus:border-blue-500 focus:outline-none 
+                        bg-gray-200 w-2/5 h-10 pl-5 rounded text-gray-500 text-sm placeholder:text-gray-500"
+                        :class="{ 'border-red-500': auth.status.error }" placeholder="كلمة المرور">
+                    <br>
+
+                    <button type="submit" :disabled=auth.status.loading
+                        class="group relative w-1/3 flex justify-center gap-3 py-2 px-4 border border-transparent text-md font-medium rounded-2xl text-gray-100 bg-blue-500 hover:bg-blue-700 focus:outline-none ">
+                        تسجيل الدخول
+                        <svg v-if="auth.status.loading" class="animate-spin -mr-1 ml-3 h-5 w-5 text-gray-100"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                             </circle>
@@ -41,9 +34,10 @@
                             </path>
                         </svg>
                     </button>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+
+            
     </div>
 </template>
 
