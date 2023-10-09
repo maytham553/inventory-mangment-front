@@ -6,8 +6,9 @@ module.exports = {
   theme: {
   },
   plugins: [],
-  fontFamily:
-    { body: ['apple'] },
+
 }
+
+
 
 

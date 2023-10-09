@@ -1,4 +1,5 @@
-<template class="font-['apple']">
+<!-- From New Branch -->
+<template>
     <div class="w-screen h-screen bg-gray-100 grid grid-cols-3">
 
     <div class="h-screen col-span-1 p-5 bg-blue-500 flex flex-col justify-center items-center">
@@ -26,13 +27,6 @@
                     <button type="submit" :disabled=auth.status.loading
                         class="group relative w-1/3 flex justify-center gap-3 py-2 px-4 border border-transparent text-md font-medium rounded-2xl text-gray-100 bg-blue-500 hover:bg-blue-700 focus:outline-none ">
                         تسجيل الدخول
-                        <svg v-if="auth.status.loading" class="animate-spin -mr-1 ml-3 h-5 w-5 text-gray-100"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z">
-                            </path>
-                        </svg>
                     </button>
                 </form>
             </div>
