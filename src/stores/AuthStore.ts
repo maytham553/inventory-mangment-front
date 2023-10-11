@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { User, Status } from '@/Types'
 import { auth } from '@/services/api'
-
+import router from '@/router'
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: null as User | null,
@@ -23,7 +23,6 @@ export const useAuthStore = defineStore('auth', {
                 const response = await auth.login({ email, password })
                 this.token = response.data.data.token
                 this.user = response.data.user
-                console.log(response.data.data.user)
                 localStorage.setItem('token', this.token)
                 this.status.success = true
                 this.status.loading = false
@@ -42,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
                 this.status.success = true
                 this.status.loading = false
                 this.status.error = false
-                window.location.reload()
+                router.push({ name: 'Login' })
             } catch (error: any) {
                 this.handleError(error)
                 throw error

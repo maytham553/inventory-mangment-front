@@ -27,6 +27,7 @@
                     <button type="submit" :disabled=auth.status.loading
                         class="group relative w-1/3 flex justify-center gap-3 py-2 px-4 border border-transparent text-md font-medium rounded-2xl text-gray-100 bg-blue-500 hover:bg-blue-700 focus:outline-none ">
                         تسجيل الدخول
+                       <Loading v-if="auth.status.loading"  />
                     </button>
                 </form>
             </div>
@@ -36,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '@/components/icons/Loading.vue';
 import { useAuthStore } from '@/stores'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'

@@ -1,7 +1,9 @@
 <template>
   <div class="flex h-screen">
     <SideBar v-if="isLoginRoute" />
-    <RouterView />
+    <div class="h-screen overflow-auto w-full ">
+      <RouterView />
+    </div>
   </div>
 </template>
 
@@ -11,6 +13,7 @@ import SideBar from './components/SideBar.vue';
 import { ref, watch } from 'vue';
 
 const isLoginRoute = ref(false)
+
 const route = useRoute()
 watch(() => route.name, (name) => {
   if (name === 'Login') {
@@ -19,6 +22,4 @@ watch(() => route.name, (name) => {
     isLoginRoute.value = true
   }
 })
-
-
 </script>
