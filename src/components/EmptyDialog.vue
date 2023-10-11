@@ -21,7 +21,7 @@ const props = defineProps({
     closeDialog: {
         type: Function,
         required: true
-    }
+    },
 })
 
 const closeDialog = () => {

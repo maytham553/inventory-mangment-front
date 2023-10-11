@@ -8,21 +8,21 @@
             <span>الأسم : </span>
             <span>{{ name }}</span>
         </div>
-        <div v-if="email">
-            <span>البريد الإلكتروني : </span>
-            <span>{{ email }}</span>
+        <div>
+            <span>الكود : </span>
+            <span>{{ code }}</span>
+        </div>
+        <div v-if="price">
+            <span>السعر : </span>
+            <span>{{ price }}</span>
         </div>
         <div>
-            <span>رقم الهاتف : </span>
-            <span>{{ phone }}</span>
+            <span>التكلفة : </span>
+            <span>{{ cost }}</span>
         </div>
         <div>
-            <span>العنوان : </span>
-            <span>{{ address }}</span>
-        </div>
-        <div>
-            <span>المحافظة : </span>
-            <span>{{ governorate }}</span>
+            <span>الكمية : </span>
+            <span>{{ quantity }}</span>
         </div>
         <div v-if="note">
             <span>ملاحظات : </span>
@@ -35,15 +35,12 @@
             <button @click="deleteHandler" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                 حذف
             </button>
-            <button @click="showHandler" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                عرض
-            </button>
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue'
+<script lang="ts" setup>
+import { defineProps } from 'vue';
 
 const props = defineProps({
     id: {
@@ -54,20 +51,20 @@ const props = defineProps({
         type: String,
         required: true
     },
-    email: {
-        type: String || undefined,
+    code: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
         required: false
     },
-    phone: {
-        type: String,
+    cost: {
+        type: Number,
         required: true
     },
-    address: {
-        type: String,
-        required: true
-    },
-    governorate: {
-        type: String,
+    quantity: {
+        type: Number,
         required: true
     },
     note: {
@@ -82,21 +79,13 @@ const props = defineProps({
         type: Function,
         required: true
     },
-    show:{
-        type:Function,
-        required:true
-    }
 })
 
 const updateHandler = (event: MouseEvent): void => {
     props.update(event)
 }
-
 const deleteHandler = (event: MouseEvent): void => {
     props.delete(event)
 }
 
-const showHandler = (event: MouseEvent): void => {
-    props.show(event)
-}
 </script>
