@@ -1,10 +1,8 @@
 <template>
     <div class="bg-white shadow-lg rounded-lg p-4 w-full">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">{{ name }}</h2>
-            <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full">
-                {{ balance }}
-            </span>
+          <h2 class="text-xl font-semibold">{{ name }}</h2>
+          <span :class="balanceClass">{{ balance }}</span>
         </div>
         <div class="text-gray-600 mb-2">
             <p v-if="email">البريد الإلكتروني: {{ email }}</p>
@@ -26,7 +24,7 @@
 </template>
   
 <script lang="ts"  setup>
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 import CustomerTransactionContainer from './../customersTransactions/CustomerTransactionsContainer.vue';
 
 const props = defineProps({
@@ -43,7 +41,7 @@ const props = defineProps({
         required: false
     },
     balance: {
-        type: String,
+        type: Number,
         required: true
     },
     phone: {
@@ -63,4 +61,15 @@ const props = defineProps({
         required: false
     }
 });
+const balanceClass = computed(() => {
+    if (props.balance > 0) {
+        return 'bg-blue-500 text-white text-sm px-2 py-1 rounded-full';
+    } else if (props.balance < 0) {
+        return 'bg-red-500 text-white text-sm px-2 py-1 rounded-full';
+    } else {
+        return 'bg-gray-500 text-white text-sm px-2 py-1 rounded-full';
+    }
+});
+
 </script>
+
