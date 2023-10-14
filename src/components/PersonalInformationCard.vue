@@ -2,7 +2,7 @@
     
     <div class="p-4 max-w-sm max-h-sm bg-gray-100 drop-shadow-2xl rounded-lg flex flex-col w-content">
        <div class="mb-2">
-        <img class="w-10 " src="src/icons/user2.png" alt="user's pic">
+        <img class="w-10 " src="src/icons/userIcon.png" alt="user's pic">
        </div>
         <div> 
         <div>
