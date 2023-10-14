@@ -20,11 +20,10 @@
                 <input v-model="password" name="password" type="password" autocomplete="current-password" required class="pr-4 appearance-none border  focus:ring-blue-500 focus:border-blue-500 focus:outline-none 
                         bg-gray-200 w-2/5 h-10 pl-5 rounded-xl text-gray-500 text-sm placeholder:text-gray-500"
                     :class="{ 'border-red-500': auth.status.error }" placeholder="كلمة المرور">
-                <br>
+                <br> 
                 <div v-if="auth.status.error" class="text-red-500 text-center h-10 ">
                     <span>{{ auth.status.message }}</span>
                 </div>
-
                 <button type="submit" :disabled=auth.status.loading
                     class="group relative w-1/3 flex justify-center gap-3 py-2 px-4 border border-transparent text-md font-medium rounded-2xl text-gray-100 bg-blue-500 hover:bg-blue-700 focus:outline-none ">
                     تسجيل الدخول
@@ -51,7 +50,6 @@ const password = ref('')
 
 const login = async () => {
     await auth.login(email.value, password.value)
-    router.push({ name: 'Home' })
 }
 </script>
 
