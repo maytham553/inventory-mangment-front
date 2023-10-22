@@ -1,8 +1,14 @@
 <template>
     <div class="fixed inset-0 flex items-center justify-center z-50">
-        <div class=" max-w-[75%]  bg-white pb-4 rounded-xl shadow-lg z-30">
-            <h2 class="mb-4 w-full rounded-t-xl bg-gray-900 font-bold text-xl text-gray-100 p-4">{{ title }}</h2>
-            <div class="pt-8 px-8">
+        <div class=" h-full w-full  bg-white pb-4  shadow-lg z-30 flex flex-col overflow-hidden  ">
+            <div class="flex justify-between items-center bg-gray-900 font-bold  text-gray-100 p-2">
+                <h2 class="text-xl font-bold">{{ title }}</h2>
+                <button @click="closeDialog" type="button"
+                    class="bg-red-500 hover:bg-red-700 text-white  w-6 h-6 rounded">
+                    x
+                </button>
+            </div>
+            <div class="pt-8 px-8 h-full w-full  overflow-auto  ">
                 <slot></slot>
             </div>
         </div>

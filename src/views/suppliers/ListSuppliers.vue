@@ -1,6 +1,6 @@
 <template>
     <CardsContainer>
-        <PersonalInformationCard v-for="supplier in suppliers" :key="supplier.id" :name="supplier.name"
+        <PersonalInformationCard v-for="supplier in suppliers" :key="supplier.id" :id="supplier.id!" :name="supplier.name"
             :phone="supplier.phone" :address="supplier.address"
             :governorate="getGovernorateNameById(supplier.governorate_id)" :note="supplier.note ?? undefined"
             :update="() => { openUpdateDialog(supplier) }" :delete="() => { openDeleteDialog(supplier) }"

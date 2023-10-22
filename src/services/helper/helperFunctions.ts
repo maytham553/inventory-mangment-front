@@ -1,4 +1,4 @@
-import type { TransactionType } from "@/Types";
+import type { Purchase, TransactionType } from "@/Types";
 
 export const formatCurrency = (number: number) => {
     return String(number + " " + 'د.ع')
@@ -28,3 +28,13 @@ export const convertTransactionTypeToArabic = (type: TransactionType) => {
             return 'غير معروف';
     }
 }
+
+
+export const sumTotal = (array: any[], key: string) => {
+    let total = 0;
+    array.forEach((item) => {
+        total += parseInt(item[key]) ;
+    });
+    return total;
+}
+

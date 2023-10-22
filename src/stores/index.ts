@@ -6,3 +6,4 @@ export * from './SupplierTransactionsStore';
 export * from './CustomerTransactionStore';
 export * from './ProductsStore';
 export * from './RawMaterialsStore';
+export * from './PurchasesStore';
