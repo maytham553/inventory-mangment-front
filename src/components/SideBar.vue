@@ -2,7 +2,7 @@
     <!-- Sidebar Component -->
     <div
         class="xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-between items-center flex-col h-full w-full sm:w-64 bg-gray-900 ">
-        <div
+         <div
             class="flex justify-start items-start flex-col  xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500  w-full bg-gray-900    ">
             <div
                 class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700">
