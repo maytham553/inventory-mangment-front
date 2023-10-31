@@ -1,6 +1,6 @@
 <template>
     <CardsContainer>
-        <PersonalInformationCard v-for="customer in customers" :key="customer.id" :name="customer.name"
+        <PersonalInformationCard v-for="customer in customers" :id="customer.id!" :key="customer.id" :name="customer.name"
             :phone="customer.phone" :address="customer.address"
             :governorate="getGovernorateNameById(customer.governorate_id)" :note="customer.note ?? undefined"
             :update="() => { openUpdateDialog(customer) }" :delete="() => { openDeleteDialog(customer) }"
@@ -23,6 +23,7 @@ const props = defineProps({
         type: Function,
         required: true
     },
+    
     openUpdateDialog: {
         type: Function,
         required: true

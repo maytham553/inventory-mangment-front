@@ -19,4 +19,11 @@ export const customers = {
     deleteCustomer: (id: number) => {
         return axios.delete(`/auth/customers/${id}`);
     },
+    getCustomerSales: (id: number , page:number) => {
+        return axios.get(`/auth/customers/${id}/sales?page=${page}`);
+    },
+    // re calculate balance 
+    reCalculateBalance: (id: number) => {
+        return axios.put(`/auth/customers/${id}/re-calculate-balance`);
+    },
 };
