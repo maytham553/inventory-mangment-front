@@ -1,7 +1,7 @@
 <template>
     
     <div class="p-4 max-w-sm max-h-sm bg-gray-100 drop-shadow-xl rounded-lg flex flex-col  w-content">
-       <div class="flex justify-center p-10 mb-5 bg-gradient-to-b from-sky-300 to-indigo-300 rounded">
+       <div class="flex justify-center p-10 mb-5 bg-gray-300 rounded">
          <UserIcon size="150" strokeColor="rgba(0,0,0,0.1)" fillColor="#172350"/>
            </div>
         <div class="p-1 flex flex-col space-y-3"> 
