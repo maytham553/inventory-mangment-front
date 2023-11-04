@@ -20,8 +20,8 @@
             :status="customersStore.getCustomerStatus" :close-dialog="closeUpdateDialog"
             :updateCustomer="customersStore.updateCustomer" />
     </EmptyDialog>
-    <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
-        <ShowCustomer v-if="showPopup" :id="customer.id!" :name="customer.name" :address="customer.address"
+    <EmptyDialog v-if="showPopup" title="معلومات العميل" :close-dialog="closeShowDialog">
+        <ShowCustomer v-if="showPopup" :id="customer.id" :name="customer.name" :address="customer.address"
             :phone="customer.phone" :governorate="getGovernorateNameById(customer.governorate_id)"
             :balance="formatCurrency(customer.balance!)"
             :reCalculateBalance="customersStore.reCalculateBalance"  />

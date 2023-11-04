@@ -1,27 +1,22 @@
 <template>
-    <div class="bg-white shadow-lg rounded-lg p-4 w-full h-full flex  flex-col  ">
-        <div class="flex-1/2">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold">{{ name }}</h2>
-                <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full">
-                    {{ balance }}
-                </span>
+    <div class="bg-white shadow-lg rounded-lg p-4 w-full">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">{{ name }}</h2>
+          <span :class="balanceClass">{{ balance }}</span>
+        </div>
                 <button @click="() => { reCalculateBalance(id) }" type="button"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     إعادة حساب الرصيد
                 </button>
-
-            </div>
-            <div class="text-gray-600 mb-2">
-                <p v-if="email">البريد الإلكتروني: {{ email }}</p>
-                <p>الهاتف: {{ phone }}</p>
-                <p>المحافظة: {{ governorate }}</p>
-                <p>العنوان: {{ address }}</p>
-            </div>
-            <div v-if="note" class="mt-2">
-                <p class="text-gray-700 font-semibold">ملاحظة:</p>
-                <p>{{ note }}</p>
-            </div>
+        <div class="text-gray-600 mb-2">
+            <p v-if="email">البريد الإلكتروني: {{ email }}</p>
+            <p>الهاتف: {{ phone }}</p>
+            <p>المحافظة: {{ governorate }}</p>
+            <p>العنوان: {{ address }}</p>
+        </div>
+        <div v-if="note" class="mt-2">
+            <p class="text-gray-700 font-semibold">ملاحظة:</p>
+            <p>{{ note }}</p>
         </div>
 
         <div class="flex-1">
@@ -50,7 +45,7 @@
 </template>
   
 <script lang="ts"  setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, computed } from 'vue';
 import CustomerTransactionContainer from './../customersTransactions/CustomerTransactionsContainer.vue';
 import SaleContainer from './../sales/SaleContainer.vue';
 const props = defineProps({
@@ -67,7 +62,7 @@ const props = defineProps({
         required: false
     },
     balance: {
-        type: String,
+        type: Number,
         required: true
     },
     phone: {
@@ -91,6 +86,17 @@ const props = defineProps({
         required: true
     }
 });
+
+const balanceClass = computed(() => {
+    if (props.balance > 0) {
+        return 'bg-blue-500 text-white text-sm px-2 py-1 rounded-full';
+    } else if (props.balance < 0) {
+        return 'bg-red-500 text-white text-sm px-2 py-1 rounded-full';
+    } else {
+        return 'bg-gray-500 text-white text-sm px-2 py-1 rounded-full';
+    }
+});
+
 
 const operationNav = ref(
     {
