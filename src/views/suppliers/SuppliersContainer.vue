@@ -19,7 +19,9 @@
     <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
         <ShowSupplier v-if="showPopup" :id="supplier.id!" :name="supplier.name" :address="supplier.address"
             :phone="supplier.phone" :governorate="getGovernorateNameById(supplier.governorate_id)"
-            :balance="formatCurrency(supplier.balance!)" />
+            :balance="formatCurrency(supplier.balance!)" 
+            :reCalculateBalance="suppliersStore.reCalculateBalance"
+            />
     </EmptyDialog>
 
     <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'"

@@ -128,6 +128,20 @@ export const useCustomersStore = defineStore('customers', {
                 throw error
             }
         },
+        async reCalculateBalance(id: number) {
+            this.clearCustomerStatus();
+            try {
+                this.customerStatus.loading = true
+                const response = await customers.reCalculateBalance(id)
+                this.customer.balance = response.data.data
+                this.customerStatus.success = true
+                this.customerStatus.loading = false
+                this.customerStatus.error = false
+            } catch (error: any) {
+                this.handleCustomerError(error)
+                throw error
+            }
+        },
         async setCustomer(customer: Customer) {
             this.customer = customer
         },
@@ -150,7 +164,7 @@ export const useCustomersStore = defineStore('customers', {
         updateBalance(id: number, balance: number, type: TransactionType) {
             if (this.customer.id === id) {
                 if (type === 'credit') {
-                    this.customer.balance! = parseInt(balance) + parseInt(this.customer.balance!)
+                    this.customer.balance! = balance + this.customer.balance!
                 } else {
                     this.customer.balance! = parseInt(balance) - parseInt(this.customer.balance!)
                 }

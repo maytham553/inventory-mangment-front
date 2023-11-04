@@ -131,6 +131,17 @@ export const useSuppliersStore = defineStore('suppliers', {
                 throw error
             }
         },
+        async reCalculateBalance(id: number) {
+            this.clearSupplierStatus();
+            try {
+                this.supplierStatus.loading = true
+                const response = await suppliers.reCalculateBalance(id)
+                this.supplier.balance = response.data.data
+            } catch (error: any) {
+                this.handleSupplierError(error)
+                throw error
+            }
+        },
         async setSupplier(supplier: Supplier) {
             this.supplier = supplier
         },

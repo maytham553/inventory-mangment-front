@@ -23,6 +23,7 @@ const props = defineProps({
         type: Function,
         required: true
     },
+    
     openUpdateDialog: {
         type: Function,
         required: true

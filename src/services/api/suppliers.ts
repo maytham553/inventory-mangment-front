@@ -19,4 +19,7 @@ export const suppliers = {
     deleteSupplier: (id: number) => {
         return axios.delete(`/auth/suppliers/${id}`);
     },
+    reCalculateBalance: (id: number) => {
+        return axios.put(`/auth/suppliers/${id}/re-calculate-balance`);
+    },
 };
