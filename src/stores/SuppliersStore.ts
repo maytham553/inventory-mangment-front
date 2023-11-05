@@ -42,11 +42,11 @@ export const useSuppliersStore = defineStore('suppliers', {
         getSuppliersStatus: (state) => state.suppliersStatus,
     },
     actions: {
-        async fetchSuppliers(page = 1) {
+        async fetchSuppliers(page = 1 , search = '') {
             this.clearSuppliersStatus();
             try {
                 this.suppliersStatus.loading = true
-                const response = await suppliers.getSuppliers(page)
+                const response = await suppliers.getSuppliers(page , search)
                 this.suppliers = response.data.data.data
                 this.pagination = {
                     currentPage: response.data.data.current_page,

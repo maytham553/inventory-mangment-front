@@ -2,6 +2,11 @@
     <div v-if="status.loading" class="flex justify-center items-center h-full">
         <Loading stroke-color="#8f8f8f" />
     </div>
+    <div class="w-full flex justify-center items-center" >
+        <div class="w-2/3" >
+            <Search :handleSearch="fetchSuppliers" placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة" />
+        </div>
+    </div>
     <div v-if="status.success && suppliers.length">
         <ListSuppliers :suppliers="suppliers" :openUpdateDialog="openUpdateDialog" :openDeleteDialog="openDeleteDialog"
             :openShowDialog="openShowDialog" :getGovernorateNameById="getGovernorateNameById" />
@@ -45,6 +50,7 @@ import Loading from '../../components/icons/Loading.vue';
 import ShowSupplier from './ShowSupplier.vue';
 import ListSuppliers from './ListSuppliers.vue';
 import { formatCurrency } from '../../services/helper/helperFunctions';
+import Search from '@/components/Search.vue';
 
 const suppliersStore = useSuppliersStore()
 const governoratesStore = useGovernoratesStore();
@@ -55,6 +61,8 @@ const updatePopup = ref(false);
 const deletePopup = ref(false);
 const showPopup = ref(false);
 const pagination = storeToRefs(suppliersStore).pagination;
+const fetchSuppliers = suppliersStore.fetchSuppliers;
+
 
 const openUpdateDialog = (supplier: Supplier) => {
     suppliersStore.setSupplier(supplier);
@@ -90,6 +98,6 @@ const getGovernorateNameById = (id: number): string => {
 }
 onMounted(async () => {
     await governoratesStore.fetchGovernorates();
-    await suppliersStore.fetchSuppliers();
+    await fetchSuppliers();
 });
 </script>

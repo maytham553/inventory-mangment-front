@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen">
     <SideBar v-if="isLoginRoute" />
-    <div class="h-screen overflow-auto w-full ">
+    <div class="h-screen overflow-auto w-full py-10 ">
       <RouterView />
     </div>
   </div>

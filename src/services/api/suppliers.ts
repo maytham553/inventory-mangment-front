@@ -3,8 +3,8 @@ import axios from './axios';
 
 export const suppliers = {
 
-    getSuppliers: (page: number) => {
-        return axios.get('/auth/suppliers?page=' + page);
+    getSuppliers: (page: number , search:string) => {
+        return axios.get('/auth/suppliers?page=' + page + "&search=" + search);
     },
     getSupplier: (id: number) => {
         return axios.get(`/auth/suppliers/${id}`);
