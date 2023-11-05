@@ -1,9 +1,14 @@
 
 <template>
-    <div v-if="status.loading" class="flex justify-center items-center h-full">
+    <div class="flex justify-center items-center w-full">
+        <div class="w-2/3">
+            <Search :handleSearch="customersStore.fetchCustomers" placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة" />
+        </div>
+    </div>
+    <div v-if="status.loading" class="flex justify-center items-center m-5">
         <Loading stroke-color="#8f8f8f" />
     </div>
-    <div v-if="status.error" class="flex justify-center items-center h-full">
+    <div v-if="status.error" class="flex justify-center items-center m-5">
         <h1 class="text-2xl text-gray-500">{{ status.message }}</h1>
     </div>
     <div v-if="status.success && customers.length">
@@ -13,7 +18,7 @@
     <div v-if="status.success && !customers.length" class="flex justify-center items-center h-full">
         <h1 class="text-2xl text-gray-500">لا يوجد عملاء</h1>
     </div>
-    <PaginationItems v-if="!status.error && customers.length" :totalPages="pagination.lastPage"
+    <PaginationItems v-if="status.success && customers.length" :totalPages="pagination.lastPage"
         :currentPage="pagination.currentPage" :goToPage="customersStore.fetchCustomers" />
     <EmptyDialog v-if="updatePopup" title="تعديل العميل" :close-dialog="closeUpdateDialog">
         <updateCustomer v-if="updatePopup" :customer="customer" :governorates="governoratesStore.governorates"
@@ -21,9 +26,9 @@
             :updateCustomer="customersStore.updateCustomer" />
     </EmptyDialog>
     <EmptyDialog v-if="showPopup" title="معلومات العميل" :close-dialog="closeShowDialog">
-        <ShowCustomer v-if="showPopup" :id="customer.id" :name="customer.name" :address="customer.address"
+        <ShowCustomer v-if="showPopup" :id="customer.id!" :name="customer.name" :address="customer.address"
             :phone="customer.phone" :governorate="getGovernorateNameById(customer.governorate_id)"
-            :balance="formatCurrency(customer.balance!)"
+            :balance="customer.balance!"
             :reCalculateBalance="customersStore.reCalculateBalance"  />
     </EmptyDialog>
 
@@ -37,16 +42,15 @@
 import { onMounted, ref } from 'vue'
 import { useCustomersStore, useGovernoratesStore } from '../../stores'
 import { storeToRefs } from 'pinia';
-import CardsContainer from '../../components/CardsContainer.vue';
 import EmptyDialog from '../../components/EmptyDialog.vue';
 import TrueOrFalseDialog from '../../components/TrueOrFalseDialog.vue';
 import PaginationItems from '../../components/PaginationItems.vue';
-import PersonalInformationCard from '../../components/PersonalInformationCard.vue';
 import type { Customer } from '../../Types';
 import updateCustomer from './UpdateCustomer.vue';
 import Loading from '../../components/icons/Loading.vue';
 import ShowCustomer from './ShowCustomer.vue';
 import ListCustomers from './ListCustomers.vue';
+import Search from '@/components/Search.vue';
 
 const customersStore = useCustomersStore()
 const governoratesStore = useGovernoratesStore();
@@ -57,7 +61,8 @@ const updatePopup = ref(false);
 const deletePopup = ref(false);
 const showPopup = ref(false);
 const pagination = storeToRefs(customersStore).pagination;
-import { formatCurrency } from '../../services/helper/helperFunctions';
+// fetch customers
+const fetchCustomers = customersStore.fetchCustomers;
 
 const openUpdateDialog = (customer: Customer) => {
     customersStore.setCustomer(customer);
@@ -93,6 +98,6 @@ const getGovernorateNameById = (id: number): string => {
 }
 onMounted(async () => {
     await governoratesStore.fetchGovernorates();
-    await customersStore.fetchCustomers();
+    await fetchCustomers();
 });
 </script>

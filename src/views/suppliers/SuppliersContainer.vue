@@ -1,20 +1,23 @@
 <template>
-    <div v-if="status.loading" class="flex justify-center items-center h-full">
-        <Loading stroke-color="#8f8f8f" />
-    </div>
-    <div class="w-full flex justify-center items-center" >
-        <div class="w-2/3" >
+    <div class="w-full flex justify-center items-center">
+        <div class="w-2/3">
             <Search :handleSearch="fetchSuppliers" placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة" />
         </div>
     </div>
-    <div v-if="status.success && suppliers.length">
+    <div v-if="status.loading" class="flex justify-center items-center m-5 ">
+        <Loading stroke-color="#8f8f8f" />
+    </div>
+    <div v-if="status.error" class="flex justify-center items-center m-5">
+        <h1 class="text-2xl text-gray-500">{{ status.message }}</h1>
+    </div>
+    <div v-if="status.success && suppliers.length"  >
         <ListSuppliers :suppliers="suppliers" :openUpdateDialog="openUpdateDialog" :openDeleteDialog="openDeleteDialog"
             :openShowDialog="openShowDialog" :getGovernorateNameById="getGovernorateNameById" />
     </div>
     <div v-if="status.success && !suppliers.length" class="flex justify-center items-center h-full">
         <h1 class="text-2xl text-gray-500">لا يوجد موردين</h1>
     </div>
-    <PaginationItems v-if="!status.error && suppliers.length" :totalPages="pagination.lastPage"
+    <PaginationItems v-if="status.success && suppliers.length" :totalPages="pagination.lastPage"
         :currentPage="pagination.currentPage" :goToPage="suppliersStore.fetchSuppliers" />
     <EmptyDialog v-if="updatePopup" title="تعديل المورد" :close-dialog="closeUpdateDialog">
         <updateSupplier v-if="updatePopup" :supplier="supplier" :governorates="governoratesStore.governorates"
@@ -24,9 +27,7 @@
     <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
         <ShowSupplier v-if="showPopup" :id="supplier.id!" :name="supplier.name" :address="supplier.address"
             :phone="supplier.phone" :governorate="getGovernorateNameById(supplier.governorate_id)"
-            :balance="formatCurrency(supplier.balance!)" 
-            :reCalculateBalance="suppliersStore.reCalculateBalance"
-            />
+            :balance="formatCurrency(supplier.balance!)" :reCalculateBalance="suppliersStore.reCalculateBalance" />
     </EmptyDialog>
 
     <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'"

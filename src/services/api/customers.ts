@@ -3,8 +3,8 @@ import axios from './axios';
 
 export const customers = {
 
-    getCustomers: (page : number) => {
-        return axios.get('/auth/customers?page=' + page);
+    getCustomers: (page : number , search:string) => {
+        return axios.get('/auth/customers?page=' + page  + "&search=" + search);
     },
     getCustomer: (id: number) => {
         return axios.get(`/auth/customers/${id}`);
@@ -22,7 +22,6 @@ export const customers = {
     getCustomerSales: (id: number , page:number) => {
         return axios.get(`/auth/customers/${id}/sales?page=${page}`);
     },
-    // re calculate balance 
     reCalculateBalance: (id: number) => {
         return axios.put(`/auth/customers/${id}/re-calculate-balance`);
     },

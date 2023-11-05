@@ -41,11 +41,11 @@ export const useCustomersStore = defineStore('customers', {
         getCustomersStatus: (state) => state.customersStatus,
     },
     actions: {
-        async fetchCustomers(page = 1) {
+        async fetchCustomers(page = 1 , search="") {
             this.clearCustomersStatus();
             try {
                 this.customersStatus.loading = true
-                const response = await customers.getCustomers(page)
+                const response = await customers.getCustomers(page , search)
                 this.customers = response.data.data.data
                 this.pagination = {
                     currentPage: response.data.data.current_page,
