@@ -1,16 +1,32 @@
 <template>
     <div class="h-full w-full flex  flex-col justify-between items-center">
-        <button @click="openCreatePopup" type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            إضافة
-        </button>
-        <div v-if="salesStatus.loading || productsStatus.loading" class="flex justify-center items-center h-full">
-            <Loading stroke-color="#8f8f8f" />
+        <div class="flex flex-col  justify-center items-center w-full">
+            <div class="flex justify-center items-center w-full">
+                <div class="w-1/3">
+                    <Search
+                        :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
+                        placeholder="التسلسل" />
+                </div>
+                <button @click="openCreatePopup" type="button"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    إضافة
+                </button>
+            </div>
+
+            <div class="flex justify-center items-center w-full">
+                <div v-if="salesStatus.loading || productsStatus.loading" class="flex justify-center items-center m-10">
+                    <Loading stroke-color="#8f8f8f" />
+                </div>
+                <div v-if="salesStatus.error || productsStatus.error"
+                    class="text-red-500 text-sm flex justify-center items-center m-10">
+                    {{ salesStatus.message || productsStatus.message }}
+                </div>
+                <div v-if="salesStatus.success && !salesStore.sales.length" class="flex justify-center items-center m-10">
+                    <h1 class="text-2xl text-gray-500"> لا يوجد فواتير بيع </h1>
+                </div>
+            </div>
         </div>
 
-        <div v-if="salesStatus.error || productsStatus.error" class="text-red-500 text-sm">
-            {{ salesStatus.message || productsStatus.message }}
-        </div>
         <SalesList v-if="salesStatus.success && productsStatus.success" :sales="salesStore.sales"
             :customerName="customerName" :update="openUpdatePopup" :show="() => { }" />
 
@@ -43,6 +59,7 @@ import { storeToRefs } from 'pinia';
 import SalesList from './SalesList.vue';
 import UpdateSale from './UpdateSale.vue';
 import PaginationItems from '../../components/PaginationItems.vue';
+import Search from '@/components/Search.vue';
 
 
 const salesStore = useSalesStore()
@@ -51,9 +68,9 @@ const sale = storeToRefs(salesStore).sale;
 const saleStatus = storeToRefs(salesStore).saleStatus;
 const salesStatus = storeToRefs(salesStore).salesStatus;
 const pagination = storeToRefs(salesStore).pagination;
-
 const products = storeToRefs(productsStore).products;
 const productsStatus = storeToRefs(productsStore).productsStatus;
+const fetchSalesOfCustomer = salesStore.fetchSalesOfCustomer;
 
 const createPopup = ref(false);
 const updatePopup = ref(false);
@@ -105,7 +122,7 @@ const props = defineProps({
 
 onMounted(async () => {
     salesStore.sale.customer_id = props.customerId;
-    await salesStore.fetchSalesOfCustomer(1, props.customerId);
+    await fetchSalesOfCustomer(1, props.customerId);
     await productsStore.fetchProducts();
 })
 </script>

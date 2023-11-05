@@ -19,8 +19,8 @@ export const customers = {
     deleteCustomer: (id: number) => {
         return axios.delete(`/auth/customers/${id}`);
     },
-    getCustomerSales: (id: number , page:number) => {
-        return axios.get(`/auth/customers/${id}/sales?page=${page}`);
+    getCustomerSales: (id: number , page:number , search="") => {
+        return axios.get(`/auth/customers/${id}/sales?page=${page}&search=${search}`);
     },
     reCalculateBalance: (id: number) => {
         return axios.put(`/auth/customers/${id}/re-calculate-balance`);

@@ -71,11 +71,11 @@ export const usePurchasesStore = defineStore('purchases', {
                 this.purchasesStatus.loading = false
             }
         },
-        async fetchPurchasesBySupplier(page: number, id: number) {
+        async fetchPurchasesBySupplier(page: number, id: number , search="") {
             this.clearPurchasesStatus();
             try {
                 this.purchasesStatus.loading = true
-                const { data: response } = await purchases.getPurchasesBySupplier(page, id)
+                const { data: response } = await purchases.getPurchasesBySupplier(page, id, search)
                 this.purchases = response.data.data.map((purchase: any) => {
                     return {
                         ...purchase,

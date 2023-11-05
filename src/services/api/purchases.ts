@@ -1,4 +1,4 @@
-import type {Purchase} from '@/Types';
+import type { Purchase } from '@/Types';
 import axios from './axios';
 
 export const purchases = {
@@ -6,8 +6,8 @@ export const purchases = {
     getPurchases: (page: number) => {
         return axios.get('/auth/purchases?page=' + page);
     },
-    getPurchasesBySupplier: (page: number , id: number) => {
-        return axios.get('/auth/purchases/supplier/' + id+'?page=' + page);
+    getPurchasesBySupplier: (page: number, id: number, search = "") => {
+        return axios.get('/auth/purchases/supplier/' + id + '?page=' + page + '&search=' + search);
     },
     getPurchase: (id: number) => {
         return axios.get(`/auth/purchases/${id}`);

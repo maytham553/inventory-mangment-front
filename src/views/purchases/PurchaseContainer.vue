@@ -1,16 +1,35 @@
 <template>
     <div class="h-full w-full flex  flex-col justify-between items-center">
-        <button @click="openCreatePopup" type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            إضافة
-        </button>
-        <div v-if="purchasesStatus.loading || rawMaterialsStatus.loading" class="flex justify-center items-center h-full">
-            <Loading stroke-color="#8f8f8f" />
+
+        <div class="flex flex-col  justify-center items-center w-full">
+            <div class="flex justify-center items-center w-full">
+                <div class="w-1/3">
+                    <Search
+                        :handleSearch="(page = 1, search: string) => { fetchPurchasesBySupplier(page, props.supplierId, search) }"
+                        placeholder="التسلسل" />
+                </div>
+                <button @click="openCreatePopup" type="button"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    إضافة
+                </button>
+            </div>
+
+            <div class="flex justify-center items-center w-full">
+                <div v-if="purchasesStatus.loading || rawMaterialsStatus.loading"
+                    class="flex justify-center items-center m-10">
+                    <Loading stroke-color="#8f8f8f" />
+                </div>
+
+                <div v-if="purchasesStatus.error || rawMaterialsStatus.error"
+                    class="text-red-500 text-sm flex justify-center items-center m-10">
+                    {{ purchasesStatus.message || rawMaterialsStatus.message }}
+                </div>
+                <div v-if="purchasesStatus.success && !purchases.length" class="flex justify-center items-center m-10">
+                    <h1 class="text-2xl text-gray-500"> لا يوجد فواتير شراء </h1>
+                </div>
+            </div>
         </div>
 
-        <div v-if="purchasesStatus.error || rawMaterialsStatus.error" class="text-red-500 text-sm">
-            {{ purchasesStatus.message || rawMaterialsStatus.message }}
-        </div>
         <PurchasesList v-if="purchasesStatus.success && rawMaterialsStatus.success" :purchases="purchasesStore.purchases"
             :supplierName="supplierName" :update="openUpdatePopup" :show="() => { }" />
 
@@ -28,7 +47,7 @@
 
         <PaginationItems v-if="purchasesStatus.success && purchasesStore.purchases.length && rawMaterialsStatus.success"
             :currentPage="pagination.currentPage" :totalPages="pagination.lastPage"
-            :goToPage="(page: number) => { purchasesStore.fetchPurchasesBySupplier(page, props.supplierId) }" />
+            :goToPage="(page: number) => { fetchPurchasesBySupplier(page, props.supplierId) }" />
     </div>
 </template>
 
@@ -43,6 +62,7 @@ import { storeToRefs } from 'pinia';
 import PurchasesList from './PurchasesList.vue';
 import UpdatePurchase from './UpdatePurchase.vue';
 import PaginationItems from '@/components/PaginationItems.vue';
+import Search from '@/components/Search.vue';
 
 
 const purchasesStore = usePurchasesStore()
@@ -51,10 +71,11 @@ const purchase = storeToRefs(purchasesStore).purchase;
 const purchaseStatus = storeToRefs(purchasesStore).purchaseStatus;
 const purchasesStatus = storeToRefs(purchasesStore).purchasesStatus;
 const pagination = storeToRefs(purchasesStore).pagination;
+const purchases = storeToRefs(purchasesStore).purchases;
 
 const rawMaterials = storeToRefs(rawMaterialsStore).rawMaterials;
 const rawMaterialsStatus = storeToRefs(rawMaterialsStore).rawMaterialsStatus;
-
+const fetchPurchasesBySupplier = purchasesStore.fetchPurchasesBySupplier
 const createPopup = ref(false);
 const updatePopup = ref(false);
 
@@ -105,7 +126,7 @@ const props = defineProps({
 
 onMounted(async () => {
     purchasesStore.purchase.supplier_id = props.supplierId;
-    await purchasesStore.fetchPurchasesBySupplier(1, props.supplierId);
+    await fetchPurchasesBySupplier(1, props.supplierId);
     await rawMaterialsStore.fetchRawMaterials();
 })
 </script>

@@ -47,11 +47,11 @@ export const useSalesStore = defineStore('sales', {
         },
     },
     actions: {
-        async fetchSalesOfCustomer(page = 1, id: number) {
+        async fetchSalesOfCustomer(page = 1, id: number , search="") {
             this.clearSalesStatus();
             try {
                 this.salesStatus.loading = true;
-                const { data: response } = await customers.getCustomerSales(id, page);
+                const { data: response } = await customers.getCustomerSales(id, page , search);
                 this.sales = response.data.data.map((sale: any) => {
                     return {
                         ...sale,
