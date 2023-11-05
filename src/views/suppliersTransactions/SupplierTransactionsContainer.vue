@@ -1,30 +1,33 @@
 <template>
-    <button @click="openCreatePopup" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        إضافة عملية
-    </button>
-    <div v-if="supplierTransactionsStatus.loading" class="flex justify-center items-center h-full">
-        <Loading stroke-color="#8f8f8f" />
+    <div class="h-full w-full flex  flex-col justify-between items-center">
+
+        <button @click="openCreatePopup" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            إضافة عملية
+        </button>
+        <div v-if="supplierTransactionsStatus.loading" class="flex justify-center items-center h-full">
+            <Loading stroke-color="#8f8f8f" />
+        </div>
+        <div v-if="supplierTransactionsStatus.error" class="flex justify-center items-center h-full">
+            <span class="text-red-500 text-center h-5 ">
+                <span>{{ supplierTransactionsStatus.message }}</span>
+            </span>
+        </div>
+        <div v-if="supplierTransactionsStatus.success && !supplierTransactions.length"
+            class="flex justify-center items-center h-full">
+            <span class="text-gray-500 text-center h-5 ">
+                <span>لا يوجد تعاملات</span>
+            </span>
+        </div>
+        <SupplierTransactionsList :transactions="supplierTransactions" />
+        <PaginationItems v-if="!supplierTransactionsStatus.error"
+            :currentPage="SupplierTransactionsStore.getSupplierTransactionsPagination.currentPage"
+            :totalPages="SupplierTransactionsStore.getSupplierTransactionsPagination.lastPage"
+            :goToPage="(page: number) => { SupplierTransactionsStore.fetchSupplierTransactionsBySupplierId(props.supplierId, page) }" />
+        <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
+            <CreateSupplierTransaction :createTransaction="createTransaction" :status="supplierTransactionStatus"
+                :supplierId="supplierId" />
+        </EmptyDialog>
     </div>
-    <div v-if="supplierTransactionsStatus.error" class="flex justify-center items-center h-full">
-        <span class="text-red-500 text-center h-5 ">
-            <span>{{ supplierTransactionsStatus.message }}</span>
-        </span>
-    </div>
-    <div v-if="supplierTransactionsStatus.success && !supplierTransactions.length"
-        class="flex justify-center items-center h-full">
-        <span class="text-gray-500 text-center h-5 ">
-            <span>لا يوجد تعاملات</span>
-        </span>
-    </div>
-    <SupplierTransactionsList :transactions="supplierTransactions" />
-    <PaginationItems v-if="!supplierTransactionsStatus.error"
-        :currentPage="SupplierTransactionsStore.getSupplierTransactionsPagination.currentPage"
-        :totalPages="SupplierTransactionsStore.getSupplierTransactionsPagination.lastPage"
-        :goToPage="(page: number) => { SupplierTransactionsStore.fetchSupplierTransactionsBySupplierId(props.supplierId, page) }" />
-    <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
-        <CreateSupplierTransaction :createTransaction="createTransaction" :status="supplierTransactionStatus"
-            :supplierId="supplierId" />
-    </EmptyDialog>
 </template>
 
 <script lang="ts" setup >

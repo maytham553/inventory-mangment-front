@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4   bg-gray-200  rounded-lg ">
+    <div class="p-4 max-w-sm max-h-sm  bg-gray-200  rounded-lg ">
         <div>
             <span>نوع العملية</span>
             <span>{{ type }}</span>

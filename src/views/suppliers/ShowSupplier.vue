@@ -1,16 +1,15 @@
 <template>
-    <div class="bg-white shadow-lg rounded-lg p-4 w-full h-full flex  flex-col  ">
-        <div class="flex-1/2" >
+    <div class="bg-white  rounded-lg p-4 w-full h-full flex  flex-col  ">
+        <div class="flex-1/2">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">{{ name }}</h2>
-                <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full">
-                    {{ balance }}
+                <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full ">
+                    {{ formatCurrency(balance) }}
+                    <button @click="() => { reCalculateBalance(id) }" type="button"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        إعادة حساب الرصيد
+                    </button>
                 </span>
-                <button @click="() => { reCalculateBalance(id) }" type="button"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    إعادة حساب الرصيد
-                </button>
-
             </div>
             <div class="text-gray-600 mb-2">
                 <p v-if="email">البريد الإلكتروني: {{ email }}</p>
@@ -24,7 +23,7 @@
             </div>
         </div>
 
-        <div class="flex-1" >
+        <div class="flex-1">
             <div class="mt-4 w-full">
                 <div class="flex flex-row gap-2">
                     <button @click="() => changeActive('transactions')"
@@ -35,18 +34,15 @@
                         class="px-4 py-2 rounded-lg">المشتريات</button>
                 </div>
             </div>
-            <div class="mt-4 h-full  " v-if="operationNav.active === 'transactions'">
+            <div class="mt-4 h-full " v-if="operationNav.active === 'transactions'">
                 <h2 class="text-xl font-semibold">التعاملات</h2>
-                <div class="h-96 overflow-auto  ">
                     <SupplierTransactionsContainer :supplierId="id" />
-                </div>
             </div>
             <div class="mt-4 h-full " v-if="operationNav.active === 'purchases'">
                 <h2 class="text-xl font-semibold">المشتريات</h2>
-                <PurchaseContainer :supplierId="id" :supplierName="name" />
+                    <PurchaseContainer :supplierId="id" :supplierName="name" />
             </div>
         </div>
-
     </div>
 </template>
   
@@ -54,6 +50,7 @@
 import { defineProps, ref } from 'vue';
 import SupplierTransactionsContainer from './../suppliersTransactions/SupplierTransactionsContainer.vue';
 import PurchaseContainer from './../purchases/PurchaseContainer.vue';
+import { formatCurrency } from '@/services/helper/helperFunctions';
 const props = defineProps({
     id: {
         type: Number,
@@ -68,7 +65,7 @@ const props = defineProps({
         required: false
     },
     balance: {
-        type: String,
+        type: Number,
         required: true
     },
     phone: {

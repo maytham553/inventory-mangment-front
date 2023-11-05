@@ -27,7 +27,7 @@
     <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
         <ShowSupplier v-if="showPopup" :id="supplier.id!" :name="supplier.name" :address="supplier.address"
             :phone="supplier.phone" :governorate="getGovernorateNameById(supplier.governorate_id)"
-            :balance="formatCurrency(supplier.balance!)" :reCalculateBalance="suppliersStore.reCalculateBalance" />
+            :balance="supplier.balance!" :reCalculateBalance="suppliersStore.reCalculateBalance" />
     </EmptyDialog>
 
     <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'"
@@ -40,17 +40,14 @@
 import { onMounted, ref } from 'vue'
 import { useSuppliersStore, useGovernoratesStore } from '../../stores'
 import { storeToRefs } from 'pinia';
-import CardsContainer from '../../components/CardsContainer.vue';
 import EmptyDialog from '../../components/EmptyDialog.vue';
 import TrueOrFalseDialog from '../../components/TrueOrFalseDialog.vue';
 import PaginationItems from '../../components/PaginationItems.vue';
-import PersonalInformationCard from '../../components/PersonalInformationCard.vue';
 import type { Supplier } from '../../Types';
 import updateSupplier from './UpdateSupplier.vue';
 import Loading from '../../components/icons/Loading.vue';
 import ShowSupplier from './ShowSupplier.vue';
 import ListSuppliers from './ListSuppliers.vue';
-import { formatCurrency } from '../../services/helper/helperFunctions';
 import Search from '@/components/Search.vue';
 
 const suppliersStore = useSuppliersStore()

@@ -1,6 +1,6 @@
 <template>
     <div class="fixed inset-0 flex items-center justify-center z-50">
-        <div class=" h-full w-full  bg-white pb-4  shadow-lg z-30 flex flex-col overflow-hidden  ">
+        <div class=" h-full w-full  bg-white pb-4  z-30 flex flex-col overflow-hidden  ">
             <div class="flex justify-between items-center bg-gray-900 font-bold  text-gray-100 p-2">
                 <h2 class="text-xl font-bold">{{ title }}</h2>
                 <button @click="closeDialog" type="button"
