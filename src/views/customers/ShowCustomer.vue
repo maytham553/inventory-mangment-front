@@ -45,7 +45,7 @@
 </template>
   
 <script lang="ts"  setup>
-import { defineProps, computed } from 'vue';
+import { defineProps, computed,ref } from 'vue';
 import CustomerTransactionContainer from './../customersTransactions/CustomerTransactionsContainer.vue';
 import SaleContainer from './../sales/SaleContainer.vue';
 const props = defineProps({

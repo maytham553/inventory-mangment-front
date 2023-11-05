@@ -2,7 +2,7 @@
     
     <div class="p-4 max-w-sm max-h-sm bg-gray-100 drop-shadow-xl rounded-lg flex flex-col  w-content">
        <div class="flex justify-center p-10 mb-5 bg-gray-300 rounded">
-         <UserIcon size="150" strokeColor="rgba(0,0,0,0.1)" fillColor="#172350"/>
+         <UserIcon :size=150 strokeColor="rgba(0,0,0,0.1)" fillColor="#172350"/>
            </div>
         <div class="p-1 flex flex-col space-y-3"> 
              <div>
@@ -21,19 +21,10 @@
             <span class="font-bold"></span>
             <span>{{ phone }}</span>
         </div>
-        <!-- <div>
-            <span class="font-bold">العنوان : </span>
-            <span>{{ address }}</span>
-        </div> -->
         <div>
             <span class="font-bold"></span>
             <span>{{ governorate }}</span>
         </div>
-        <!-- <div v-if="note">
-          <span class="font-bold">ملاحظات : </span>
-          <span>{{ showMore ? truncatedNote : note }}</span>
-          <a v-if="showMore" @click="expandNote" class="cursor-pointer text-green-500 text-s">أكمل القراءة</a>
-        </div> -->
         <div class="flex flex-row items-center justify-center w-full   ">
             <button @click="updateHandler" class="text-xs bg-[#2b4162] hover:bg-[#1a2c47] text-white font-bold py-2 px-4 rounded-r-md">
                 تعديل
