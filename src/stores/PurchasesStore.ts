@@ -1,7 +1,8 @@
 import { purchases } from '@/services/api'
+import { calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
 import { defineStore } from 'pinia'
-import type { Status, Pagination, Purchase, PurchaseRawMaterial, RawMaterial } from '@/Types'
-import { PDFDocument, PDFPage, PageSizes, encodeToBase64 } from 'pdf-lib'
+import type { Status, Pagination, Purchase, PurchaseRawMaterial, RawMaterial, } from '@/Types'
+import { PDFDocument, PDFPage, PageSizes } from 'pdf-lib'
 import fontkit from "@pdf-lib/fontkit";
 import printJS from 'print-js'
 
@@ -13,6 +14,8 @@ export const usePurchasesStore = defineStore('purchases', {
             status: 'confirmed' as Purchase['status'],
             discount_amount: 0,
             discount_percentage: 0,
+            total_amount: 0,
+            subtotal_amount: 0,
         } as Purchase,
         purchaseStatus: {
             loading: false,
@@ -71,7 +74,7 @@ export const usePurchasesStore = defineStore('purchases', {
                 this.purchasesStatus.loading = false
             }
         },
-        async fetchPurchasesBySupplier(page: number, id: number , search="") {
+        async fetchPurchasesBySupplier(page: number, id: number, search = "") {
             this.clearPurchasesStatus();
             try {
                 this.purchasesStatus.loading = true
@@ -180,7 +183,7 @@ export const usePurchasesStore = defineStore('purchases', {
             page.drawText('المورد', { x: 50, y: height - 4 * fontSize, size: fontSize });
             page.drawText(supplierName, { x: 50, y: height - 6 * fontSize, size: fontSize });
             page.drawText('التاريخ', { x: 285, y: height - 4 * fontSize, size: fontSize });
-            page.drawText(purchase.created_at??String(new Date()), { x: 285, y: height - 6 * fontSize, size: fontSize });
+            page.drawText(purchase.created_at ?? String(new Date()), { x: 285, y: height - 6 * fontSize, size: fontSize });
             page.drawText('الحالة', { x: 50, y: height - 8 * fontSize, size: fontSize });
             page.drawText(purchase.status, { x: 50, y: height - 10 * fontSize, size: fontSize });
             page.drawText('المجموع الجزئي', { x: 285, y: height - 8 * fontSize, size: fontSize });
@@ -247,6 +250,38 @@ export const usePurchasesStore = defineStore('purchases', {
                 this.purchasesStatus.message = 'حدث خطأ في الخادم';
             } else {
                 this.purchasesStatus.message = 'حدث خطأ ما'
+            }
+        },
+
+        reCalculatePurchaseAfterChange() {
+            const initialNumber = Number();
+            if (this.purchase.raw_materials && this.purchase.raw_materials.length > 0) {
+                this.purchase.raw_materials.forEach((rawMaterial: any) => {
+                    if (rawMaterial.discount_amount) {
+                        rawMaterial.discount_percentage = calculateDiscountPercentage(rawMaterial.subtotal, rawMaterial.discount_amount, 1);
+                    }
+                    if (rawMaterial.quantity) {
+                        rawMaterial.subtotal = calculateSubtotal(rawMaterial.quantity, rawMaterial.unit_price, 1);
+                        rawMaterial.total = calculateTotal(rawMaterial.subtotal, rawMaterial.discount_amount, 1);
+                        rawMaterial.discount_percentage = calculateDiscountPercentage(rawMaterial.subtotal, rawMaterial.discount_amount, 1);
+                    }
+                });
+                const total = sumTotal(this.purchase.raw_materials, 'total');
+                const subtotal = sumTotal(this.purchase.raw_materials, 'subtotal');
+                this.purchase.total_amount = total
+                this.purchase.subtotal_amount = subtotal
+                if (this.purchase.discount_amount) {
+                    this.purchase.discount_percentage = parseInt(((this.purchase.discount_amount / this.purchase.subtotal_amount) * 100).toFixed(1));
+                    this.purchase.total_amount = total - this.purchase.discount_amount;
+                } else {
+                    this.purchase.discount_amount = initialNumber;
+                    this.purchase.discount_percentage = initialNumber;
+                }
+            } else {
+                this.purchase.total_amount = initialNumber;
+                this.purchase.subtotal_amount = initialNumber;
+                this.purchase.discount_amount = initialNumber;
+                this.purchase.discount_percentage = initialNumber;
             }
         },
         handlePurchaseError(error: any) {

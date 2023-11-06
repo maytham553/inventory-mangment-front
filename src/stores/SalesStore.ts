@@ -1,10 +1,11 @@
 import { sales, customers } from '@/services/api'
+import { calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
 import { defineStore } from 'pinia'
 import type { Sale, Status, Pagination, Product, Customer, SaleProduct } from '@/Types'
 import { PDFDocument, PDFPage, PageSizes } from 'pdf-lib'
 import fontkit from "@pdf-lib/fontkit";
 import printJS from 'print-js'
-import { sumTotal } from '@/services/helper/helperFunctions';
+
 
 export const useSalesStore = defineStore('sales', {
     state: () => ({
@@ -14,6 +15,8 @@ export const useSalesStore = defineStore('sales', {
             status: 'confirmed' as Sale['status'],
             discount_amount: 0,
             discount_percentage: 0,
+            total_amount: 0,
+            subtotal_amount: 0,
         } as Sale,
         saleStatus: {
             loading: false,
@@ -47,11 +50,11 @@ export const useSalesStore = defineStore('sales', {
         },
     },
     actions: {
-        async fetchSalesOfCustomer(page = 1, id: number , search="") {
+        async fetchSalesOfCustomer(page = 1, id: number, search = "") {
             this.clearSalesStatus();
             try {
                 this.salesStatus.loading = true;
-                const { data: response } = await customers.getCustomerSales(id, page , search);
+                const { data: response } = await customers.getCustomerSales(id, page, search);
                 this.sales = response.data.data.map((sale: any) => {
                     return {
                         ...sale,
@@ -229,26 +232,18 @@ export const useSalesStore = defineStore('sales', {
             const url = window.URL.createObjectURL(blob);
             printJS(url), { type: 'pdf', showModal: false };
         },
-        calculateDiscountPercentage(subTotal: number, discountAmount: number): number {
-            return Number(((discountAmount / subTotal) * 100).toFixed(1));
-        },
-        calculateSubtotal(quantity: number, unitPrice: number): number {
-            return Number((quantity * unitPrice).toFixed(1));
-        },
-        calculateTotal(subTotal: number, discountAmount: number): number {
-            return Number((subTotal - discountAmount).toFixed(1));
-        },
+
         reCalculateSaleAfterChange() {
             const initialNumber = Number();
             if (this.sale.products && this.sale.products.length > 0) {
                 this.sale.products.forEach((product: SaleProduct) => {
                     if (product.discount_amount) {
-                        product.discount_percentage = this.calculateDiscountPercentage(product.subtotal, product.discount_amount);
+                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, product.discount_amount, 1);
                     }
                     if (product.quantity) {
-                        product.subtotal = this.calculateSubtotal(product.quantity, product.unit_price);
-                        product.total = this.calculateTotal(product.subtotal, product.discount_amount);
-                        product.discount_percentage = this.calculateDiscountPercentage(product.subtotal, product.discount_amount);
+                        product.subtotal = calculateSubtotal(product.quantity, product.unit_price, 1);
+                        product.total = calculateTotal(product.subtotal, product.discount_amount, 1);
+                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, product.discount_amount, 1);
                     }
                 });
                 const total = sumTotal(this.sale.products, 'total');
@@ -256,7 +251,7 @@ export const useSalesStore = defineStore('sales', {
                 this.sale.total_amount = total
                 this.sale.subtotal_amount = subtotal
                 if (this.sale.discount_amount) {
-                    this.sale.discount_percentage = this.calculateDiscountPercentage(this.sale.subtotal_amount, this.sale.discount_amount);
+                    this.sale.discount_percentage = calculateDiscountPercentage(this.sale.subtotal_amount, this.sale.discount_amount, 1);
                     this.sale.total_amount = total - this.sale.discount_amount;
                 } else {
                     this.sale.discount_amount = initialNumber;

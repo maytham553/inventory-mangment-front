@@ -36,13 +36,13 @@
         <EmptyDialog v-if="createPopup" :title="String(supplierId)" :close-dialog="closeCreatePopup">
             <CreatePurchase v-if="createPopup" :purchase="purchasesStore.purchase" :purchaseStatus="purchaseStatus"
                 :rawMaterials="rawMaterials" :rawMaterialsStatus="rawMaterialsStatus" :addItem="addItem"
-                :removeItem="removeItem" :onSubmit="createPurchase" submitButtonText="حفظ" />
+                :removeItem="removeItem" :onSubmit="createPurchase" submitButtonText="حفظ" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" />
         </EmptyDialog>
 
         <EmptyDialog v-if="updatePopup" :title="String(supplierId)" :close-dialog="closeUpdatePopup">
             <UpdatePurchase v-if="updatePopup" :purchase="purchasesStore.purchase" :purchaseStatus="purchaseStatus"
                 :rawMaterials="rawMaterials" :rawMaterialsStatus="rawMaterialsStatus" :addItem="addItem"
-                :removeItem="removeItem" :onSubmit="updatePurchase" submitButtonText="تعديل" />
+                :removeItem="removeItem" :onSubmit="updatePurchase" submitButtonText="تعديل" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" />
         </EmptyDialog>
 
         <PaginationItems v-if="purchasesStatus.success && purchasesStore.purchases.length && rawMaterialsStatus.success"
@@ -72,7 +72,7 @@ const purchaseStatus = storeToRefs(purchasesStore).purchaseStatus;
 const purchasesStatus = storeToRefs(purchasesStore).purchasesStatus;
 const pagination = storeToRefs(purchasesStore).pagination;
 const purchases = storeToRefs(purchasesStore).purchases;
-
+const reCalculatePurchaseAfterChange = purchasesStore.reCalculatePurchaseAfterChange;
 const rawMaterials = storeToRefs(rawMaterialsStore).rawMaterials;
 const rawMaterialsStatus = storeToRefs(rawMaterialsStore).rawMaterialsStatus;
 const fetchPurchasesBySupplier = purchasesStore.fetchPurchasesBySupplier

@@ -19,13 +19,15 @@
                         class="bg-gray-100 hover:bg-gray-300 mb-2">
                         <td>{{ rawMaterial.name }}</td>
                         <td>
-                            <input placeholder="الكمية" type="number" id="quantity" v-model="rawMaterial.quantity" />
+                            <input placeholder="الكمية" type="number" :id="'quantity' + rawMaterial.id"
+                                v-model="rawMaterial.quantity" />
                         </td>
                         <td>
-                            <input placeholder="السعر" type="number" id="unitPrice" v-model="rawMaterial.unit_price" />
+                            <input placeholder="السعر" type="number" :id="'unitPrice' + rawMaterial.id"
+                                v-model="rawMaterial.unit_price" />
                         </td>
                         <td>
-                            <input placeholder="مبلغ الخصم" type="number" id="discountAmount"
+                            <input placeholder="مبلغ الخصم" type="number" :id="'discountAmount' + rawMaterial.id"
                                 v-model="rawMaterial.discount_amount" />
                         </td>
                         <td>
@@ -55,20 +57,23 @@
 
                 <div class="flex  items-center w-72  justify-between  ">
                     <label for="discountPercentage">نسبة الخصم</label>
-                    <input placeholder="نسبة الخصم" type="number" id="discountPercentage"
-                        v-model="purchase.discount_percentage" class="form-input   p-1 rounded-lg bg-gray-200" />
+                    <span id="discountPercentage" class="form-input   p-1 rounded-lg bg-gray-200 ">
+                        {{ purchase.discount_percentage }}
+                    </span>
                 </div>
 
                 <div class="flex  items-center w-72  justify-between ">
                     <label for="subtotalAmount">المجموع الجزئي</label>
-                    <input placeholder="المجموع الجزئي" type="number" id="subtotalAmount" v-model="purchase.subtotal_amount"
-                        class="form-input   p-1 rounded-lg bg-gray-200" />
+                    <span id="subtotalAmount" class="form-input   p-1 rounded-lg bg-gray-200">
+                        {{ purchase.subtotal_amount }}
+                    </span>
                 </div>
 
                 <div class="flex  items-center w-72  justify-between ">
                     <label for="totalAmount">المجموع الكلي</label>
-                    <input placeholder="المجموع الكلي" type="number" id="totalAmount" v-model="purchase.total_amount"
-                        class="form-input   p-1 rounded-lg bg-gray-200" />
+                    <span id="totalAmount" class="form-input   p-1 rounded-lg bg-gray-200">
+                        {{ purchase.total_amount }}
+                    </span>
                 </div>
             </div>
             <div class="flex w-1/2 flex-col gap-1 justify-between">
@@ -118,10 +123,8 @@
 <script lang="ts" setup>
 import type { Purchase, Status } from '../../Types';
 import { PurchaseStatus } from '../../Types';
-import { defineProps, onMounted, ref, watch } from 'vue';
-import { sumTotal } from './../../services/helper/helperFunctions'
+import { defineProps, onBeforeUpdate, onMounted, ref, watch } from 'vue';
 import Loading from '@/components/icons/Loading.vue';
-import { purchases } from '@/services/api';
 
 const props = defineProps({
     purchase: {
@@ -143,6 +146,10 @@ const props = defineProps({
     submitButtonText: {
         type: String,
         required: true
+    },
+    reCalculatePurchaseAfterChange: {
+        type: Function,
+        required: true
     }
 })
 
@@ -157,34 +164,7 @@ const removeItem = (rawMaterialId: number) => {
     props.removeItem(rawMaterialId);
 }
 
-
-let initialNumber: number;
-watch(props.purchase, (newVal, oldVal) => {
-    if (newVal.raw_materials && newVal.raw_materials.length > 0) {
-        newVal.raw_materials.forEach((rawMaterial: any) => {
-            if (rawMaterial.discount_amount) {
-                rawMaterial.discount_percentage = ((rawMaterial.discount_amount / rawMaterial.subtotal) * 100).toFixed(1);
-            }
-            if (rawMaterial.quantity) {
-                rawMaterial.subtotal = (rawMaterial.quantity * rawMaterial.unit_price).toFixed(1);
-                rawMaterial.total = (rawMaterial.subtotal - rawMaterial.discount_amount).toFixed(1);
-                rawMaterial.discount_percentage = ((rawMaterial.discount_amount / rawMaterial.subtotal) * 100).toFixed(1);
-            }
-        });
-        newVal.total_amount = sumTotal(newVal.raw_materials, 'total')
-        newVal.subtotal_amount = sumTotal(newVal.raw_materials, 'subtotal')
-        if (newVal.discount_amount) {
-            newVal.discount_percentage = parseInt(((newVal.discount_amount / newVal.subtotal_amount) * 100).toFixed(1));
-            newVal.total_amount = sumTotal(newVal.raw_materials, 'total') - newVal.discount_amount;
-        } else {
-            newVal.discount_amount = initialNumber;
-            newVal.discount_percentage = initialNumber;
-        }
-    } else {
-        newVal.total_amount = initialNumber;
-        newVal.subtotal_amount = initialNumber;
-        newVal.discount_amount = initialNumber;
-        newVal.discount_percentage = initialNumber;
-    }
-}, { deep: true });
+onBeforeUpdate(() => {
+    props.reCalculatePurchaseAfterChange()
+})
 </script>
