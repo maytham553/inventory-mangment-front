@@ -6,6 +6,8 @@ import CreateCustomer from '@/views/customers/CreateCustomer.vue'
 import CreateSupplier from '@/views/suppliers/CreateSupplier.vue'
 import ProductsContainer from '@/views/products/ProductsContainer.vue'
 import RawMaterialsContainer from '@/views/rawMaterials/RawMaterialsContainer.vue'
+import ExpensesContainer from '@/views/expenses/ExpensesContainer.vue'
+
 const routes = [
   {
     path: '/login',
@@ -47,6 +49,11 @@ const routes = [
     path: '/rawMaterials',
     name: 'RawMaterials',
     component: RawMaterialsContainer
+  },
+  {
+    path: '/expenses',
+    name: 'Expenses',
+    component: ExpensesContainer,
   },
   {
     path: '/:catchAll(.*)',
