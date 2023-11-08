@@ -14,7 +14,8 @@
             {{ currentPage - 1 }}
         </button>
         <button
-            class="font-bold bg-[#172350] text-white hover:bg-[#0E1932]  rounded-full h-8 w-8 flex items-center justify-center"
+            class="font-bold bg-white text-[#0E1932]   rounded-full h-8 w-8 flex items-center justify-center "
+            disabled
             @click="goToPage(currentPage)">
             {{ currentPage }}
         </button>
