@@ -1,40 +1,43 @@
 <template>
-    <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 h-full ">
-        <div class="mb-4 h-2/3 overflow-auto bg-gray-200 p-2 rounded-xl  ">
-            <table class="w-full">
+    <form @submit.prevent="handleSubmit" class="bg-gray-100  overflow-auto ">
+        <div class="mb-4 h-auto  bg-gray-200  rounded-xl p-5  ">
+            <table class="w-full divide-y divide-gray-100 text-xs font-bold ">
                 <thead>
-                    <tr>
-                        <th>المادة </th>
-                        <th>الكمية</th>
-                        <th>السعر</th>
-                        <th>مبلغ الخصم</th>
-                        <th>نسبة الخصم</th>
-                        <th>المجموع الجزئي</th>
-                        <th>المبلغ الكلي</th>
-                        <th>-</th>
+                    <tr >
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">التسلسل</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المادة </th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">الكمية</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">السعر</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">مبلغ الخصم</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">نسبة الخصم</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المجموع الجزئي</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المبلغ الكلي</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">-</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="product in sale.products" :key="product.id" class="bg-gray-100 hover:bg-gray-300 mb-2">
-                        <td>{{ product.name }}</td>
-                        <td>
-                            <input placeholder="الكمية" type="number" id="quantity" v-model="product.quantity" />
+                <tbody class="divide-y divide-gray-200">
+                    <tr v-for="(product, index) in sale.products" :key="product.id"
+                    :class="{'bg-gray-100': index % 2 == 1}">
+                        <td  class=" px-3 text-gray-600 truncate">{{ index + 1 }}</td>
+                        <td  class=" px-3 text-gray-600 truncate">{{ product.name }}</td>
+                        <td  class=" px-3 text-gray-600 truncate" >
+                            <input placeholder="الكمية" type="number" id="quantity" v-model="product.quantity" class="rounded-xl px-2 " />
                         </td>
-                        <td>
-                            <input placeholder="السعر" type="number" id="unitPrice" v-model="product.unit_price" />
+                        <td  class=" px-3 text-gray-600 truncate" >
+                            <input placeholder="السعر" type="number" id="unitPrice" v-model="product.unit_price" class="rounded-xl px-2" />
                         </td>
-                        <td>
+                        <td  class=" px-3 text-gray-600 truncate" >
                             <input placeholder="مبلغ الخصم" type="number" id="discountAmount"
-                                v-model="product.discount_amount" />
+                                v-model="product.discount_amount"  class="rounded-xl px-2"/>
                         </td>
-                        <td>
+                        <td  class=" px-3 text-gray-600 truncate" >
                             {{ product.discount_percentage }}
                         </td>
-                        <td>{{ product.subtotal }}</td>
-                        <td>{{ product.total }}</td>
-                        <td>
+                        <td  class=" px-3 text-gray-600 truncate" >{{ product.subtotal }}</td>
+                        <td  class=" px-3 text-gray-600 truncate" >{{ product.total }}</td>
+                        <td  class=" px-3 text-gray-600 truncate" >
                             <button @click="removeItem(product.id!)" type="button"
-                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded my-1">
                                 حذف
                             </button>
                         </td>
@@ -105,6 +108,14 @@
                     <button type="button" @click="handleSubmitAndPrint"
                         class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  flex justify-center gap-3"
                         :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
+                        {{ submitButtonText + " و طباعة " }}
+                        <Loading v-if="status.loading" class="-mr-1 ml-3" />
+                    </button>
+
+
+                    <button type="button" @click="printWithoutSave"
+                        class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  flex justify-center gap-3"
+                        :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
                         طباعة
                     </button>
                     <div v-if="status.error" class="text-red-500 text-sm">
@@ -118,10 +129,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { Product, Sale, SaleProduct, Status } from '../../Types';
+import { onBeforeUpdate } from 'vue';
+import type {  Sale, Status } from '../../Types';
 import { SaleStatus } from '../../Types';
-import { computed, defineProps, onBeforeUpdate, onUpdated, watch } from 'vue';
-import { sumTotal } from './../../services/helper/helperFunctions'
 import Loading from '../../components/icons/Loading.vue';
 
 const props = defineProps({
@@ -148,15 +158,35 @@ const props = defineProps({
     reCalculateSaleAfterChange: {
         type: Function,
         required: true
+    },
+    print: {
+        type: Function,
+        required: true
+    },
+    closeDialog: {
+        type: Function,
+        required: false,
+        default: () => { }
+    },
+    clearForm: {
+        type: Function,
+        required: false,
+        default: () => { }
     }
 })
 
 
 const handleSubmit = async () => {
     await props.onSubmit(props.sale);
+    props.clearForm();
+}
+const printWithoutSave = async () => {
+    await props.print();
 }
 const handleSubmitAndPrint = async () => {
-    await props.onSubmit(props.sale, true);
+    await props.onSubmit(props.sale);
+    await props.print();
+    props.clearForm();
 }
 const removeItem = (productId: number) => {
     props.removeItem(productId);

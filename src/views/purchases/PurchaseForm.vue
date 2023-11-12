@@ -1,43 +1,45 @@
 <template>
-    <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 h-full ">
-        <div class="mb-4 h-2/3 overflow-auto bg-gray-200 p-2 rounded-xl  ">
-            <table class="w-full">
+    <form @submit.prevent="handleSubmit" class="bg-gray-100  overflow-auto ">
+        <div class="mb-4 h-auto  bg-gray-200  rounded-xl p-5  ">
+            <table class="w-full divide-y divide-gray-100 text-xs font-bold ">
                 <thead>
                     <tr>
-                        <th>المادة الخام</th>
-                        <th>الكمية</th>
-                        <th>السعر</th>
-                        <th>مبلغ الخصم</th>
-                        <th>نسبة الخصم</th>
-                        <th>المجموع الجزئي</th>
-                        <th>المبلغ الكلي</th>
-                        <th>-</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">التسلسل</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المادة الخام</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">الكمية</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">السعر</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">مبلغ الخصم</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">نسبة الخصم</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المجموع الجزئي</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">المبلغ الكلي</th>
+                        <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">-</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="rawMaterial in purchase.raw_materials" :key="rawMaterial.id"
-                        class="bg-gray-100 hover:bg-gray-300 mb-2">
-                        <td>{{ rawMaterial.name }}</td>
-                        <td>
+                <tbody class="divide-y divide-gray-200">
+                    <tr v-for="(rawMaterial, index) in purchase.raw_materials" :key="rawMaterial.id"
+                        :class="{ 'bg-gray-100': index % 2 == 1 }">
+                        <td class=" px-3 text-gray-600 truncate">{{ index + 1 }}</td>
+                        <td class=" px-3 text-gray-600 truncate">{{ rawMaterial.name }}</td>
+                        <td class=" px-3 text-gray-600 truncate">
                             <input placeholder="الكمية" type="number" :id="'quantity' + rawMaterial.id"
-                                v-model="rawMaterial.quantity" />
+                                v-model="rawMaterial.quantity" class="rounded-xl px-2 " />
                         </td>
-                        <td>
+                        <td class=" px-3 text-gray-600 truncate">
                             <input placeholder="السعر" type="number" :id="'unitPrice' + rawMaterial.id"
-                                v-model="rawMaterial.unit_price" />
+                                v-model="rawMaterial.unit_price" class="rounded-xl px-2 " />
                         </td>
-                        <td>
+                        <td class=" px-3 text-gray-600 truncate">
                             <input placeholder="مبلغ الخصم" type="number" :id="'discountAmount' + rawMaterial.id"
-                                v-model="rawMaterial.discount_amount" />
+                                v-model="rawMaterial.discount_amount" class="rounded-xl px-2" />
                         </td>
-                        <td>
+                        <td class=" px-3 text-gray-600 truncate">
                             {{ rawMaterial.discount_percentage }}
                         </td>
-                        <td>{{ rawMaterial.subtotal }}</td>
-                        <td>{{ rawMaterial.total }}</td>
-                        <td>
+                        <td class=" px-3 text-gray-600 truncate">{{ rawMaterial.subtotal }}</td>
+                        <td class=" px-3 text-gray-600 truncate">{{ rawMaterial.total }}</td>
+                        <td class=" px-3 text-gray-600 truncate">
                             <button @click="removeItem(rawMaterial.id!)" type="button"
-                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded my-1">
                                 حذف
                             </button>
                         </td>
@@ -108,6 +110,14 @@
                     <button type="button" @click="handleSubmitAndPrint"
                         class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  flex justify-center gap-3"
                         :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
+                        {{ submitButtonText + " و طباعة " }}
+                        <Loading v-if="status.loading" class="-mr-1 ml-3" />
+                    </button>
+
+
+                    <button type="button" @click="printWithoutSave"
+                        class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  flex justify-center gap-3"
+                        :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
                         طباعة
                     </button>
                     <div v-if="status.error" class="text-red-500 text-sm">
@@ -123,7 +133,7 @@
 <script lang="ts" setup>
 import type { Purchase, Status } from '../../Types';
 import { PurchaseStatus } from '../../Types';
-import { defineProps, onBeforeUpdate, onMounted, ref, watch } from 'vue';
+import { defineProps, onBeforeUpdate } from 'vue';
 import Loading from '@/components/icons/Loading.vue';
 
 const props = defineProps({
@@ -150,6 +160,20 @@ const props = defineProps({
     reCalculatePurchaseAfterChange: {
         type: Function,
         required: true
+    },
+    print: {
+        type: Function,
+        required: true
+    },
+    closeDialog: {
+        type: Function,
+        required: false,
+        default: () => { }
+    },
+    clearForm: {
+        type: Function,
+        required: false,
+        default: () => { }
     }
 })
 
@@ -157,8 +181,13 @@ const props = defineProps({
 const handleSubmit = async () => {
     await props.onSubmit(props.purchase);
 }
+const printWithoutSave = async () => {
+    await props.print();
+}
 const handleSubmitAndPrint = async () => {
     await props.onSubmit(props.purchase, true);
+    await props.print();
+    props.clearForm();
 }
 const removeItem = (rawMaterialId: number) => {
     props.removeItem(rawMaterialId);

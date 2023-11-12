@@ -36,13 +36,21 @@
         <EmptyDialog v-if="createPopup" :title="String(supplierId)" :close-dialog="closeCreatePopup">
             <CreatePurchase v-if="createPopup" :purchase="purchasesStore.purchase" :purchaseStatus="purchaseStatus"
                 :rawMaterials="rawMaterials" :rawMaterialsStatus="rawMaterialsStatus" :addItem="addItem"
-                :removeItem="removeItem" :onSubmit="createPurchase" submitButtonText="حفظ" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" />
+                :removeItem="removeItem" :onSubmit="createPurchase" submitButtonText="حفظ"
+                :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" :print="openPrintPopup"
+                :closeDialog="closeUpdatePopup" :clearForm="purchasesStore.setInitialPurchase" />
         </EmptyDialog>
 
         <EmptyDialog v-if="updatePopup" :title="String(supplierId)" :close-dialog="closeUpdatePopup">
             <UpdatePurchase v-if="updatePopup" :purchase="purchasesStore.purchase" :purchaseStatus="purchaseStatus"
                 :rawMaterials="rawMaterials" :rawMaterialsStatus="rawMaterialsStatus" :addItem="addItem"
-                :removeItem="removeItem" :onSubmit="updatePurchase" submitButtonText="تعديل" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" />
+                :removeItem="removeItem" :onSubmit="updatePurchase" submitButtonText="تعديل"
+                :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" :print="openPrintPopup"
+                :closeDialog="closeUpdatePopup" />
+        </EmptyDialog>
+
+        <EmptyDialog v-if="printPopup" :title="supplierName" :close-dialog="closePrintPopup">
+            <PurchasePrint :purchase="purchase" :supplier="supplier" :closeDialog="closePrintPopup" />
         </EmptyDialog>
 
         <PaginationItems v-if="purchasesStatus.success && purchasesStore.purchases.length && rawMaterialsStatus.success"
@@ -53,7 +61,7 @@
 
 <script lang="ts" setup>
 import CreatePurchase from './CreatePurchase.vue';
-import { usePurchasesStore, useRawMaterialsStore } from '../../stores';
+import { usePurchasesStore, useRawMaterialsStore, useSuppliersStore } from '../../stores';
 import { onMounted, ref, defineProps, watch } from 'vue';
 import type { Purchase, RawMaterial } from '../../Types';
 import Loading from '../../components/icons/Loading.vue';
@@ -63,10 +71,12 @@ import PurchasesList from './PurchasesList.vue';
 import UpdatePurchase from './UpdatePurchase.vue';
 import PaginationItems from '@/components/PaginationItems.vue';
 import Search from '@/components/Search.vue';
+import PurchasePrint from './PurchasePrint.vue';
 
 
 const purchasesStore = usePurchasesStore()
 const rawMaterialsStore = useRawMaterialsStore()
+const supplierStore = useSuppliersStore()
 const purchase = storeToRefs(purchasesStore).purchase;
 const purchaseStatus = storeToRefs(purchasesStore).purchaseStatus;
 const purchasesStatus = storeToRefs(purchasesStore).purchasesStatus;
@@ -76,8 +86,10 @@ const reCalculatePurchaseAfterChange = purchasesStore.reCalculatePurchaseAfterCh
 const rawMaterials = storeToRefs(rawMaterialsStore).rawMaterials;
 const rawMaterialsStatus = storeToRefs(rawMaterialsStore).rawMaterialsStatus;
 const fetchPurchasesBySupplier = purchasesStore.fetchPurchasesBySupplier
+const supplier = storeToRefs(supplierStore).supplier;
 const createPopup = ref(false);
 const updatePopup = ref(false);
+const printPopup = ref(false);
 
 const openCreatePopup = () => {
     createPopup.value = true;
@@ -95,21 +107,23 @@ const closeUpdatePopup = () => {
     updatePopup.value = false;
     purchasesStore.setInitialPurchase();
 }
+const openPrintPopup = (purchase: Purchase) => {
+    printPopup.value = true;
+}
+const closePrintPopup = () => {
+    printPopup.value = false;
+}
 const addItem = (rawMaterial: RawMaterial) => {
     purchasesStore.addRawMaterialToPurchase(rawMaterial);
 }
 const removeItem = (id: number) => {
     purchasesStore.removeRawMaterialFromPurchase(id);
 }
-const createPurchase = async (data: Purchase, print: boolean) => {
+const createPurchase = async (data: Purchase) => {
     await purchasesStore.createPurchase(data);
-    print ? purchasesStore.printPurchase(purchase.value, props.supplierName) : null;
-    closeCreatePopup();
 }
-const updatePurchase = async (data: Purchase, print: boolean) => {
+const updatePurchase = async (data: Purchase) => {
     await purchasesStore.updatePurchase(data);
-    print ? purchasesStore.printPurchase(purchase.value, props.supplierName) : null;
-    closeUpdatePopup();
 }
 
 const props = defineProps({

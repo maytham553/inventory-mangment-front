@@ -26,21 +26,21 @@
         <div class="flex-1">
             <div class="mt-4 w-full">
                 <div class="flex flex-row gap-2">
-                    <button @click="() => changeActive('transactions')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
-                        class="px-4 py-2 rounded-lg">التعاملات</button>
                     <button @click="() => changeActive('purchases')"
                         :class="{ 'bg-blue-500 text-white': operationNav.active === 'purchases' }"
                         class="px-4 py-2 rounded-lg">المشتريات</button>
+                    <button @click="() => changeActive('transactions')"
+                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
+                        class="px-4 py-2 rounded-lg">التعاملات</button>
                 </div>
-            </div>
-            <div class="mt-4 h-full " v-if="operationNav.active === 'transactions'">
-                <h2 class="text-xl font-semibold">التعاملات</h2>
-                    <SupplierTransactionsContainer :supplierId="id" />
             </div>
             <div class="mt-4 h-full " v-if="operationNav.active === 'purchases'">
                 <h2 class="text-xl font-semibold">المشتريات</h2>
-                    <PurchaseContainer :supplierId="id" :supplierName="name" />
+                <PurchaseContainer :supplierId="id" :supplierName="name" />
+            </div>
+            <div class="mt-4 h-full " v-if="operationNav.active === 'transactions'">
+                <h2 class="text-xl font-semibold">التعاملات</h2>
+                <SupplierTransactionsContainer :supplierId="id" />
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@ const props = defineProps({
 
 const operationNav = ref(
     {
-        active: 'transactions',
+        active: 'purchases',
         items: [
             {
                 name: 'التعاملات',

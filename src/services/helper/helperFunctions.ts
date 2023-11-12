@@ -38,14 +38,28 @@ export const sumTotal = (array: any[], key: string) => {
     return total;
 }
 
+// purchase or sale status t arabic 
+export const convertPurchaseStatusToArabic = (status: string) => {
+    switch (status) {
+        case 'pending':
+            return 'معلقة';
+        case 'confirmed':
+            return 'مكتملة';
+        case 'cancelled':
+            return 'ملغية';
+        default:
+            return 'غير معروف';
+    }
+}
+
 export const calculateDiscountPercentage = (subTotal: number, discountAmount: number, fractionDigits: number): number => {
     return Number(((discountAmount / subTotal) * 100).toFixed(fractionDigits));
 }
 
-export const calculateSubtotal = (quantity: number, unitPrice: number , fractionDigits: number): number => {
+export const calculateSubtotal = (quantity: number, unitPrice: number, fractionDigits: number): number => {
     return Number((quantity * unitPrice).toFixed(fractionDigits));
 }
 
-export const calculateTotal = (subTotal: number, discountAmount: number , fractionDigits: number): number => {
+export const calculateTotal = (subTotal: number, discountAmount: number, fractionDigits: number): number => {
     return Number((subTotal - discountAmount).toFixed(fractionDigits));
 }

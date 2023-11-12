@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">{{ name }}</h2>
             <span :class="balanceClass">
-                 {{ formatCurrency(balance) }}
+                {{ formatCurrency(balance) }}
                 <button @click="() => { reCalculateBalance(id) }" type="button"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                     إعادة حساب الرصيد
@@ -24,17 +24,17 @@
         <div class="flex-1">
             <div class="mt-4 w-full">
                 <div class="flex flex-row gap-2">
-                    <button @click="() => changeActive('transactions')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
-                        class="px-4 py-2 rounded-lg">التعاملات</button>
                     <button @click="() => changeActive('sales')"
                         :class="{ 'bg-blue-500 text-white': operationNav.active === 'sales' }"
                         class="px-4 py-2 rounded-lg">مبيعات</button>
+                    <button @click="() => changeActive('transactions')"
+                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
+                        class="px-4 py-2 rounded-lg">التعاملات</button>
                 </div>
             </div>
             <div class="mt-4 h-full  " v-if="operationNav.active === 'transactions'">
                 <h2 class="text-xl font-semibold">التعاملات</h2>
-                    <CustomerTransactionContainer :customerId="id" />
+                <CustomerTransactionContainer :customerId="id" />
             </div>
             <div class="mt-4 h-full " v-if="operationNav.active === 'sales'">
                 <h2 class="text-xl font-semibold">مبيعات</h2>
@@ -101,7 +101,7 @@ const balanceClass = computed(() => {
 
 const operationNav = ref(
     {
-        active: 'transactions',
+        active: 'sales',
         items: [
             {
                 name: 'التعاملات',

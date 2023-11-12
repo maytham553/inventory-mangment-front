@@ -1,10 +1,7 @@
 import { sales, customers } from '@/services/api'
-import { calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
+import {  calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
 import { defineStore } from 'pinia'
-import type { Sale, Status, Pagination, Product, Customer, SaleProduct } from '@/Types'
-import { PDFDocument, PDFPage, PageSizes } from 'pdf-lib'
-import fontkit from "@pdf-lib/fontkit";
-import printJS from 'print-js'
+import type { Sale, Status, Pagination, Product, SaleProduct } from '@/Types'
 
 
 export const useSalesStore = defineStore('sales', {
@@ -88,7 +85,10 @@ export const useSalesStore = defineStore('sales', {
             try {
                 this.saleStatus.loading = true;
                 const { data: response } = await sales.createSale(sale);
-                this.sale = response.data;
+                this.sale = {
+                    ...response.data,
+                    products: sale.products
+                };
                 this.sales.unshift({
                     ...response.data,
                     products: sale.products
@@ -106,7 +106,6 @@ export const useSalesStore = defineStore('sales', {
             try {
                 this.saleStatus.loading = true;
                 const { data: response } = await sales.updateSale(sale.id, sale);
-                this.sale = response.data;
                 this.saleStatus.success = true;
             } catch (error) {
                 this.handleSaleError(error);
@@ -156,81 +155,6 @@ export const useSalesStore = defineStore('sales', {
                 discount_percentage: 0,
                 customer_id: this.sale.customer_id,
             } as Sale;
-        },
-        async createSalePDF(sale: Sale, customerName: string): Promise<Uint8Array> {
-            const fontBytes = await fetch('./fonts/arabicFont.ttf').then((res) => res.arrayBuffer());
-            const pdfDoc = await PDFDocument.create();
-            // width , height
-            pdfDoc.registerFontkit(fontkit);
-            const customFont = await pdfDoc.embedFont(fontBytes);
-            const page = pdfDoc.addPage(PageSizes.A4);
-            const { width, height } = page.getSize();
-            const fontSize = 20;
-            page.setFont(customFont);
-
-            page.drawText('المبيعات', { x: 285, y: height - 2 * fontSize, size: fontSize });
-            page.drawText('العميل', { x: 50, y: height - 4 * fontSize, size: fontSize });
-            page.drawText(customerName, { x: 50, y: height - 6 * fontSize, size: fontSize });
-            page.drawText('التاريخ', { x: 285, y: height - 4 * fontSize, size: fontSize });
-            page.drawText(sale.created_at ?? String(new Date()), { x: 285, y: height - 6 * fontSize, size: fontSize });
-            page.drawText('الحالة', { x: 50, y: height - 8 * fontSize, size: fontSize });
-            page.drawText(sale.status, { x: 50, y: height - 10 * fontSize, size: fontSize });
-            page.drawText('المجموع الجزئي', { x: 285, y: height - 8 * fontSize, size: fontSize });
-            page.drawText(sale.subtotal_amount.toString(), { x: 285, y: height - 10 * fontSize, size: fontSize });
-            page.drawText('الخصم', { x: 50, y: height - 12 * fontSize, size: fontSize });
-            page.drawText(sale.discount_amount.toString(), { x: 50, y: height - 14 * fontSize, size: fontSize });
-            page.drawText('المجموع', { x: 285, y: height - 12 * fontSize, size: fontSize });
-            page.drawText(sale.total_amount.toString(), { x: 285, y: height - 14 * fontSize, size: fontSize });
-            page.drawText('الملاحظات', { x: 50, y: height - 16 * fontSize, size: fontSize });
-            page.drawText(sale.note ?? '', { x: 50, y: height - 18 * fontSize, size: fontSize });
-
-            this.drawTable(page, 50, height - 20 * fontSize, sale.products, fontSize - 10);
-            const pdfBytes = await pdfDoc.save();
-            return pdfBytes;
-        },
-        drawTable(page: PDFPage, x: number, y: number, data: SaleProduct[], fontSize = 10) {
-            const columnWidths = [100, 100, 100, 100, 100, 100];
-            const tableHeader = ['المنتج', 'الكمية', 'السعر', 'الإجمالي', 'الخصم', 'المجموع'];
-
-            // Draw table header
-            y -= 2 * fontSize;
-            columnWidths.forEach((width, index) => {
-                page.drawText(tableHeader[index], {
-                    x: x + (index * width),
-                    y,
-                    size: fontSize,
-                });
-            });
-            data.forEach((product) => {
-                if (y < 50) {
-                    page = page.doc.addPage();
-                    y = page.getHeight() - 2 * fontSize;
-                }
-                y -= 2 * fontSize;
-                const rowData = [
-                    product.name,
-                    product.quantity!.toString(),
-                    product.price!.toString(),
-                    product.subtotal!.toString(),
-                    product.discount_amount!.toString(),
-                    product.total!.toString(),
-                ];
-
-                columnWidths.forEach((width, index) => {
-                    page.drawText(rowData[index], {
-                        x: x + (index * width),
-                        y,
-                        size: fontSize,
-                    });
-                });
-            });
-        },
-
-        async printSale(data: Sale, customerName: string) {
-            const pdfBytes = await this.createSalePDF(data, customerName);
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            printJS(url), { type: 'pdf', showModal: false };
         },
 
         reCalculateSaleAfterChange() {

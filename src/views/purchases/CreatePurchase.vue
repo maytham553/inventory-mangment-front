@@ -1,9 +1,10 @@
 <template>
     <div class="flex gap-5 h-full overflow-hidden ">
-        <PurchaseForm class="w-3/4 h-full " :purchase="purchase" :status="purchaseStatus"  :removeItem="removeItem" :onSubmit="onSubmit"
-            submitButtonText="حفظ" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange" />
-        <PurchaseRawMaterialList class="w-1/4 h-full overflow-auto " :rawMaterials="rawMaterials" :status="rawMaterialsStatus" :addItem="addItem"
-            :removeItem="removeItem" />
+        <PurchaseForm class="w-3/4 h-full " :purchase="purchase" :status="purchaseStatus" :removeItem="removeItem"
+            :onSubmit="onSubmit" submitButtonText="حفظ" :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange"
+            :print="print" :closeDialog="closeDialog" :clearForm="clearForm" />
+        <PurchaseRawMaterialList class="w-1/4 h-full overflow-auto " :rawMaterials="rawMaterials"
+            :status="rawMaterialsStatus" :addItem="addItem" :removeItem="removeItem" />
     </div>
 </template>
 
@@ -49,6 +50,20 @@ const props = defineProps({
     reCalculatePurchaseAfterChange: {
         type: Function,
         required: true
+    },
+    print: {
+        type: Function,
+        required: true
+    },
+    closeDialog: {
+        type: Function,
+        required: false,
+        default: () => { }
+    },
+    clearForm: {
+        type: Function,
+        required: false,
+        default: () => { }
     }
 })
 

@@ -1,7 +1,7 @@
 <template>
     <div class="flex gap-5 h-full overflow-hidden ">
         <SaleForm class="w-3/4 h-full " :sale="sale" :status="saleStatus" :removeItem="removeItem" :onSubmit="onSubmit"
-            submitButtonText="حفظ" :reCalculateSaleAfterChange="reCalculateSaleAfterChange" />
+            submitButtonText="حفظ" :reCalculateSaleAfterChange="reCalculateSaleAfterChange" :print="print" :clearForm="clearForm"  />
         <SaleProductList class="w-1/4 h-full overflow-auto " :products="products" :status="productsStatus"
             :addItem="addItem" :removeItem="removeItem" />
     </div>
@@ -49,6 +49,20 @@ const props = defineProps({
     reCalculateSaleAfterChange: {
         type: Function,
         required: true
+    },
+    print: {
+        type: Function,
+        required: true
+    },
+    closeDialog: {
+        type: Function,
+        required: false,
+        default: () => {}
+    },
+    clearForm: {
+        type: Function,
+        required: false,
+        default: () => {}
     }
 })
 </script>

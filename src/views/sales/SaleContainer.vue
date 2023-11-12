@@ -33,13 +33,19 @@
         <EmptyDialog v-if="createPopup" :title="String(customerId)" :close-dialog="closeCreatePopup">
             <CreateSale v-if="createPopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
                 :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="createSale"
-                submitButtonText="حفظ" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange" />
+                submitButtonText="حفظ" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
+                :print="openPrintPopup" :clearForm="salesStore.setInitialSale" />
         </EmptyDialog>
 
         <EmptyDialog v-if="updatePopup" :title="String(customerId)" :close-dialog="closeUpdatePopup">
             <UpdateSale v-if="updatePopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
                 :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="updateSale"
-                submitButtonText="تعديل" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange" />
+                submitButtonText="تعديل" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
+                :print="openPrintPopup" :closeDialog="closeUpdatePopup" />
+        </EmptyDialog>
+
+        <EmptyDialog v-if="printPopup" :title="customerName" :close-dialog="closePrintPopup">
+            <SalePrint :sale="sale" :customer="customer" :closeDialog="closePrintPopup" />
         </EmptyDialog>
 
         <PaginationItems v-if="salesStatus.success && salesStore.sales.length && productsStatus.success"
@@ -50,8 +56,8 @@
 
 <script lang="ts" setup>
 import CreateSale from './CreateSale.vue';
-import { useSalesStore, useProductsStore } from '../../stores';
-import { onMounted, ref, defineProps, watch } from 'vue';
+import { useSalesStore, useProductsStore, useCustomersStore } from '../../stores';
+import { onMounted, ref, defineProps } from 'vue';
 import type { Sale, Product } from '../../Types';
 import Loading from '../../components/icons/Loading.vue';
 import EmptyDialog from '../../components/EmptyDialog.vue';
@@ -60,10 +66,12 @@ import SalesList from './SalesList.vue';
 import UpdateSale from './UpdateSale.vue';
 import PaginationItems from '../../components/PaginationItems.vue';
 import Search from '@/components/Search.vue';
-
+import router from '@/router';
+import SalePrint from './SalePrint.vue';
 
 const salesStore = useSalesStore()
 const productsStore = useProductsStore()
+const customersStore = useCustomersStore()
 const sale = storeToRefs(salesStore).sale;
 const saleStatus = storeToRefs(salesStore).saleStatus;
 const salesStatus = storeToRefs(salesStore).salesStatus;
@@ -71,10 +79,11 @@ const pagination = storeToRefs(salesStore).pagination;
 const products = storeToRefs(productsStore).products;
 const productsStatus = storeToRefs(productsStore).productsStatus;
 const fetchSalesOfCustomer = salesStore.fetchSalesOfCustomer;
+const customer = storeToRefs(customersStore).customer;
 
 const createPopup = ref(false);
 const updatePopup = ref(false);
-
+const printPopup = ref(false);
 const openCreatePopup = () => {
     createPopup.value = true;
 }
@@ -91,21 +100,23 @@ const closeUpdatePopup = () => {
     updatePopup.value = false;
     salesStore.setInitialSale();
 }
+const openPrintPopup = (sale: Sale) => {
+    printPopup.value = true;
+}
+const closePrintPopup = () => {
+    printPopup.value = false;
+}
 const addItem = (product: Product) => {
     salesStore.addProductToSale(product);
 }
 const removeItem = (id: number) => {
     salesStore.removeProductFromSale(id);
 }
-const createSale = async (data: Sale, print: boolean) => {
+const createSale = async (data: Sale) => {
     await salesStore.createSale(data);
-    print ? salesStore.printSale(data, props.customerName) : null;
-    closeCreatePopup();
 }
-const updateSale = async (data: Sale, print: boolean) => {
+const updateSale = async (data: Sale) => {
     await salesStore.updateSale(data);
-    print ? salesStore.printSale(data, props.customerName) : null;
-    closeUpdatePopup();
 }
 
 const props = defineProps({

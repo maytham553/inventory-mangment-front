@@ -2,10 +2,6 @@ import { purchases } from '@/services/api'
 import { calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
 import { defineStore } from 'pinia'
 import type { Status, Pagination, Purchase, PurchaseRawMaterial, RawMaterial, } from '@/Types'
-import { PDFDocument, PDFPage, PageSizes } from 'pdf-lib'
-import fontkit from "@pdf-lib/fontkit";
-import printJS from 'print-js'
-
 export const usePurchasesStore = defineStore('purchases', {
     state: () => ({
         purchases: [] as Purchase[],
@@ -167,80 +163,6 @@ export const usePurchasesStore = defineStore('purchases', {
         },
         setPurchase(purchase: Purchase) {
             this.purchase = purchase
-        },
-        async createPurchasePDF(purchase: Purchase, supplierName: string): Promise<Uint8Array> {
-            const fontBytes = await fetch('./fonts/arabicFont.ttf').then((res) => res.arrayBuffer());
-            const pdfDoc = await PDFDocument.create();
-            // width , height
-            pdfDoc.registerFontkit(fontkit);
-            const customFont = await pdfDoc.embedFont(fontBytes);
-            const page = pdfDoc.addPage(PageSizes.A4);
-            const { width, height } = page.getSize();
-            const fontSize = 20;
-            page.setFont(customFont);
-
-            page.drawText('المشتريات', { x: 285, y: height - 2 * fontSize, size: fontSize });
-            page.drawText('المورد', { x: 50, y: height - 4 * fontSize, size: fontSize });
-            page.drawText(supplierName, { x: 50, y: height - 6 * fontSize, size: fontSize });
-            page.drawText('التاريخ', { x: 285, y: height - 4 * fontSize, size: fontSize });
-            page.drawText(purchase.created_at ?? String(new Date()), { x: 285, y: height - 6 * fontSize, size: fontSize });
-            page.drawText('الحالة', { x: 50, y: height - 8 * fontSize, size: fontSize });
-            page.drawText(purchase.status, { x: 50, y: height - 10 * fontSize, size: fontSize });
-            page.drawText('المجموع الجزئي', { x: 285, y: height - 8 * fontSize, size: fontSize });
-            page.drawText(purchase.subtotal_amount.toString(), { x: 285, y: height - 10 * fontSize, size: fontSize });
-            page.drawText('الخصم', { x: 50, y: height - 12 * fontSize, size: fontSize });
-            page.drawText(purchase.discount_amount.toString(), { x: 50, y: height - 14 * fontSize, size: fontSize });
-            page.drawText('المجموع', { x: 285, y: height - 12 * fontSize, size: fontSize });
-            page.drawText(purchase.total_amount.toString(), { x: 285, y: height - 14 * fontSize, size: fontSize });
-            page.drawText('الملاحظات', { x: 50, y: height - 16 * fontSize, size: fontSize });
-            page.drawText(purchase.note ?? '', { x: 50, y: height - 18 * fontSize, size: fontSize });
-
-            this.drawTable(page, 50, height - 20 * fontSize, purchase.raw_materials, fontSize - 10);
-            const pdfBytes = await pdfDoc.save();
-            return pdfBytes;
-        },
-        drawTable(page: PDFPage, x: number, y: number, data: PurchaseRawMaterial[], fontSize = 10) {
-            const columnWidths = [100, 100, 100, 100, 100, 100];
-            const tableHeader = ['المادة الخام', 'الكمية', 'السعر', 'الإجمالي', 'الخصم', 'المجموع'];
-
-            // Draw table header
-            y -= 2 * fontSize;
-            columnWidths.forEach((width, index) => {
-                page.drawText(tableHeader[index], {
-                    x: x + (index * width),
-                    y,
-                    size: fontSize,
-                });
-            });
-            data.forEach((rawMaterial) => {
-                if (y < 50) {
-                    page = page.doc.addPage();
-                    y = page.getHeight() - 2 * fontSize;
-                }
-                y -= 2 * fontSize;
-                const rowData = [
-                    rawMaterial.name,
-                    rawMaterial.quantity!.toString(),
-                    rawMaterial.unit_price!.toString(),
-                    rawMaterial.subtotal!.toString(),
-                    rawMaterial.discount_amount!.toString(),
-                    rawMaterial.total!.toString(),
-                ];
-
-                columnWidths.forEach((width, index) => {
-                    page.drawText(rowData[index], {
-                        x: x + (index * width),
-                        y,
-                        size: fontSize,
-                    });
-                });
-            });
-        },
-        async printPurchase(purchase: Purchase, supplierName: string) {
-            const pdfBytes = await this.createPurchasePDF(purchase, supplierName);
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            printJS(url), { type: 'pdf', showModal: false };
         },
         handlePurchasesError(error: any) {
             this.purchasesStatus.error = true
