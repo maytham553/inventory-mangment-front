@@ -1,8 +1,8 @@
 <template>
-    <div class="flex w-full justify-center gap-5  items-center ">
-        <input class=" w-3/6 bg-gray-200 rounded-lg py-2 px-4 focus:border-none " type="text" :placeholder=placeholder
+    <div class="flex w-full justify-center gap-5 mt-4  rounded-lg items-center ">
+        <input class=" w-3/6 bg-gray-200 py-2 px-4 rounded-lg focus:border-none " type="text" :placeholder=placeholder
             v-model="search" @keyup.enter="handleSearch" />
-        <button @click="handleSearch" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/6">
+        <button @click="handleSearch" class="bg-[#29ADB2] rounded-lg hover:bg-[#29ADB2]/60 text-white font-bold py-2 px-4  w-16">
             بحث
         </button>
     </div>
