@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex items-center justify-center gap-3 px-20 
+    class="flex items-center
+     justify-center gap-3 px-20 
     py-2 z-0   
     bg-opacity-70 backdrop-blur-sm rounded-full 
     absolute bottom-5 bg-[#a2c4dd]"

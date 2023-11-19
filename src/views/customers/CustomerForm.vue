@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-10 pt-20">
+ 
   
   <form
     @submit.prevent="handleSubmit"
@@ -93,9 +93,9 @@
       </div>
     </div>
   </form>
-  <BgView />
+  
 
-</div>
+ 
 </template>
 
 <script setup lang="ts">

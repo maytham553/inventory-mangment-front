@@ -8,8 +8,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { type Status, type Product } from '../../Types';
-import ProductForm from './ProductForm.vue';
-import BgView from '@/components/icons/BgView.vue';
+import ProductForm from './ProductForm.vue'; 
 
 const props = defineProps({
     status: {

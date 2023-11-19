@@ -1,9 +1,9 @@
 <template>
   <form
     @submit.prevent="handleSubmit"
-    class="w-full mx-auto h-full flex justify-center flex-col items-center"
+    class= " mx-auto h-full w-full flex justify-center flex-col items-center"
   >
-    <div class="bg-gray-100 p-5 lg:w-1/2 max-w-[500px] rounded-2xl">
+    <div class="bg-gray-100 p-5 lg:w-1/2 w-full max-w-[500px] rounded-2xl">
       <div class="mb-4">
         <label for="name" class="block text-gray-700 m-1">الاسم</label>
         <input

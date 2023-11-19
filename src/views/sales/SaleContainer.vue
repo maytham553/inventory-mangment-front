@@ -1,14 +1,14 @@
 <template>
     <div class="h-full w-full flex  flex-col justify-between items-center">
         <div class="flex flex-col  justify-center items-center w-full">
-            <div class="flex justify-center items-center w-full">
+            <div class="flex justify-center items-center gap-5 w-full">
                 <div class="w-1/3">
                     <Search
                         :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
                         placeholder="التسلسل" />
                 </div>
                 <button @click="openCreatePopup" type="button"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                     إضافة
                 </button>
             </div>

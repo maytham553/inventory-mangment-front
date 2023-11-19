@@ -1,95 +1,103 @@
 <template>
-  <div class="container pt-10 z-0 relative pb-16">
-    <div class="flex items-center mb-10 px-5 justify-between">
+  <div class="z-0 relative">
+    <div class="container pt-10 pb-16">
+      <div class="flex items-center mb-10 px-5 justify-between">
         <div></div>
-      <h1 class="text-4xl text-center font-bold text-blue-700">المواد الخام</h1>
-      <button
-        @click="openCreatePopup"
-        class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"
-      >
-        <span
-          class="absolute text-green-500 inset-0 flex items-center px-5 py-1 justify-center opacity-0 hover:opacity-100 transition duration-200 delay-75 rounded-r-full ease-in-out transform hover:translate-x-12"
+        <h1 class="text-4xl text-center font-bold text-blue-700">
+          المواد الخام
+        </h1>
+        <button
+          @click="openCreatePopup"
+          class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"
         >
-          إضافة
-        </span>
+          <span
+            class="absolute text-green-500 inset-0 flex items-center px-5 py-1 justify-center opacity-0 hover:opacity-100 transition duration-200 delay-75 rounded-r-full ease-in-out transform hover:translate-x-12"
+          >
+            إضافة
+          </span>
 
-        <PlusIcon :size="50" />
-      </button>
-    </div>
-    <div
-      v-if="rawMaterialsStatus.loading"
-      class="flex justify-center items-center h-full"
-    >
-      <Loading stroke-color="#8f8f8f" />
-    </div>
-    <div
-      v-if="rawMaterialsStatus.error"
-      class="flex justify-center items-center h-full"
-    >
-      <span class="text-red-500 text-center h-5">
-        <span>{{ rawMaterialsStatus.message }}</span>
-      </span>
-    </div>
-    <div
-      v-if="rawMaterialsStatus.success && !rawMaterials.length"
-      class="flex justify-center items-center h-full"
-    >
-      <span class="text-gray-500 text-center h-5">
-        <span>لا يوجد مواد خام</span>
-      </span>
-    </div>
-    <RawMaterialsList
-      v-if="rawMaterialsStatus.success && rawMaterials.length"
-      :rawMaterials="rawMaterials"
-      :openUpdateDialog="openUpdateDialog"
-      :openDeleteDialog="openDeleteDialog"
-    />
-   
-    <EmptyDialog
-      v-if="createPopup"
-      title="إضافة"
-      :onClose="closeCreatePopup"
-      :closeDialog="closeCreatePopup"
-    >
-      <CreateRawMaterial
-        :create="createRawMaterial"
-        :status="rawMaterialStatus"
+          <PlusIcon :size="50" />
+        </button>
+      </div>
+      <div
+        v-if="rawMaterialsStatus.loading"
+        class="flex justify-center items-center h-full"
+      >
+        <Loading stroke-color="#8f8f8f" />
+      </div>
+      <div
+        v-if="rawMaterialsStatus.error"
+        class="flex justify-center items-center h-full"
+      >
+        <span class="text-red-500 text-center h-5">
+          <span>{{ rawMaterialsStatus.message }}</span>
+        </span>
+      </div>
+      <div
+        v-if="rawMaterialsStatus.success && !rawMaterials.length"
+        class="flex justify-center items-center h-full"
+      >
+        <span class="text-gray-500 text-center h-5">
+          <span>لا يوجد مواد خام</span>
+        </span>
+      </div>
+      <RawMaterialsList
+        v-if="rawMaterialsStatus.success && rawMaterials.length"
+        :rawMaterials="rawMaterials"
+        :openUpdateDialog="openUpdateDialog"
+        :openDeleteDialog="openDeleteDialog"
       />
-    </EmptyDialog>
-    <EmptyDialog
-      v-if="updatePopup"
-      title="تعديل"
-      :onClose="closeUpdatePopup"
-      :closeDialog="closeUpdatePopup"
-    >
-      <UpdateRawMaterial
-        :update="updateRawMaterial"
-        :status="rawMaterialStatus"
-        :rawMaterial="rawMaterial"
-      />
-    </EmptyDialog>
-    <TrueOrFalseDialog
-      v-if="deletePopup"
-      title="حذف"
-      :onClose="closeDeletePopup"
-      :closeDialog="closeDeletePopup"
-      :message="'هل تريد حذف المادة الخام ' + rawMaterial.name + '؟'"
-      :trueText="'نعم'"
-      :falseText="'لا'"
-      :selectOption="handleDelete"
-      :status="rawMaterialStatus"
-    >
-    </TrueOrFalseDialog>
+
+    
+      <BgView />
+    </div>
     <BgView />
   </div>
-  <div class="flex items-center w-full bg-white justify-center">
-      <PaginationItems
-        v-if="!rawMaterialsStatus.error && rawMaterials.length"
-        :currentPage="pagination.currentPage"
-        :totalPages="pagination.lastPage"
-        :goToPage="(page: number) => { rawMaterialsStore.fetchRawMaterials(page) }"
-      />
-    </div>
+  <EmptyDialog
+        v-if="createPopup"
+        title="إضافة"
+        :onClose="closeCreatePopup"
+        :closeDialog="closeCreatePopup"
+      >
+        <CreateRawMaterial
+          :create="createRawMaterial"
+          :status="rawMaterialStatus"
+        />
+      </EmptyDialog>
+      <EmptyDialog
+        v-if="updatePopup"
+        title="تعديل"
+        :onClose="closeUpdatePopup"
+        :closeDialog="closeUpdatePopup"
+      >
+        <UpdateRawMaterial
+          :update="updateRawMaterial"
+          :status="rawMaterialStatus"
+          :rawMaterial="rawMaterial"
+        />
+      </EmptyDialog>
+      <TrueOrFalseDialog
+        v-if="deletePopup"
+        title="حذف"
+        :onClose="closeDeletePopup"
+        :closeDialog="closeDeletePopup"
+        :message="'هل تريد حذف المادة الخام ' + rawMaterial.name + '؟'"
+        :trueText="'نعم'"
+        :falseText="'لا'"
+        :selectOption="handleDelete"
+        :status="rawMaterialStatus"
+      >
+      </TrueOrFalseDialog>
+      <div class="flex items-center w-full bg-white justify-center">
+
+    <PaginationItems
+      v-if="!rawMaterialsStatus.error && rawMaterials.length"
+      :currentPage="pagination.currentPage"
+      :totalPages="pagination.lastPage"
+      :goToPage="(page: number) => { rawMaterialsStore.fetchRawMaterials(page) }"
+    />
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -115,7 +123,6 @@ const rawMaterial = storeToRefs(rawMaterialsStore).rawMaterial;
 const pagination = storeToRefs(rawMaterialsStore).pagination;
 const rawMaterialStatus = storeToRefs(rawMaterialsStore).rawMaterialStatus;
 const rawMaterials = storeToRefs(rawMaterialsStore).rawMaterials;
-
 
 const openCreatePopup = () => {
   createPopup.value = true;

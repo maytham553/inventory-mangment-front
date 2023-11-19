@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white  rounded-lg p-4 w-full">
+    <div class="bg-white container rounded-lg py-4 z-50 w-full">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">{{ name }}</h2>
             <span :class="balanceClass">
