@@ -1,9 +1,7 @@
 <template>
- 
-  
   <form
     @submit.prevent="handleSubmit"
-    class="w-full h-full flex justify-center flex-col items-center"
+    class="flex justify-center flex-col items-center"
   >
     <div class="bg-gray-100 sm:w-[400px] p-5 rounded-2xl">
       <div class="mb-4">
@@ -93,16 +91,12 @@
       </div>
     </div>
   </form>
-  
-
- 
 </template>
 
 <script setup lang="ts">
 import { defineProps, ref, watch } from "vue";
 import type { Governorate, Status } from "../../Types";
 import Loading from "@/components/icons/Loading.vue";
-import BgView from "@/components/icons/BgView.vue";
 
 const props = defineProps({
   customer: {

@@ -1,13 +1,13 @@
 <template>
-  <table class="w-full  self-center">
-    <thead>
-      <tr>
-        <th class="text-center mr-4">ID</th>
-        <th class="w-[160px]">Amount</th>
-        <th class="text-center w-max-[160px]">Title</th>
-        <th>Description</th>
-        <th class="w-[190px]">Created At</th>
-        <th class="w-[190px]">Updated At</th>
+  <table class="w-full text-right  self-center">
+    <thead class="bg-blue-500  text-white p-2 h-10">
+      <tr class="text-right">
+        <th class=" pr-2 ">التسلسل</th>
+        <th class="  ">المقدار</th>
+        <th class="  ">العنوان</th>
+        <th class=" ">الوصف</th>
+        <th class=" ">تاريخ الانشاء</th>
+        <th class=" ">تاريخ التحديث</th>
       </tr>
     </thead>
     <tbody>
