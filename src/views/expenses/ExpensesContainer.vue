@@ -1,12 +1,13 @@
 <template>
     <div class="min-h-full flex flex-col  justify-between ">
-        <div class="flex flex-col justify-center items-center gap-5    ">
-            <div class=" w-full flex  justify-center items-center  ">
+        <div class="w-full h-full flex flex-col gap-20">
+            <div class="flex flex-col justify-center items-center gap-5 ">
+            <div class=" w-full flex mt-4 justify-center items-center  ">
                 <div class="w-1/2" >
                     <Search :handleSearch="fetchExpenses" placeholder="التسلسل ,العنوان" />
                 </div>
                 <button @click="openCreatePopup"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-1/6">
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 mt-4 px-4 rounded-lg w-30">
                     إضافة عملية
                 </button>
             </div>
@@ -26,12 +27,21 @@
             </span>
         </div>
         <ExpensesList :expenses="expenses" />
+
+        </div>
+    
         <PaginationItems v-if="!expensesStatus.error" :currentPage="ExpensesStore.getExpensesPagination.currentPage"
             :totalPages="ExpensesStore.getExpensesPagination.lastPage" :goToPage="fetchExpenses" />
         <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
             <CreateExpense :createExpense="createExpense" :status="expenseStatus" />
         </EmptyDialog>
     </div>
+
+
+
+
+
+
 </template>
 
 <script lang="ts" setup >

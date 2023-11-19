@@ -1,5 +1,5 @@
 <template>
-    <button @click="openCreatePopup" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+    <button @click="openCreatePopup" class="bg-green-500 hover:bg-green-700 text-white  font-bold py-2 px-4 rounded-lg">
         إضافة عملية
     </button>
     <div v-if="customerTransactionsStatus.loading" class="flex justify-center items-center h-full">

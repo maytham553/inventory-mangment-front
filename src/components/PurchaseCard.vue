@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 max-w-sm w-[30%]   bg-gray-200  rounded-lg ">
+    <div class="p-4 max-w-sm w-[30%]  bg-gray-200  rounded-lg ">
         <div>
             <span>id : </span>
             <span>{{ purchase.id }}</span>

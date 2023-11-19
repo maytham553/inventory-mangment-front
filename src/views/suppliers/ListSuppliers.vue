@@ -1,4 +1,5 @@
 <template>
+    
     <CardsContainer class="py-10 grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
         <PersonalInformationCard v-for="supplier in suppliers" :key="supplier.id" :name="supplier.name"
             :phone="supplier.phone" :address="supplier.address" :id="supplier.id!"

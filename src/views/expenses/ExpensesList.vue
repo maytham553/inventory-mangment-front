@@ -1,23 +1,34 @@
+
 <template>
-    <CardsContainer>
-        <ExpenseCard v-for="expense in expenses" :key="expense.id" :id="expense.id" :amount="expense.amount"
-            :title="expense.title" :description="expense.description ?? undefined"
-            :created_at="ISO8601DateToHumanDate(expense.created_at!)"
-            :updated_at="ISO8601DateToHumanDate(expense.updated_at!)" />
-    </CardsContainer>
-</template>
-
-<script lang="ts" setup>
-import CardsContainer from '../../components/CardsContainer.vue';
-import ExpenseCard from '../../components/ExpenseCard.vue';
-import { defineProps } from 'vue';
-import type { Expense } from '../../Types';
-import { ISO8601DateToHumanDate } from '../../services/helper/helperFunctions';
-
-const props = defineProps({
+    <table class="w-full  self-center">
+      <thead>
+        <tr>
+          <th class="text-center mr-4">ID</th>
+          <th class="w-[160px]">Amount</th>
+          <th class="text-center w-max-[160px]">Title</th>
+          <th>Description</th>
+          <th class="w-[190px]">Created At</th>
+          <th class="w-[190px]">Updated At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ExpenseTableRow v-for="expense in reversedExpenses" :key="expense.id" :expense="expense" />
+      </tbody>
+    </table>
+  </template>
+  
+  <script lang="ts" setup>
+  import ExpenseTableRow from '../../components/ExpenseTableRow.vue';
+  import { defineProps, computed } from 'vue';
+  import type { Expense } from '../../Types';
+  
+  const props = defineProps({
     expenses: {
-        type: Array as () => Expense[],
-        required: true
-    }
-})
-</script>
+      type: Array as () => Expense[],
+      required: true,
+    },
+  });
+
+  const reversedExpenses = computed(() => [...props.expenses].reverse());
+  </script>
+  

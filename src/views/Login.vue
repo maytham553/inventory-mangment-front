@@ -1,6 +1,6 @@
 <!-- From New Branch -->
 <template>
-    <div class="w-screen h-screen bg-gray-100 grid grid-cols-3">
+    <div class="lg:w-screen lg:h-screen m-0 p-0 bg-gray-100 grid lg:grid-cols-3">
 
         <div class="h-screen col-span-1 p-5 bg-blue-500 flex flex-col justify-center items-center">
             <h1 class="text-gray-100 font-black	 text-3xl">اهلاً بك مجدداً</h1><br>
