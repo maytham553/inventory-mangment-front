@@ -1,5 +1,6 @@
 <template>
-  <div class="p-4 max-w-sm flex flex-col justify-between w-[300px] rounded-t-[16%] bg-white bg-opacity-80 backdrop-blur-md drop-shadow-lg hover:drop-shadow-xl rounded-lg">
+  <div class="flex m-2 items-center justify-center rounded-lg py-[2px] rounded-tl-[18%] w-[334px] bg-gradient-to-r from-[#29ADB2] via-red-400 to-[#C5E898]">
+  <div class="p-3 pt-6 pr-6 flex flex-col h-full justify-between w-[330px] rounded-tl-[18%] bg-white  hover:drop-shadow-xl rounded-lg">
     <div>
       <div>
         <span>id : </span>
@@ -25,9 +26,9 @@
         <span>الكمية : </span>
         <span>{{ quantity }}</span>
       </div>
-      <div v-if="note">
+      <div v-if="note" class="overflow-hidden">
         <span>ملاحظات : </span>
-        <span>{{ note }}</span>
+        <span  >{{ note }}</span>
       </div>
     </div>
     <div class="flex mt-5 justify-evenly items-center">
@@ -62,12 +63,52 @@
       </button>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts" setup>
 import { defineProps } from "vue";
+import { defineProps } from "vue";
+
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: false,
+  },
+  cost: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  note: {
+    type: String,
+    required: false,
+  },
+  update: {
+    type: Function,
+    required: true,
+  },
+  delete: {
+    type: Function,
+    required: true,
+  },
+});
   id: {
     type: Number,
     required: true,
@@ -109,7 +150,11 @@ const props = defineProps({
 const updateHandler = (event: MouseEvent): void => {
   props.update(event);
 };
+  props.update(event);
+};
 const deleteHandler = (event: MouseEvent): void => {
+  props.delete(event);
+};
   props.delete(event);
 };
 </script>

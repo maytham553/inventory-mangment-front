@@ -1,11 +1,12 @@
 
+
 <template>
     <table class="w-full  self-center">
       <thead>
         <tr>
           <th class="text-center mr-4">ID</th>
           <th class="w-[160px]">Amount</th>
-          <th>Title</th>
+          <th class="text-center w-max-[160px]">Title</th>
           <th>Description</th>
           <th class="w-[190px]">Created At</th>
           <th class="w-[190px]">Updated At</th>
@@ -24,6 +25,14 @@
   
   const props = defineProps({
     expenses: {
+      type: Array as () => Expense[],
+      required: true,
+    },
+  });
+
+  const reversedExpenses = computed(() => [...props.expenses].reverse());
+  </script>
+  
       type: Array as () => Expense[],
       required: true,
     },
