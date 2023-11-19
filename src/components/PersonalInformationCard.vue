@@ -50,14 +50,55 @@
             </button>
         </div>
     </div>
+       
+            <div class="p-1 flex gap-2 flex-col justify-center items-center ">
+               
+                <div>
+                    <span class="font-bold"></span>
+                    <span>{{ name }}</span>
+                </div>
+                <div v-if="email">
+                    <span class="font-bold"></span>
+                    <span>{{ email }}</span>
+                </div>
+                <div>
+                    <span class="font-bold"></span>
+                    <span>{{ phone }}</span>
+                </div>
+                <div>
+                    <span class="font-bold"></span>
+                    <span>{{ governorate }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row items-center mt-4 justify-evenly w-full">
+            <button @click="updateHandler"
+                class="text-xs bg-[#0766AD] hover:bg-[#1a2c47] text-white font-bold p-2 rounded-md">
+               <Edit />
+            </button>
+            <button @click="showHandler"
+                class="text-xs bg-[#C5E898] hover:bg-[#40765c] text-white font-bold p-2 rounded-md">
+                <Show />
+            </button>
+            <button @click="deleteHandler"
+                class="text-xs bg-red-600 hover:bg-red-800 text-white font-bold p-2 rounded-md">
+                <Delete />
+            </button>
         </div>
     </div>
+        </div>
+    </div>
+    
     
 </template>
 
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue'
 import UserIcon from '@/components/icons/UserIcon.vue';
+import Delete from "../components/icons/Delete.vue";
+import Edit from "../components/icons/Edit.vue"
+import Show from "../components/icons/Show.vue"
+
 import Delete from "../components/icons/Delete.vue";
 import Edit from "../components/icons/Edit.vue"
 import Show from "../components/icons/Show.vue"

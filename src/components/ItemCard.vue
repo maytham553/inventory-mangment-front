@@ -68,9 +68,47 @@
 
 <script lang="ts" setup>
 import { defineProps } from "vue";
+import { defineProps } from "vue";
 
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: false,
+  },
+  cost: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  note: {
+    type: String,
+    required: false,
+  },
+  update: {
+    type: Function,
+    required: true,
+  },
+  delete: {
+    type: Function,
+    required: true,
+  },
+});
   id: {
     type: Number,
     required: true,
@@ -112,7 +150,11 @@ const props = defineProps({
 const updateHandler = (event: MouseEvent): void => {
   props.update(event);
 };
+  props.update(event);
+};
 const deleteHandler = (event: MouseEvent): void => {
+  props.delete(event);
+};
   props.delete(event);
 };
 </script>
