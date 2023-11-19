@@ -86,8 +86,8 @@
             </button>
         </div>
     </div>
-        </div>
-    </div>
+    
+   
     
     
 </template>
@@ -98,11 +98,7 @@ import UserIcon from '@/components/icons/UserIcon.vue';
 import Delete from "../components/icons/Delete.vue";
 import Edit from "../components/icons/Edit.vue"
 import Show from "../components/icons/Show.vue"
-
-import Delete from "../components/icons/Delete.vue";
-import Edit from "../components/icons/Edit.vue"
-import Show from "../components/icons/Show.vue"
-
+ 
 
 const props = defineProps({
     id: {
