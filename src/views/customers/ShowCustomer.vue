@@ -29,7 +29,7 @@
         <p>{{ note }}</p>
       </div>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 mb-2">
       <div class="flex items-center flex-row justify-center gap-2">
         <button
           @click="() => changeActive('sales')"
@@ -54,11 +54,11 @@
       </div>
 
       <div class="mt-4 h-full" v-if="operationNav.active === 'transactions'">
-        <h2 class="text-xl font-semibold">التعاملات</h2>
+        <!-- <h2 class="text-xl font-semibold">التعاملات</h2> -->
         <CustomerTransactionContainer :customerId="id" />
       </div>
-      <div class="mt-4 h-full" v-if="operationNav.active === 'sales'">
-        <h2 class="text-xl font-semibold">مبيعات</h2>
+      <div class="mt-4 h-full " v-if="operationNav.active === 'sales'">
+        <!-- <h2 class="text-xl font-semibold">مبيعات</h2> -->
         <SaleContainer :customerId="id" :customerName="name" />
       </div>
     </div>

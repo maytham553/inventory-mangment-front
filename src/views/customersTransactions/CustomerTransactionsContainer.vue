@@ -1,64 +1,61 @@
 <template>
-  <div  >
+  <div class="w-full flex flex-col gap-1">
+    <button
+      @click="openCreatePopup"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 max-w-xs px-4 rounded-lg"
+    >
+      إضافة عملية
+    </button>
+    <div
+      v-if="customerTransactionsStatus.loading"
+      class="flex justify-center items-center h-full"
+    >
+      <Loading stroke-color="#8f8f8f" />
+    </div>
+    <div
+      v-if="customerTransactionsStatus.error"
+      class="flex justify-center items-center h-full"
+    >
+      <span class="text-red-500 text-center h-5">
+        <span>{{ customerTransactionsStatus.message }}</span>
+      </span>
+    </div>
+    <div
+      v-if="customerTransactionsStatus.success && !customerTransactions.length"
+      class="flex justify-center items-center h-full"
+    >
+      <span class="text-gray-500 text-center h-5">
+        <span>لا يوجد تعاملات</span>
+      </span>
+    </div>
+    <CustomerTransactionsList :transactions="customerTransactions" />
+    <div class="w-full items-center justify-center flex">
+      <PaginationItems
+        v-if="!customerTransactionsStatus.error"
+        :currentPage="
+          CustomerTransactionsStore.getCustomerTransactionsPagination
+            .currentPage
+        "
+        :totalPages="
+          CustomerTransactionsStore.getCustomerTransactionsPagination.lastPage
+        "
+        :goToPage="(page: number) => { CustomerTransactionsStore.fetchCustomerTransactionsByCustomerId(props.customerId, page) }"
+      />
+    </div>
 
-
-  <button
-    @click="openCreatePopup"
-    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
-  >
-    إضافة عملية
-  </button>
-  <div
-    v-if="customerTransactionsStatus.loading"
-    class="flex justify-center items-center h-full"
-  >
-    <Loading stroke-color="#8f8f8f" />
+    <EmptyDialog
+      v-if="createPopup"
+      title="إضافة"
+      :onClose="closeCreatePopup"
+      :closeDialog="closeCreatePopup"
+    >
+      <CreateCustomerTransaction
+        :createTransaction="createTransaction"
+        :status="customerTransactionStatus"
+        :customerId="customerId"
+      />
+    </EmptyDialog>
   </div>
-  <div
-    v-if="customerTransactionsStatus.error"
-    class="flex justify-center items-center h-full"
-  >
-    <span class="text-red-500 text-center h-5">
-      <span>{{ customerTransactionsStatus.message }}</span>
-    </span>
-  </div>
-  <div
-    v-if="customerTransactionsStatus.success && !customerTransactions.length"
-    class="flex justify-center items-center h-full"
-  >
-    <span class="text-gray-500 text-center h-5">
-      <span>لا يوجد تعاملات</span>
-    </span>
-  </div>
-  <CustomerTransactionsList :transactions="customerTransactions" />
- <div class="w-full items-center  justify-center flex">
-
-
-  <PaginationItems
-    v-if="!customerTransactionsStatus.error"
-    :currentPage="
-      CustomerTransactionsStore.getCustomerTransactionsPagination.currentPage
-    "
-    :totalPages="
-      CustomerTransactionsStore.getCustomerTransactionsPagination.lastPage
-    "
-    :goToPage="(page: number) => { CustomerTransactionsStore.fetchCustomerTransactionsByCustomerId(props.customerId, page) }"
-  /> 
-</div>
-
-  <EmptyDialog
-    v-if="createPopup"
-    title="إضافة"
-    :onClose="closeCreatePopup"
-    :closeDialog="closeCreatePopup"
-  >
-    <CreateCustomerTransaction
-      :createTransaction="createTransaction"
-      :status="customerTransactionStatus"
-      :customerId="customerId"
-    />
-  </EmptyDialog>
-</div>
 </template>
 
 <script lang="ts" setup>

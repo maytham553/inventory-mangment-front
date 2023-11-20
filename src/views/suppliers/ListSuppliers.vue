@@ -1,6 +1,6 @@
 <template>
   <CardsContainer
-    class="py-10 flex flex-wrap items-center justify-between"
+    class="py-10 flex flex-wrap items-center  justify-between"
   >
     <PersonalInformationCard
       v-for="supplier in suppliers"

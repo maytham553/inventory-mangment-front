@@ -1,8 +1,9 @@
 <template>
-  <div class="h-full w-full flex flex-col justify-between items-center">
+  <div class="h-full w-full flex flex-col justify-between  items-center">
+   
     <div class="flex flex-col justify-center items-center w-full">
       <div class="flex justify-center items-center gap-5 w-full">
-        <div class="w-1/3">
+        <div class="w-full">
           <Search
             :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
             placeholder="التسلسل"

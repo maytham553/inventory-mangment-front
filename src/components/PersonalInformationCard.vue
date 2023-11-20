@@ -1,7 +1,7 @@
 <template>
     <div>
-            <div class="pb-3 pr-3 pt-3 border border-[#0766AD] w-[286px] h-[190px] bg-gray-100 drop-shadow-lg 
-    hover:drop-shadow-xl rounded-lg rounded-tr-[18%] flex flex-col justify-between items-start">
+            <div class="pb-3 pr-3 pt-3 border bg-white border-[#0766AD] w-[286px] h-[190px]  drop-shadow-lg 
+    hover:drop-shadow-xl rounded-lg   flex flex-col justify-between items-start">
         <div class="flex items-center gap-4 justify-start">
 
             <div className="flex justify-between relative">
