@@ -1,55 +1,52 @@
 <template>
-  <div class="z-0 relative">
-    <div class="container pb-16 pt-10">
-      <div class="flex items-center mb-10 px-5 justify-between">
-        <div></div>
-        <h1 class="text-4xl text-center font-bold text-blue-700">المنتجات</h1>
-        <button
-          @click="openCreatePopup"
-          class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"
+  <div class="container pb-16 pt-10">
+    <div class="flex items-center mb-10 px-5 justify-between">
+      <div></div>
+      <h1 class="text-4xl text-center font-bold text-blue-700">المنتجات</h1>
+      <button
+        @click="openCreatePopup"
+        class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"
+      >
+        <span
+          class="absolute text-green-500 inset-0 flex items-center px-5 py-1 justify-center opacity-0 hover:opacity-100 transition duration-200 delay-75 rounded-r-full ease-in-out transform hover:translate-x-12"
         >
-          <span
-            class="absolute text-green-500 inset-0 flex items-center px-5 py-1 justify-center opacity-0 hover:opacity-100 transition duration-200 delay-75 rounded-r-full ease-in-out transform hover:translate-x-12"
-          >
-            إضافة
-          </span>
-
-          <PlusIcon :size="50" />
-        </button>
-      </div>
-
-      <div
-        v-if="productsStatus.loading"
-        class="flex justify-center items-center h-full"
-      >
-        <Loading stroke-color="#8f8f8f" />
-      </div>
-      <div
-        v-if="productsStatus.error"
-        class="flex justify-center items-center h-full"
-      >
-        <span class="text-red-500 text-center h-5">
-          <span>{{ productsStatus.message }}</span>
+          إضافة
         </span>
-      </div>
-      <div
-        v-if="productsStatus.success && !products.length"
-        class="flex justify-center items-center h-full"
-      >
-        <span class="text-gray-500 text-center h-5">
-          <span>لا يوجد منتجات</span>
-        </span>
-      </div>
-      <ProductsList
-        v-if="productsStatus.success && products.length"
-        :products="products"
-        :openUpdateDialog="openUpdateDialog"
-        :openDeleteDialog="openDeleteDialog"
-      />
+
+        <PlusIcon :size="50" />
+      </button>
     </div>
 
-    <BgView />
+    <div
+      v-if="productsStatus.loading"
+      class="flex justify-center items-center h-full"
+    >
+      <Loading stroke-color="#8f8f8f" />
+    </div>
+    <div
+      v-if="productsStatus.error"
+      class="flex justify-center items-center h-full"
+    >
+      <span class="text-red-500 text-center h-5">
+        <span>{{ productsStatus.message }}</span>
+      </span>
+    </div>
+    <div
+      v-if="productsStatus.success && !products.length"
+      class="flex justify-center items-center h-full"
+    >
+      <span class="text-gray-500 text-center h-5">
+        <span>لا يوجد منتجات</span>
+      </span>
+    </div>
+    <ProductsList
+      v-if="productsStatus.success && products.length"
+      :products="products"
+      :openUpdateDialog="openUpdateDialog"
+      :openDeleteDialog="openDeleteDialog"
+    />
   </div>
+
   <EmptyDialog
     v-if="createPopup"
     title="إضافة"

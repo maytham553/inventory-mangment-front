@@ -1,5 +1,6 @@
 <template>
-    <div class="p-4 max-w-sm max-h-sm  bg-gray-200  rounded-lg ">
+    <div class="pb-3 border border-[#0766AD] pr-6 pt-3  w-[286px] h-[190px] bg-gray-100 drop-shadow-lg 
+    hover:drop-shadow-xl rounded-lg rounded-tr-[18%] flex flex-col justify-between items-start">
         <div>
             <span>id : </span>
             <span>{{ sale.id }}</span>
@@ -17,13 +18,13 @@
             <span>{{ sale.status }}</span>
         </div>
 
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between gap-4 items-center">
             <button @click="() => updateHandler(sale)"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold p-2 rounded-md">
                 تعديل
             </button>
             <button @click="() => showHandler(sale.id)"
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-green-500 hover:bg-green-700 text-white text-sm font-bold p-2 rounded-md">
                 عرض
             </button>
         </div>

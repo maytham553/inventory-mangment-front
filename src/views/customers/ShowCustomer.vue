@@ -25,11 +25,11 @@
             <div class="mt-4 w-full">
                 <div class="flex flex-row gap-2">
                     <button @click="() => changeActive('sales')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'sales' }"
-                        class="px-4 py-2 rounded-lg">مبيعات</button>
+                        :class="{ 'bg-blue-500 hover:bg-blue-700 text-white': operationNav.active === 'sales' }"
+                        class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg">مبيعات</button>
                     <button @click="() => changeActive('transactions')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
-                        class="px-4 py-2 rounded-lg">التعاملات</button>
+                        :class="{ 'bg-blue-500 hover:bg-blue-700 text-white': operationNav.active === 'transactions' }"
+                        class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg">التعاملات</button>
                 </div>
             </div>
             <div class="mt-4 h-full  " v-if="operationNav.active === 'transactions'">

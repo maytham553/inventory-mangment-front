@@ -1,8 +1,3 @@
-<!-- 
-    <div class="flex items-center justify-center h-[344px] rounded-md rounded-tr-lg w-[388px] bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
-
- -->
-
 <template>
   <div
     class="flex justify-between items-center text-white flex-col h-full w-full sm:w-[20rem] bg-[#0766AD]"

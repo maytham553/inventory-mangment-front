@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="flex items-center justify-center w-[290px] m-2 rounded-lg bg-gradient-to-r from-[#29ADB2] via-red-400 to-[#C5E898] rounded-tr-[18%] h-[194px]">
-            <div class="pb-3 pr-3 pt-3  w-[286px] h-[190px] bg-gray-100 drop-shadow-lg 
+            <div class="pb-3 pr-3 pt-3 border border-[#0766AD] w-[286px] h-[190px] bg-gray-100 drop-shadow-lg 
     hover:drop-shadow-xl rounded-lg rounded-tr-[18%] flex flex-col justify-between items-start">
         <div class="flex items-center gap-4 justify-start">
 
@@ -51,7 +50,6 @@
         </div>
     </div>
         </div>
-    </div>
     
 </template>
 
