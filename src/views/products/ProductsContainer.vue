@@ -102,7 +102,7 @@ import { storeToRefs } from "pinia";
 import PaginationItems from "../../components/PaginationItems.vue";
 import TrueOrFalseDialog from "@/components/TrueOrFalseDialog.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
-import BgView from "@/components/icons/BgView.vue";
+ 
 
 const productsStore = useProductsStore();
 const createPopup = ref(false);

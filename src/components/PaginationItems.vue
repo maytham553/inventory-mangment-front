@@ -7,14 +7,14 @@
     absolute bottom-5 bg-[#a2c4dd]"
   >
     <button
-      class="disabled:opacity-30 p-1 rounded-lg hover:bg-[#0766AD]"
+      class="disabled:opacity-30 p-1 rounded-lg hover:bg-primary"
       :disabled="currentPage === 1"
       @click="goToPage(currentPage - 1)"
     >
       <h1 class="font-bold text-[#172350]">&lt;</h1>
     </button>
     <button
-      class="text-white bg-blue-600 cursor-pointer hover:bg-[#0766AD] disabled:opacity-70 p-1 rounded-lg w-20"
+      class="text-white bg-blue-600 cursor-pointer hover:bg-primary disabled:opacity-70 p-1 rounded-lg w-20"
       :disabled="currentPage === 1"
       @click="goToPage(1)"
     >
@@ -22,14 +22,14 @@
     </button>
     <button
       v-if="currentPage > 1"
-      class="bg-blue-600 cursor-pointer font-bold text-white hover:bg-[#0766AD] rounded-full h-8 w-8 flex items-center justify-center"
+      class="bg-blue-600 cursor-pointer font-bold text-white hover:bg-primary rounded-full h-8 w-8 flex items-center justify-center"
       @click="goToPage(currentPage - 1)"
     >
       {{ currentPage - 1 }}
     </button>
     <button
       class="font-bold bg-white text-[#0E1932] border border-blue-500 
-      cursor-pointer hover:bg-[#0766AD] hover:text-white rounded-full h-8 w-8 flex items-center justify-center"
+      cursor-pointer hover:bg-primary hover:text-white rounded-full h-8 w-8 flex items-center justify-center"
       disabled
       @click="goToPage(currentPage)"
     >
@@ -37,7 +37,7 @@
     </button>
     <button
       v-if="totalPages >= currentPage + 1"
-      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-[#0766AD] rounded-full
+      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-primary rounded-full
        h-8 w-8 flex items-center justify-center"
       @click="goToPage(currentPage + 1)"
     >
@@ -45,7 +45,7 @@
     </button>
     <button
       v-if="totalPages >= currentPage + 2"
-      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-[#0766AD] rounded-full h-8 w-8 flex items-center justify-center"
+      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-primary rounded-full h-8 w-8 flex items-center justify-center"
       @click="goToPage(currentPage + 2)"
     >
       {{ currentPage + 2 }}
@@ -54,21 +54,21 @@
     <span v-if="totalPages >= currentPage + 4">...</span>
     <button
       v-if="totalPages >= currentPage + 4"
-      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-[#0766AD] rounded-full h-8 w-8 flex items-center justify-center"
+      class="text-white bg-blue-600 cursor-pointer font-bold hover:bg-primary rounded-full h-8 w-8 flex items-center justify-center"
       @click="goToPage(totalPages)"
     >
       {{ totalPages }}
     </button>
 
     <button
-      class="disabled:opacity-70 text-white bg-blue-600 cursor-pointer hover:bg-[#0766AD] p-1 rounded-lg w-20"
+      class="disabled:opacity-70 text-white bg-blue-600 cursor-pointer hover:bg-primary p-1 rounded-lg w-20"
       :disabled="currentPage === totalPages"
       @click="goToPage(totalPages)"
     >
       الاخيرة
     </button>
     <button
-      class="disabled:opacity-30 p-1 rounded-lg hover:bg-[#0766AD]"
+      class="disabled:opacity-30 p-1 rounded-lg hover:bg-primary"
       :disabled="currentPage === totalPages"
       @click="goToPage(currentPage + 1)"
     >

@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex justify-between items-center text-white flex-col h-full w-full sm:w-[20rem] bg-[#0766AD]"
+    class="flex justify-between items-center text-white flex-col h-full w-full sm:w-[20rem] bg-primary"
   >
     <div
       class="flex justify-start items-start flex-col xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 w-full"
     >
       <div
-        class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-[#29ADB2]/70"
+        class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-secondary/70"
       >
         <button
           @click="toggleMenu1"
@@ -26,14 +26,14 @@
           <div>
             <RouterLink
               to="/products"
-              class="flex justify-start w-full items-center hover:bg-[#29ADB2]/80 gap-4 rounded-md text-right py-2"
+              class="flex justify-start w-full items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
             >
               <Boxes />
               <p class="text-base leading-4">المنتجات</p>
             </RouterLink>
             <RouterLink
               to="/rawMaterials"
-              class="flex justify-start items-center hover:bg-[#29ADB2]/80 gap-4 rounded-md text-right py-2"
+              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
               ><Dolly />
               <p class="text-base leading-4">المواد الخام</p>
             </RouterLink>
@@ -42,7 +42,7 @@
       </div>
 
       <div
-        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:bg-[#29ADB2]/70"
+        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70"
       >
         <button
           @click="toggleMenu2"
@@ -62,14 +62,14 @@
           <div class="flex justify-start flex-col items-start pb-5">
             <RouterLink
               to="/suppliers"
-              class="flex justify-start items-center hover:bg-[#29ADB2]/80 gap-4 rounded-md text-right py-2"
+              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
             >
               <AllSuppliers />
               <p class="text-base leading-4">كل الموردين</p>
             </RouterLink>
             <RouterLink
               to="/suppliers/create"
-              class="flex justify-start items-center gap-4 hover:bg-[#29ADB2]/80 rounded-md text-right py-2"
+              class="flex justify-start items-center gap-4 hover:bg-secondary/80 rounded-md text-right py-2"
             >
               <AddSupplier />
               <p class="text-base leading-4">اضافة مورد</p>
@@ -79,7 +79,7 @@
       </div>
 
       <div
-        class="flex flex-col justify-end items-center px-6 border-b border-gray-200 w-full hover:bg-[#29ADB2]/70"
+        class="flex flex-col justify-end items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70"
       >
         <button
           @click="toggleMenu3"
@@ -99,7 +99,7 @@
           <div class="flex justify-start flex-col items-start">
             <RouterLink
               to="/customers"
-              class="flex justify-start gap-4 items-center hover:bg-[#29ADB2]/80 rounded text-right py-2"
+              class="flex justify-start gap-4 items-center hover:bg-secondary/80 rounded text-right py-2"
             >
               <People />
 
@@ -107,7 +107,7 @@
             </RouterLink>
             <RouterLink
               to="/customers/create"
-              class="flex justify-start items-center hover:bg-[#29ADB2]/80 gap-4 rounded text-right py-2"
+              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded text-right py-2"
             >
               <AddPerson />
               <p class="text-base leading-4">اضافة عميل</p>
@@ -117,7 +117,7 @@
       </div>
 
       <div
-        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-[#29ADB2]/70"
+        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-secondary/70"
       >
         <RouterLink
           to="/expenses"
@@ -130,7 +130,7 @@
     </div>
     <button
       @click="logout"
-      class="text-left py-3 px-8 mb-3 gap-4 flex hover:bg-[#29ADB2]/70 justify-start items-center w-full"
+      class="text-left py-3 px-8 mb-3 gap-4 flex hover:bg-secondary/70 justify-start items-center w-full"
     >
       <Logout name="logout" />
       <p class="text-lg font-semibold leading-5 uppercase">تسجيل خروج</p>

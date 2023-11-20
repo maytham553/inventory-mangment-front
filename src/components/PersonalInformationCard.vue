@@ -1,6 +1,6 @@
 <template>
     <div>
-            <div class="pb-3 pr-3 pt-3 border bg-white border-[#0766AD] w-[286px] h-[190px]  drop-shadow-lg 
+            <div class="pb-3 pr-3 pt-3 border bg-white   w-[286px] h-[190px]  drop-shadow-lg 
     hover:drop-shadow-xl rounded-lg   flex flex-col justify-between items-start">
         <div class="flex items-center gap-4 justify-start">
 
@@ -9,7 +9,7 @@
                     <UserIcon :size=100 strokeColor="rgba(0,0,0,0.1)" fillColor="#172350" />
                 </div>
     
-                <div class="absolute right-0 top-[58px] p-1 h-6 w-6 flex justify-center text-xs items-center rounded-full text-gray-50 bg-[#0766AD]/80">
+                <div class="absolute right-0 top-[58px] p-1 h-6 w-6 flex justify-center text-xs items-center rounded-full text-gray-50 bg-primary/80">
                  {{ id }}
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="flex flex-row items-center mt-4 justify-evenly w-full">
             <button @click="updateHandler"
-                class="text-xs bg-[#0766AD] hover:bg-[#1a2c47] text-white font-bold p-2 rounded-md">
+                class="text-xs bg-primary hover:bg-[#1a2c47] text-white font-bold p-2 rounded-md">
                <Edit />
             </button>
             <button @click="showHandler"
