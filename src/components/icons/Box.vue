@@ -1,20 +1,31 @@
 <template 
 >
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" fill="white" viewBox="0 0 448 512"><path d="M50.7 58.5L0 160H208V32H93.7C75.5 32 58.9 42.3 50.7 58.5zM240 160H448L397.3 58.5C389.1 42.3 372.5 32 354.3 32H240V160zm208 32H0V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192z"/></svg>  </template>
+  <svg :width="size" viewBox="0 0 16 16" :height="size" :fill="fill">
+
+
+    >
+    <path
+      d="M4.98 1a.5.5 0 00-.39.188L1.54 5H6a.5.5 0 01.5.5 1.5 1.5 0 003 0A.5.5 0 0110 5h4.46l-3.05-3.812A.5.5 0 0011.02 1H4.98zm9.954 5H10.45a2.5 2.5 0 01-4.9 0H1.066l.32 2.562A.5.5 0 001.884 9h12.234a.5.5 0 00.496-.438L14.933 6zM3.809.563A1.5 1.5 0 014.981 0h6.038a1.5 1.5 0 011.172.563l3.7 4.625a.5.5 0 01.105.374l-.39 3.124A1.5 1.5 0 0114.117 10H1.883A1.5 1.5 0 01.394 8.686l-.39-3.124a.5.5 0 01.106-.374L3.81.563zM.125 11.17A.5.5 0 01.5 11H6a.5.5 0 01.5.5 1.5 1.5 0 003 0 .5.5 0 01.5-.5h5.5a.5.5 0 01.496.562l-.39 3.124A1.5 1.5 0 0114.117 16H1.883a1.5 1.5 0 01-1.489-1.314l-.39-3.124a.5.5 0 01.121-.393zm.941.83l.32 2.562a.5.5 0 00.497.438h12.234a.5.5 0 00.496-.438l.32-2.562H10.45a2.5 2.5 0 01-4.9 0H1.066z" />
+  </svg>
+</template>
   
-  <script lang="ts">
-  export default {
-    props: {
-      size: {
-        type: Number,
-        default: 24,
-      },
-      strokeColor: {
-        type: String,
-        default: 'currentColor',
-      },
+<script lang="ts">
+export default {
+  props: {
+    size: {
+      type: Number,
+      default: 24,
     },
-  };
-  </script>
+    strokeColor: {
+      type: String,
+      default: 'currentColor',
+    }, fill: {
+      type: String,
+      default: 'currentColor',
+
+    }
+  },
+};
+</script>
 
 
