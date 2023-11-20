@@ -1,9 +1,9 @@
 <template>
-    <div class="flex  gap-10 h-full overflow-hidden w-full">
-        <SaleForm class="w-2/3 h-full " :sale="sale" :status="saleStatus" :removeItem="removeItem" :onSubmit="onSubmit"
+    <div class="flex  gap-1 h-full overflow-hidden w-full">
+        <SaleForm class="w-full h-full " :sale="sale" :status="saleStatus" :removeItem="removeItem" :onSubmit="onSubmit"
             submitButtonText="تعديل" :reCalculateSaleAfterChange="reCalculateSaleAfterChange" :print="print"
             :closeDialog="closeDialog" />
-        <SaleProductList class="w-1/3 h-full overflow-y-auto " :products="products" :status="productsStatus"
+        <SaleProductList class="w-1/4 h-full overflow-y-auto " :products="products" :status="productsStatus"
             :addItem="addItem" :removeItem="removeItem" />
     </div>
 </template>
