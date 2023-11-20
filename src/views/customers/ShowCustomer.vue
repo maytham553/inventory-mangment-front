@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col pb-16 container items-center justify-center">
+  <div class="flex flex-col pb-16 container items-center justify-around">
     <div class="bg-white rounded-lg py-4 z-50 w-full">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">{{ name }}</h2>

@@ -1,4 +1,7 @@
 <template>
+  <div  >
+
+
   <button
     @click="openCreatePopup"
     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
@@ -55,6 +58,7 @@
       :customerId="customerId"
     />
   </EmptyDialog>
+</div>
 </template>
 
 <script lang="ts" setup>
