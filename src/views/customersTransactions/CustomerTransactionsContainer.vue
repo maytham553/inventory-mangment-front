@@ -28,6 +28,9 @@
     </span>
   </div>
   <CustomerTransactionsList :transactions="customerTransactions" />
+ <div class="w-full items-center  justify-center flex">
+
+
   <PaginationItems
     v-if="!customerTransactionsStatus.error"
     :currentPage="
@@ -37,7 +40,9 @@
       CustomerTransactionsStore.getCustomerTransactionsPagination.lastPage
     "
     :goToPage="(page: number) => { CustomerTransactionsStore.fetchCustomerTransactionsByCustomerId(props.customerId, page) }"
-  />
+  /> 
+</div>
+
   <EmptyDialog
     v-if="createPopup"
     title="إضافة"

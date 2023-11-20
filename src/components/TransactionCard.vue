@@ -1,6 +1,6 @@
 <template>
         <div class="pb-3 pr-3 pt-3  w-[286px] h-[190px] bg-gray-100 drop-shadow-lg 
-    hover:drop-shadow-xl rounded-lg rounded-tr-[18%] flex flex-col justify-between items-start">
+    hover:drop-shadow-xl rounded-lg   flex flex-col justify-between items-start">
             <div>
                 <span>نوع العملية</span>
                 <span>{{ type }}</span>

@@ -1,58 +1,58 @@
 <template>
-  <div class="bg-white container rounded-lg py-4 z-50 w-full">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">{{ name }}</h2>
-      <span :class="balanceClass">
-        {{ formatCurrency(balance) }}
-        <button
-          @click="
-            () => {
-              reCalculateBalance(id);
-            }
-          "
-          type="button"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        >
-          إعادة حساب الرصيد
-        </button>
-      </span>
-    </div>
-    <div class="text-gray-600 mb-2">
-      <p v-if="email">البريد الإلكتروني: {{ email }}</p>
-      <p>الهاتف: {{ phone }}</p>
-      <p>المحافظة: {{ governorate }}</p>
-      <p>العنوان: {{ address }}</p>
-    </div>
-    <div v-if="note" class="mt-2">
-      <p class="text-gray-700 font-semibold">ملاحظة:</p>
-      <p>{{ note }}</p>
-    </div>
-
-    <div class="flex-1">
-      <div class="mt-4 w-full">
-        <div class="flex flex-row gap-2">
+  <div class="flex flex-col pb-16 container items-center justify-center">
+    <div class="bg-white rounded-lg py-4 z-50 w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">{{ name }}</h2>
+        <span :class="balanceClass">
+          {{ formatCurrency(balance) }}
           <button
-            @click="() => changeActive('sales')"
-            :class="{
-              'bg-blue-500 hover:bg-blue-700 text-white':
-                operationNav.active === 'sales',
-            }"
-            class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
+            @click="
+              () => {
+                reCalculateBalance(id);
+              }
+            "
+            type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           >
-            مبيعات
+            إعادة حساب الرصيد
           </button>
-          <button
-            @click="() => changeActive('transactions')"
-            :class="{
-              'bg-blue-500 hover:bg-blue-700 text-white':
-                operationNav.active === 'transactions',
-            }"
-            class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
-          >
-            التعاملات
-          </button>
-        </div>
+        </span>
       </div>
+      <div class="text-gray-600 mb-2">
+        <p v-if="email">البريد الإلكتروني: {{ email }}</p>
+        <p>الهاتف: {{ phone }}</p>
+        <p>المحافظة: {{ governorate }}</p>
+        <p>العنوان: {{ address }}</p>
+      </div>
+      <div v-if="note" class="mt-2">
+        <p class="text-gray-700 font-semibold">ملاحظة:</p>
+        <p>{{ note }}</p>
+      </div>
+    </div>
+    <div class="flex-1">
+      <div class="flex items-center flex-row justify-center gap-2">
+        <button
+          @click="() => changeActive('sales')"
+          :class="{
+            'bg-blue-500 hover:bg-blue-700 text-white':
+              operationNav.active === 'sales',
+          }"
+          class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
+        >
+          مبيعات
+        </button>
+        <button
+          @click="() => changeActive('transactions')"
+          :class="{
+            'bg-blue-500 hover:bg-blue-700 text-white':
+              operationNav.active === 'transactions',
+          }"
+          class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
+        >
+          التعاملات
+        </button>
+      </div>
+
       <div class="mt-4 h-full" v-if="operationNav.active === 'transactions'">
         <h2 class="text-xl font-semibold">التعاملات</h2>
         <CustomerTransactionContainer :customerId="id" />
