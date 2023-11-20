@@ -6,86 +6,13 @@
       class="flex justify-start items-start flex-col xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 w-full"
     >
       <div
-        class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-secondary/70"
-      >
-        <button
-          @click="toggleMenu1"
-          class="flex justify-between items-center w-full py-5"
-        >
-          <!-- <Box /> -->
-          <p class="text-xl font-semibold leading-5 uppercase">المواد</p>
-          <div>
-            <ArrowDown v-if="!menu1Visible" name="arrow-down" />
-            <ArrowUp v-if="menu1Visible" name="arrow-up" />
-          </div>
-        </button>
-        <div
-          v-if="menu1Visible"
-          class="flex flex-col justify-between items-start h-full pb-6 w-full"
-        >
-          <div>
-            <RouterLink
-              to="/products"
-              class="flex justify-start w-full items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
-            >
-              <Boxes />
-              <p class="text-base leading-4">المنتجات</p>
-            </RouterLink>
-            <RouterLink
-              to="/rawMaterials"
-              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
-              ><Dolly />
-              <p class="text-base leading-4">المواد الخام</p>
-            </RouterLink>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70"
-      >
-        <button
-          @click="toggleMenu2"
-          class="flex justify-between items-center w-full py-5"
-        >
-          <!-- <Supplier /> -->
-          <p class="text-xl font-semibold leading-5 uppercase">الموردين</p>
-          <div>
-            <ArrowDown v-if="!menu2Visible" name="arrow-down" />
-            <ArrowUp v-if="menu2Visible" name="arrow-up" />
-          </div>
-        </button>
-        <div
-          v-if="menu2Visible"
-          class="flex flex-col justify-between items-start h-full pb-6 w-full"
-        >
-          <div class="flex justify-start flex-col items-start pb-5">
-            <RouterLink
-              to="/suppliers"
-              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
-            >
-              <AllSuppliers />
-              <p class="text-base leading-4">كل الموردين</p>
-            </RouterLink>
-            <RouterLink
-              to="/suppliers/create"
-              class="flex justify-start items-center gap-4 hover:bg-secondary/80 rounded-md text-right py-2"
-            >
-              <AddSupplier />
-              <p class="text-base leading-4">اضافة مورد</p>
-            </RouterLink>
-          </div>
-        </div>
-      </div>
-
-      <div
         class="flex flex-col justify-end items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70"
       >
         <button
           @click="toggleMenu3"
           class="text-left flex justify-between items-center w-full py-5"
         >
-          <!-- <Person /> -->
+          <Person />
           <p class="text-lg font-semibold leading-5 uppercase">العملاء</p>
           <div>
             <ArrowDown v-if="!menu3Visible" name="arrow-down" />
@@ -101,7 +28,7 @@
               to="/customers"
               class="flex justify-start gap-4 items-center hover:bg-secondary/80 rounded text-right py-2"
             >
-              <People />
+              <!-- <People /> -->
 
               <p class="text-base leading-4">كل العملاء</p>
             </RouterLink>
@@ -109,8 +36,80 @@
               to="/customers/create"
               class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded text-right py-2"
             >
-              <AddPerson />
+              <!-- <AddPerson /> -->
               <p class="text-base leading-4">اضافة عميل</p>
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70"
+      >
+        <button
+          @click="toggleMenu2"
+          class="flex justify-between items-center w-full py-5"
+        >
+          <Supplier />
+          <p class="text-xl font-semibold leading-5 uppercase">الموردين</p>
+          <div>
+            <ArrowDown v-if="!menu2Visible" name="arrow-down" />
+            <ArrowUp v-if="menu2Visible" name="arrow-up" />
+          </div>
+        </button>
+        <div
+          v-if="menu2Visible"
+          class="flex flex-col justify-between items-start h-full pb-6 w-full"
+        >
+          <div class="flex justify-start flex-col items-start pb-5">
+            <RouterLink
+              to="/suppliers"
+              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
+            >
+              <!-- <AllSuppliers /> -->
+              <p class="text-base leading-4">كل الموردين</p>
+            </RouterLink>
+            <RouterLink
+              to="/suppliers/create"
+              class="flex justify-start items-center gap-4 hover:bg-secondary/80 rounded-md text-right py-2"
+            >
+              <!-- <AddSupplier /> -->
+              <p class="text-base leading-4">اضافة مورد</p>
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-secondary/70"
+      >
+        <button
+          @click="toggleMenu1"
+          class="flex justify-between items-center w-full py-5"
+        >
+          <Box />
+          <p class="text-xl font-semibold leading-5 uppercase">المواد</p>
+          <div>
+            <ArrowDown v-if="!menu1Visible" name="arrow-down" />
+            <ArrowUp v-if="menu1Visible" name="arrow-up" />
+          </div>
+        </button>
+        <div
+          v-if="menu1Visible"
+          class="flex flex-col justify-between items-start h-full pb-6 w-full"
+        >
+          <div>
+            <RouterLink
+              to="/products"
+              class="flex justify-start w-full items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
+            >
+              <!-- <Boxes /> -->
+              <p class="text-base leading-4">المنتجات</p>
+            </RouterLink>
+            <RouterLink
+              to="/rawMaterials"
+              class="flex justify-start items-center hover:bg-secondary/80 gap-4 rounded-md text-right py-2"
+              >
+              <!-- <Dolly /> -->
+              <p class="text-base leading-4">المواد الخام</p>
             </RouterLink>
           </div>
         </div>
