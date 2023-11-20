@@ -37,7 +37,7 @@
       </div>
       <div class="mb-4">
         <button type="submit"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full flex justify-center gap-3"
+          class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded-lg w-full flex justify-center gap-3"
           :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
           {{ submitButtonText }}
           <Loading v-if="status.loading" class="-mr-1 ml-3" />

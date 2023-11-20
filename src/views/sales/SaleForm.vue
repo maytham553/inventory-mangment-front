@@ -195,7 +195,7 @@
     <div class="flex items-center  py-1 justify-self-end justify-center gap-2">
       <button
         type="submit"
-        class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
+        class="bg-secondary h-auto hover:bg-primary text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
         :class="{ 'bg-blue-300': status.loading }"
         :disabled="status.loading"
       >
@@ -205,7 +205,7 @@
       <button
         type="button"
         @click="handleSubmitAndPrint"
-        class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
+        class="bg-secondary h-auto hover:bg-primary text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
         :class="{ 'bg-blue-300': status.loading }"
         :disabled="status.loading"
       >
@@ -216,7 +216,7 @@
       <button
         type="button"
         @click="printWithoutSave"
-        class="bg-blue-500 h-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
+        class="bg-secondary h-auto hover:bg-primary text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
         :class="{ 'bg-blue-300': status.loading }"
         :disabled="status.loading"
       >

@@ -2,7 +2,7 @@
     <section class="bg-gray-100 py-20 px-10">
         <div class="flex justify-center items-center w-full">
             <button @click="print" type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
                 طباعة
             </button>
         </div>

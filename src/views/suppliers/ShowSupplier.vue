@@ -3,10 +3,10 @@
         <div class="flex-1/2">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">{{ name }}</h2>
-                <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full ">
+                <span class="bg-secondary text-white text-sm px-2 py-1 rounded-full ">
                     {{ formatCurrency(balance) }}
                     <button @click="() => { reCalculateBalance(id) }" type="button"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded-full">
                         إعادة حساب الرصيد
                     </button>
                 </span>
@@ -27,10 +27,10 @@
             <div class="mt-4 w-full">
                 <div class="flex flex-row gap-2">
                     <button @click="() => changeActive('purchases')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'purchases' }"
+                        :class="{ 'bg-secondary text-white': operationNav.active === 'purchases' }"
                         class="px-4 py-2 rounded-lg">المشتريات</button>
                     <button @click="() => changeActive('transactions')"
-                        :class="{ 'bg-blue-500 text-white': operationNav.active === 'transactions' }"
+                        :class="{ 'bg-secondary text-white': operationNav.active === 'transactions' }"
                         class="px-4 py-2 rounded-lg">التعاملات</button>
                 </div>
             </div>

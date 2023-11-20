@@ -20,7 +20,7 @@
 
         <div class="flex justify-between gap-4 items-center">
             <button @click="() => updateHandler(sale)"
-                class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold p-2 rounded-md">
+                class="bg-secondary hover:bg-primary text-white text-sm font-bold p-2 rounded-md">
                 تعديل
             </button>
             <button @click="() => showHandler(sale.id)"

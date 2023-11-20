@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-10 pb-16">
     <div class="flex items-center mb-10 px-5 justify-between">
-      <h1 class="text-4xl w-1/3 text-right font-bold text-blue-700">
+      <h1 class="text-4xl w-1/3 text-right font-bold  text-secondary">
         الصرفيات
       </h1>
 

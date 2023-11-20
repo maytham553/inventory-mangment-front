@@ -2,7 +2,7 @@
   <div class="container pb-16 pt-10">
     <div class="flex items-center mb-10 px-5 justify-between">
       <div></div>
-      <h1 class="text-4xl text-center font-bold text-blue-700">المنتجات</h1>
+      <h1 class="text-4xl text-center font-bold  text-secondary">المنتجات</h1>
       <button
         @click="openCreatePopup"
         class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"

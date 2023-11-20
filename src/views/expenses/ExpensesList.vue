@@ -1,6 +1,6 @@
 <template>
   <table class="w-full text-right  self-center">
-    <thead class="bg-blue-500  text-white p-2 h-10">
+    <thead class="bg-secondary  text-white p-2 h-10">
       <tr class="text-right">
         <th class=" pr-2 ">التسلسل</th>
         <th class="  ">المقدار</th>

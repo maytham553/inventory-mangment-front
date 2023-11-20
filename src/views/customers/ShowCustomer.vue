@@ -12,7 +12,7 @@
               }
             "
             type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded-full"
           >
             إعادة حساب الرصيد
           </button>
@@ -34,7 +34,7 @@
         <button
           @click="() => changeActive('sales')"
           :class="{
-            'bg-blue-500 hover:bg-blue-700 text-white':
+            'bg-secondary hover:bg-primary text-white':
               operationNav.active === 'sales',
           }"
           class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
@@ -44,7 +44,7 @@
         <button
           @click="() => changeActive('transactions')"
           :class="{
-            'bg-blue-500 hover:bg-blue-700 text-white':
+            'bg-secondary hover:bg-primary text-white':
               operationNav.active === 'transactions',
           }"
           class="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-white rounded-lg"
@@ -111,7 +111,7 @@ const props = defineProps({
 
 const balanceClass = computed(() => {
   if (props.balance > 0) {
-    return "bg-blue-500 text-white text-sm px-2 py-1 rounded-full";
+    return "bg-secondary text-white text-sm px-2 py-1 rounded-full";
   } else if (props.balance < 0) {
     return "bg-red-500 text-white text-sm px-2 py-1 rounded-full";
   } else {

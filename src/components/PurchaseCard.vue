@@ -19,7 +19,7 @@
 
         <div class="flex justify-between items-center">
             <button @click="() => updateHandler(purchase)"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
                 تعديل
             </button>
             <button @click="() => showHandler(purchase.id)"

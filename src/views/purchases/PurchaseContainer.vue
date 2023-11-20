@@ -9,7 +9,7 @@
                         placeholder="التسلسل" />
                 </div>
                 <button @click="openCreatePopup" type="button"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
                     إضافة
                 </button>
             </div>

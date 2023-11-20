@@ -3,7 +3,7 @@
     <div class="h-full w-full bg-white z-30 flex flex-col overflow-hidden">
       <div
         v-if="!hiddenBar"
-        class="flex justify-between items-center bg-blue-700 font-bold text-gray-100 p-4"
+        class="flex justify-between items-center bg-primary font-bold text-gray-100 p-4"
       >
         <div></div>
         <h2 class="text-xl font-bold">{{ title }}</h2>
