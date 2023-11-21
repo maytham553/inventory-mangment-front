@@ -119,7 +119,7 @@
       </table>
     </div>
 
-    <div class=" flex container gap-1">
+    <div class="flex container gap-1">
       <div class="flex w-1/2 flex-col gap-1">
         <div class="flex items-center w-72 justify-between">
           <label for="discountAmount">مبلغ الخصم</label>
@@ -128,7 +128,7 @@
             type="number"
             id="discountAmount"
             v-model="sale.discount_amount"
-            class="form-input w-[100px] text-left p-1 rounded-lg bg-gray-200"
+            class="w-[100px] text-left p-1 rounded-lg bg-gray-200"
           />
         </div>
 
@@ -138,7 +138,7 @@
             placeholder="نسبة الخصم"
             type="number"
             id="discountPercentage"
-            class="form-input min-w-[100px] text-left p-1 rounded-lg bg-gray-200"
+            class="min-w-[100px] text-left p-1 rounded-lg bg-gray-200"
           >
             {{ sale.discount_percentage }}
           </span>
@@ -146,18 +146,14 @@
 
         <div class="flex items-center w-72 justify-between">
           <label for="subtotalAmount">المجموع الجزئي</label>
-          <span
-            class="form-input min-w-[100px] text-left p-1 rounded-lg bg-gray-200"
-          >
+          <span class="min-w-[100px] text-left p-1 rounded-lg bg-gray-200">
             {{ sale.subtotal_amount }}
           </span>
         </div>
 
         <div class="flex items-center w-72 justify-between">
           <label for="totalAmount">المجموع الكلي</label>
-          <span
-            class="form-input min-w-[100px] text-left p-1 rounded-lg bg-gray-200"
-          >
+          <span class="min-w-[100px] text-left p-1 rounded-lg bg-gray-200">
             {{ sale.total_amount }}
           </span>
         </div>
@@ -169,7 +165,7 @@
             id="status"
             v-model="sale.status"
             required
-            class=" text-left p-1 py-2 rounded-lg bg-gray-200"
+            class="text-left p-1 py-2 rounded-lg bg-gray-200"
           >
             <option value="" disabled selected>اختر الحالة</option>
             <option v-for="status in SaleStatus" :key="status" :value="status">
@@ -192,7 +188,7 @@
       </div>
     </div>
 
-    <div class="flex items-center  py-1 justify-self-end justify-center gap-2">
+    <div class="flex items-center py-1 justify-self-end justify-center gap-2">
       <button
         type="submit"
         class="bg-secondary h-auto hover:bg-primary text-white font-bold py-2 px-4 rounded flex justify-center gap-3"

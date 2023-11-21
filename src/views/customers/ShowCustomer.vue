@@ -57,7 +57,7 @@
         <!-- <h2 class="text-xl font-semibold">التعاملات</h2> -->
         <CustomerTransactionContainer :customerId="id" />
       </div>
-      <div class="mt-4 h-full " v-if="operationNav.active === 'sales'">
+      <div class="mt-4 h-full" v-if="operationNav.active === 'sales'">
         <!-- <h2 class="text-xl font-semibold">مبيعات</h2> -->
         <SaleContainer :customerId="id" :customerName="name" />
       </div>
