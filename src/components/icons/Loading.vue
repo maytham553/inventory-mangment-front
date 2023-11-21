@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-screen absolute top-0 left-0 bg-white z-50 flex items-center flex-col gap-10 justify-center">
+   
     <svg
       :width="size"
       :height="size"
@@ -22,8 +22,8 @@
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
       ></path>
     </svg>
-    <h2 class="rtl text-xl text-secondary">جاري التحميل...</h2>
-  </div>
+ 
+ 
 </template>
 
 <script lang="ts">
