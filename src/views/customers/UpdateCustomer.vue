@@ -1,4 +1,5 @@
 <template>
+  
   <CustomerForm :customer="customer" :governorates="governorates" :status="statusRef" :onSubmit="updateHandler"
     submitButtonText="تحديث العميل" />
 </template>

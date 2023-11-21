@@ -1,23 +1,38 @@
 <template>
-    <CardsContainer>
-        <ExpenseCard v-for="expense in expenses" :key="expense.id" :id="expense.id" :amount="expense.amount"
-            :title="expense.title" :description="expense.description ?? undefined"
-            :created_at="ISO8601DateToHumanDate(expense.created_at!)"
-            :updated_at="ISO8601DateToHumanDate(expense.updated_at!)" />
-    </CardsContainer>
+  <div class="mb-4 h-auto overflow-y-auto shadow-md bg-gray-200 rounded-xl">
+    <table class="w-full divide-y divide-gray-100 text-xs font-bold">
+      <thead>
+        <tr>
+          <th class="pr-2 px-3 py-4 font-semibold text-gray-400  w-[20px]">التسلسل</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-right">المقدار</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-right">العنوان</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-right">الوصف</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ الانشاء</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ التحديث</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <ExpenseTableRow
+          v-for="expense in reversedExpenses"
+          :key="expense.id"
+          :expense="expense"
+        />
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import CardsContainer from '../../components/CardsContainer.vue';
-import ExpenseCard from '../../components/ExpenseCard.vue';
-import { defineProps } from 'vue';
-import type { Expense } from '../../Types';
-import { ISO8601DateToHumanDate } from '../../services/helper/helperFunctions';
+import ExpenseTableRow from "../../components/ExpenseTableRow.vue";
+import { defineProps, computed } from "vue";
+import type { Expense } from "../../Types";
 
 const props = defineProps({
-    expenses: {
-        type: Array as () => Expense[],
-        required: true
-    }
-})
+  expenses: {
+    type: Array as () => Expense[],
+    required: true,
+  },
+});
+
+const reversedExpenses = computed(() => [...props.expenses].reverse());
 </script>

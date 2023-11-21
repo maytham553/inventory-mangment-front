@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 max-w-sm w-[30%]   bg-gray-200  rounded-lg ">
+    <div class="p-4 max-w-sm w-[30%]  bg-gray-200  rounded-lg ">
         <div>
             <span>id : </span>
             <span>{{ purchase.id }}</span>
@@ -19,7 +19,7 @@
 
         <div class="flex justify-between items-center">
             <button @click="() => updateHandler(purchase)"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
                 تعديل
             </button>
             <button @click="() => showHandler(purchase.id)"
