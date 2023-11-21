@@ -1,119 +1,119 @@
 <template>
-  <div class="h-full w-full flex flex-col justify-between items-center">
-    <div class="flex flex-col justify-center items-center w-full">
-      <div class="flex justify-center items-center gap-5 w-full">
-        <div class="w-1/3">
-          <Search
-            :handleSearch="(page = 1, search: string) => { fetchPurchasesBySupplier(page, props.supplierId, search) }"
-            placeholder="التسلسل"
-          />
-        </div>
-        <button
-          @click="openCreatePopup"
-          type="button"
-          class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded-lg"
-        >
-          إضافة
-        </button>
-      </div>
-
-      <div class="flex justify-center items-center w-full">
-        <div
-          v-if="purchasesStatus.loading || rawMaterialsStatus.loading"
-          class="flex justify-center items-center m-10"
-        >
-          <Loading stroke-color="#8f8f8f" />
-        </div>
-
-        <div
-          v-if="purchasesStatus.error || rawMaterialsStatus.error"
-          class="text-red-500 text-sm flex justify-center items-center m-10"
-        >
-          {{ purchasesStatus.message || rawMaterialsStatus.message }}
-        </div>
-        <div
-          v-if="purchasesStatus.success && !purchases.length"
-          class="flex justify-center items-center m-10"
-        >
-          <h1 class="text-2xl text-gray-500">لا يوجد فواتير شراء</h1>
-        </div>
-      </div>
-    </div>
-
-    <PurchasesList
-      v-if="purchasesStatus.success && rawMaterialsStatus.success"
-      :purchases="purchasesStore.purchases"
-      :supplierName="supplierName"
-      :update="openUpdatePopup"
-      :show="() => {}"
+  <div class=" w-full  pb-16  ">
+ 
+  <div
+    v-if="purchasesStatus.success && rawMaterialsStatus.success"
+    class="flex justify-center items-center gap-5 w-full"
+  >
+    <Search
+      :handleSearch="(page = 1, search: string) => { fetchPurchasesBySupplier(page, props.supplierId, search) }"
+      placeholder="التسلسل"
     />
 
-    <EmptyDialog
+    <button
+      @click="openCreatePopup"
+      type="button"
+      class="bg-green-600 hover:bg-primary text-white font-bold py-2 px-4 rounded-lg"
+    >
+      إضافة
+      
+    </button>
+  </div>
+
+  <div
+    v-if="purchasesStatus.loading || rawMaterialsStatus.loading"
+    class="flex justify-center items-center m-10"
+  >
+    <Loading stroke-color="#8f8f8f" />
+  </div>
+
+  <div
+    v-if="purchasesStatus.error || rawMaterialsStatus.error"
+    class="text-red-500 text-sm flex justify-center items-center m-10"
+  >
+    {{ purchasesStatus.message || rawMaterialsStatus.message }}
+  </div>
+  <div
+    v-if="purchasesStatus.success && !purchases.length"
+    class="flex justify-center items-center m-10"
+  >
+    <h1 class="text-2xl text-gray-500">لا يوجد فواتير شراء</h1>
+  </div>
+
+  <PurchasesList
+    v-if="purchasesStatus.success && rawMaterialsStatus.success"
+    :purchases="purchasesStore.purchases"
+    :supplierName="supplierName"
+    :update="openUpdatePopup"
+    :show="() => {}"
+  />
+
+  <EmptyDialog
+    v-if="createPopup"
+    :title="String(supplierId)"
+    :close-dialog="closeCreatePopup"
+  >
+    <CreatePurchase
       v-if="createPopup"
-      :title="String(supplierId)"
-      :close-dialog="closeCreatePopup"
-    >
-      <CreatePurchase
-        v-if="createPopup"
-        :purchase="purchasesStore.purchase"
-        :purchaseStatus="purchaseStatus"
-        :rawMaterials="rawMaterials"
-        :rawMaterialsStatus="rawMaterialsStatus"
-        :addItem="addItem"
-        :removeItem="removeItem"
-        :onSubmit="createPurchase"
-        submitButtonText="حفظ"
-        :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange"
-        :print="openPrintPopup"
-        :closeDialog="closeUpdatePopup"
-        :clearForm="purchasesStore.setInitialPurchase"
-      />
-    </EmptyDialog>
+      :purchase="purchasesStore.purchase"
+      :purchaseStatus="purchaseStatus"
+      :rawMaterials="rawMaterials"
+      :rawMaterialsStatus="rawMaterialsStatus"
+      :addItem="addItem"
+      :removeItem="removeItem"
+      :onSubmit="createPurchase"
+      submitButtonText="حفظ"
+      :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange"
+      :print="openPrintPopup"
+      :closeDialog="closeUpdatePopup"
+      :clearForm="purchasesStore.setInitialPurchase"
+    />
+  </EmptyDialog>
 
-    <EmptyDialog
+  <EmptyDialog
+    v-if="updatePopup"
+    :title="String(supplierId)"
+    :close-dialog="closeUpdatePopup"
+  >
+    <UpdatePurchase
       v-if="updatePopup"
-      :title="String(supplierId)"
-      :close-dialog="closeUpdatePopup"
-    >
-      <UpdatePurchase
-        v-if="updatePopup"
-        :purchase="purchasesStore.purchase"
-        :purchaseStatus="purchaseStatus"
-        :rawMaterials="rawMaterials"
-        :rawMaterialsStatus="rawMaterialsStatus"
-        :addItem="addItem"
-        :removeItem="removeItem"
-        :onSubmit="updatePurchase"
-        submitButtonText="تعديل"
-        :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange"
-        :print="openPrintPopup"
-        :closeDialog="closeUpdatePopup"
-      />
-    </EmptyDialog>
+      :purchase="purchasesStore.purchase"
+      :purchaseStatus="purchaseStatus"
+      :rawMaterials="rawMaterials"
+      :rawMaterialsStatus="rawMaterialsStatus"
+      :addItem="addItem"
+      :removeItem="removeItem"
+      :onSubmit="updatePurchase"
+      submitButtonText="تعديل"
+      :reCalculatePurchaseAfterChange="reCalculatePurchaseAfterChange"
+      :print="openPrintPopup"
+      :closeDialog="closeUpdatePopup"
+    />
+  </EmptyDialog>
 
-    <EmptyDialog
-      v-if="printPopup"
-      :title="supplierName"
-      :close-dialog="closePrintPopup"
-    >
-      <PurchasePrint
-        :purchase="purchase"
-        :supplier="supplier"
-        :closeDialog="closePrintPopup"
-      />
-    </EmptyDialog>
-    <div class="w-full items-center justify-center flex">
-      <PaginationItems
-        v-if="
-          purchasesStatus.success &&
-          purchasesStore.purchases.length &&
-          rawMaterialsStatus.success
-        "
-        :currentPage="pagination.currentPage"
-        :totalPages="pagination.lastPage"
-        :goToPage="(page: number) => { fetchPurchasesBySupplier(page, props.supplierId) }"
-      />
-    </div>
+  <EmptyDialog
+    v-if="printPopup"
+    :title="supplierName"
+    :close-dialog="closePrintPopup"
+  >
+    <PurchasePrint
+      :purchase="purchase"
+      :supplier="supplier"
+      :closeDialog="closePrintPopup"
+    />
+  </EmptyDialog>
+</div>
+  <div class="w-full items-center justify-center flex">
+    <PaginationItems
+      v-if="
+        purchasesStatus.success &&
+        purchasesStore.purchases.length &&
+        rawMaterialsStatus.success
+      "
+      :currentPage="pagination.currentPage"
+      :totalPages="pagination.lastPage"
+      :goToPage="(page: number) => { fetchPurchasesBySupplier(page, props.supplierId) }"
+    />
   </div>
 </template>
 

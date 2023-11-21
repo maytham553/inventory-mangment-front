@@ -1,41 +1,40 @@
 <template>
-  <div class="h-full w-full flex flex-col justify-between items-center">
-    <div class="flex flex-col justify-center items-center w-full">
-      <div class="flex justify-center items-center gap-5 w-full">
-        <div class="w-1/3">
-          <Search
-            :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
-            placeholder="التسلسل"
-          />
-        </div>
-        <button
-          @click="openCreatePopup"
-          type="button"
-          class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
-        >
-          إضافة
-        </button>
-      </div>
+  <div class="w-full pb-16">
+    <div class="flex justify-center items-center gap-5 w-full"
+    v-if="salesStatus.success && productsStatus.success"
+    >
+      <Search
+        :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
+        placeholder="التسلسل"
+      />
 
-      <div class="flex justify-center items-center w-full">
-        <div
-          v-if="salesStatus.loading || productsStatus.loading"
-          class="flex justify-center items-center m-10"
-        >
-          <Loading stroke-color="#8f8f8f" />
-        </div>
-        <div
-          v-if="salesStatus.error || productsStatus.error"
-          class="text-red-500 text-sm flex justify-center items-center m-10"
-        >
-          {{ salesStatus.message || productsStatus.message }}
-        </div>
-        <div
-          v-if="salesStatus.success && !salesStore.sales.length"
-          class="flex justify-center items-center m-10"
-        >
-          <h1 class="text-2xl text-gray-500">لا يوجد فواتير بيع</h1>
-        </div>
+      <button
+        @click="openCreatePopup"
+        type="button"
+        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
+      >
+        إضافة
+      </button>
+    </div>
+
+    <div class="flex justify-center items-center w-full">
+      <div
+        v-if="salesStatus.loading || productsStatus.loading"
+        class="flex justify-center items-center m-10"
+      >
+        <Loading stroke-color="#8f8f8f" />
+      </div>
+      <div
+        v-if="salesStatus.error || productsStatus.error"
+        class="text-red-500 text-sm flex justify-center items-center m-10"
+      >
+        {{ salesStatus.message || productsStatus.message }}
+      </div>
+      <div
+        v-if="salesStatus.success && !salesStore.sales.length"
+        class="flex justify-center items-center m-10"
+      >
+        <h1 class="text-2xl text-gray-500">لا يوجد فواتير بيع</h1>
       </div>
     </div>
 

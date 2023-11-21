@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col pb-16 container items-center justify-around">
+  <div class="flex flex-col pb-16 container items-center w-full justify-around">
     <div class="bg-white rounded-lg py-4 z-50 w-full">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">{{ name }}</h2>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="flex-1 mb-2">
+    <div class="w-full mb-2">
       <div class="flex items-center flex-row justify-center gap-2">
         <button
           @click="() => changeActive('purchases')"
@@ -53,7 +53,7 @@
           التعاملات
         </button>
       </div>
-      <div class="mt-4 h-full" v-if="operationNav.active === 'purchases'">
+      <div class="mt-4 h-full w-full" v-if="operationNav.active === 'purchases'">
         <!-- <h2 class="text-xl font-semibold">المشتريات</h2> -->
         <PurchaseContainer :supplierId="id" :supplierName="name" />
       </div>

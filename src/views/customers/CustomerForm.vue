@@ -3,7 +3,7 @@
     @submit.prevent="handleSubmit"
     class="flex justify-center flex-col items-center"
   >
-  <h1 class="text-secondary text-4xl mb-8 font-bold"> إضافة عميل</h1>
+    <h1 class="text-secondary text-4xl mb-8 font-bold">إضافة عميل</h1>
 
     <div class="bg-gray-100 sm:w-[400px] p-5 rounded-2xl">
       <div class="mb-4">

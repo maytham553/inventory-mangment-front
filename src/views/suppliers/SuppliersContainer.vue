@@ -5,7 +5,10 @@
         كل الموردين
       </h1>
 
-      <div class="w-2/3 flex items-center justify-start">
+      <div
+      v-if="status.success && suppliers.length"
+    class="flex justify-between items-center gap-5 w-full"
+  >
         <Search
           :handleSearch="fetchSuppliers"
           placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة"
@@ -33,7 +36,7 @@
     </div>
     <div
       v-if="status.success && !suppliers.length"
-      class="flex justify-center items-center h-full"
+      class="flex justify-center items-center my-5 h-full"
     >
       <h1 class="text-2xl text-gray-500">لا يوجد موردين</h1>
     </div>

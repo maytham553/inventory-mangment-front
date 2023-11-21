@@ -29,7 +29,7 @@
         <p>{{ note }}</p>
       </div>
     </div>
-    <div class="flex-1 mb-2">
+    <div class="w-full mb-2">
       <div class="flex items-center flex-row justify-center gap-2">
         <button
           @click="() => changeActive('sales')"

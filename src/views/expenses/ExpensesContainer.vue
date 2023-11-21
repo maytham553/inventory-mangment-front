@@ -30,7 +30,7 @@
       v-if="expensesStatus.success && !expenses.length"
       class="flex justify-center items-center mt-10 h-full"
     >
-      <span class="text-gray-500 text-center h-5">
+      <span class="text-gray-500 text-center my-5 h-5">
         <span>لا يوجد تعاملات</span>
       </span>
     </div>

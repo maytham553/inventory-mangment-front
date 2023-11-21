@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col gap-1">
     <button
       @click="openCreatePopup"
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 max-w-xs px-4 rounded-lg"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 mb-2 max-w-xs px-4 rounded-lg"
     >
       إضافة عملية
     </button>
@@ -24,7 +24,7 @@
       v-if="customerTransactionsStatus.success && !customerTransactions.length"
       class="flex justify-center items-center h-full"
     >
-      <span class="text-gray-500 text-center h-5">
+      <span class="text-gray-500 text-center h-5 my-5">
         <span>لا يوجد تعاملات</span>
       </span>
     </div>
