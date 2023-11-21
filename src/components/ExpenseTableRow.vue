@@ -9,15 +9,15 @@
     <td class="px-1 text-gray-600 text-right truncate">{{ expense.amount }}</td>
     <td>{{ expense.title }}</td>
     <td
-      class="px-1 text-gray-600 text-right h-full py-1 lg:max-w-[400px] "
+      class="px-1 text-gray-600 text-right h-full py-1 lg:max-w-[300px] "
       data-content={{expense.description}}
     >
       {{ expense.description }}
     </td>
-    <td class="px-1 text-gray-600 text-center lg:max-w-[50px] truncate ltr">
+    <td class="px-1 text-gray-600 text-center  truncate ltr">
       {{ ISO8601DateToHumanDate(expense.created_at) }}
     </td>
-    <td class="px-1 text-gray-600 text-center lg:max-w-[50px] truncate ltr">
+    <td class="px-1 text-gray-600 text-center  truncate ltr">
       {{ ISO8601DateToHumanDate(expense.updated_at) }}
     </td>
   </tr>
