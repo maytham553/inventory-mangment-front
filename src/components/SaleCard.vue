@@ -17,18 +17,18 @@
       <span>{{ sale.status }}</span>
     </div>
 
-    <div class="flex justify-between gap-4 items-center">
+    <div class="flex justify-between gap-4 mt-5 items-center">
       <button
         @click="() => updateHandler(sale)"
         class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
       >
-        > تعديل
+         تعديل
       </button>
       <button
         @click="() => showHandler(sale.id)"
         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       >
-        > عرض
+       عرض
       </button>
     </div>
   </div>

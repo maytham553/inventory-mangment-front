@@ -1,15 +1,23 @@
 <template>
-  <tr class="h-10" :class="{ 'bg-blue-100': isEvenRow, 'bg-blue-50': isOddRow }">
-    <td class=" text-center">{{ expense.id }}</td>
-    <td class=" ">{{ expense.amount }}</td>
-    <td>{{ expense.title }}</td>
-    <td class="  ">
-      {{ expense.description || "N/A" }}
+  <tr
+    class="h-10 hover:bg-secondary/50 cursor-pointer"
+    :class="{ 'bg-gray-100': isEvenRow, 'bg-white': isOddRow }"
+  >
+    <td class="px-1 text-gray-600 w-[20px] truncate text-center">
+      {{ expense.id }}
     </td>
-    <td class="ltr">
+    <td class="px-1 text-gray-600 text-right truncate">{{ expense.amount }}</td>
+    <td>{{ expense.title }}</td>
+    <td
+      class="px-1 text-gray-600 text-right h-full py-1 lg:max-w-[400px] "
+      data-content={{expense.description}}
+    >
+      {{ expense.description }}
+    </td>
+    <td class="px-1 text-gray-600 text-center lg:max-w-[50px] truncate ltr">
       {{ ISO8601DateToHumanDate(expense.created_at) }}
     </td>
-    <td class="ltr">
+    <td class="px-1 text-gray-600 text-center lg:max-w-[50px] truncate ltr">
       {{ ISO8601DateToHumanDate(expense.updated_at) }}
     </td>
   </tr>
