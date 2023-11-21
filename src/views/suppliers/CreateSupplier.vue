@@ -1,6 +1,7 @@
 
-import SupplierForm from './SupplierForm.vue';
+
 <template>
+    
     <div class="m-auto  lg:p-24 p-10 lg:h-screen relative z-10 ">
 
         <SupplierForm :supplier="suppliersStore.initialSupplier" :governorates="governoratesStore.governorates"

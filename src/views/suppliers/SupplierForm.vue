@@ -3,7 +3,9 @@
     @submit.prevent="handleSubmit"
     class="w-full h-full flex justify-center flex-col items-center"
   >
-    <div class="bg-gray-100 p-5 sm:w-[400px] rounded-2xl">
+  <h1 class="text-secondary text-4xl mb-8 font-bold"> إضافة مورد</h1>
+
+    <div class="bg-gray-100 p-5 sm:w-[400px] shadow-lg rounded-2xl">
       <div class="mb-4">
         <label for="name" class="block text-gray-700 m-1">الاسم</label>
         <input

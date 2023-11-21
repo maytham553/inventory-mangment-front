@@ -1,7 +1,6 @@
 <!-- From New Branch -->
 <template>
-  <div class="lg:w-screen relative z-10 lg:h-screen 
-  mx-auto p-0 bg-gray-100">
+  <div class="lg:w-screen relative z-10 lg:h-screen mx-auto p-0 bg-gray-100">
     <!-- <div class="h-screen col-span-1 p-5 bg-secondary flex flex-col justify-center items-center">
             <h1 class="text-gray-100 font-black	 text-3xl">اهلاً بك مجدداً</h1><br>
             <p class="text-gray-100 font-bold ">أدخل معلوماتك للدخول الى حسابك</p>
