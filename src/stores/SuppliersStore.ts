@@ -162,13 +162,14 @@ export const useSuppliersStore = defineStore('suppliers', {
             } as Status
         },
         updateBalance(id: number, amount: number, type: TransactionType) {
-            if (this.supplier.id === id) {
-                if (type === 'credit') {
-                    this.supplier.balance! = parseInt(amount) + parseInt(this.supplier.balance!)
-                } else {
-                    this.supplier.balance! = parseInt(amount) - parseInt(this.supplier.balance!)
-                }
-            }
+            // if (this.supplier.id === id) {
+            //     if (type === 'credit') {
+            //         this.supplier.balance! = parseInt(amount) + parseInt(this.supplier.balance!)
+            //     } else {
+            //         this.supplier.balance! = parseInt(amount) - parseInt(this.supplier.balance!)
+            //     }
+            // }
+            this.reCalculateBalance(id)
         },
         handleSupplierError(error: any) {
             this.supplierStatus.error = true

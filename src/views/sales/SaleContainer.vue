@@ -1,113 +1,53 @@
 <template>
   <div class="w-full pb-16">
-    <div class="flex justify-center items-center gap-5 w-full"
-    v-if="salesStatus.success && productsStatus.success"
-    >
-      <Search
-        :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
-        placeholder="التسلسل"
-      />
+    <div class="flex justify-center items-center gap-5 w-full" v-if="salesStatus.success && productsStatus.success">
+      <Search :handleSearch="(page = 1, search: string) => { fetchSalesOfCustomer(page, props.customerId, search) }"
+        placeholder="التسلسل" />
 
-      <button
-        @click="openCreatePopup"
-        type="button"
-        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
-      >
+      <button @click="openCreatePopup" type="button"
+        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
         إضافة
       </button>
     </div>
 
     <div class="flex justify-center items-center w-full">
-      <div
-        v-if="salesStatus.loading || productsStatus.loading"
-        class="flex justify-center items-center m-10"
-      >
+      <div v-if="salesStatus.loading || productsStatus.loading" class="flex justify-center items-center m-10">
         <Loading stroke-color="#8f8f8f" />
       </div>
-      <div
-        v-if="salesStatus.error || productsStatus.error"
-        class="text-red-500 text-sm flex justify-center items-center m-10"
-      >
+      <div v-if="salesStatus.error || productsStatus.error"
+        class="text-red-500 text-sm flex justify-center items-center m-10">
         {{ salesStatus.message || productsStatus.message }}
       </div>
-      <div
-        v-if="salesStatus.success && !salesStore.sales.length"
-        class="flex justify-center items-center m-10"
-      >
+      <div v-if="salesStatus.success && !salesStore.sales.length" class="flex justify-center items-center m-10">
         <h1 class="text-2xl text-gray-500">لا يوجد فواتير بيع</h1>
       </div>
     </div>
 
-    <SalesList
-      v-if="salesStatus.success && productsStatus.success"
-      :sales="salesStore.sales"
-      :customerName="customerName"
-      :update="openUpdatePopup"
-      :show="() => {}"
-    />
+    <SalesList v-if="salesStatus.success && productsStatus.success" :sales="salesStore.sales" :customerName="customerName"
+      :update="openUpdatePopup" :show="() => { }" />
 
-    <EmptyDialog
-      v-if="createPopup"
-      :title="String(customerId)"
-      :close-dialog="closeCreatePopup"
-    >
-      <CreateSale
-        v-if="createPopup"
-        :sale="salesStore.sale"
-        :saleStatus="saleStatus"
-        :products="products"
-        :productsStatus="productsStatus"
-        :addItem="addItem"
-        :removeItem="removeItem"
-        :onSubmit="createSale"
-        submitButtonText="حفظ"
-        :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
-        :print="openPrintPopup"
-        :clearForm="salesStore.setInitialSale"
-      />
+    <EmptyDialog v-if="createPopup" :title="String(customerId)" :close-dialog="closeCreatePopup">
+      <CreateSale v-if="createPopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
+        :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="createSale"
+        submitButtonText="حفظ" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange" :print="openPrintPopup"
+        :clearForm="salesStore.setInitialSale" />
     </EmptyDialog>
 
-    <EmptyDialog
-      v-if="updatePopup"
-      :title="String(customerId)"
-      :close-dialog="closeUpdatePopup"
-    >
-      <UpdateSale
-        v-if="updatePopup"
-        :sale="salesStore.sale"
-        :saleStatus="saleStatus"
-        :products="products"
-        :productsStatus="productsStatus"
-        :addItem="addItem"
-        :removeItem="removeItem"
-        :onSubmit="updateSale"
-        submitButtonText="تعديل"
-        :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
-        :print="openPrintPopup"
-        :closeDialog="closeUpdatePopup"
-      />
+    <EmptyDialog v-if="updatePopup" :title="String(customerId)" :close-dialog="closeUpdatePopup">
+      <UpdateSale v-if="updatePopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
+        :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="updateSale"
+        submitButtonText="تعديل" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
+        :print="openPrintPopup" :closeDialog="closeUpdatePopup" />
     </EmptyDialog>
 
-    <EmptyDialog
-      v-if="printPopup"
-      :title="customerName"
-      :close-dialog="closePrintPopup"
-    >
-      <SalePrint
-        :sale="sale"
-        :customer="customer"
-        :closeDialog="closePrintPopup"
-      />
+    <EmptyDialog v-if="printPopup" :title="customerName" :close-dialog="closePrintPopup">
+      <SalePrint :sale="sale" :customer="customer" :closeDialog="closePrintPopup" />
     </EmptyDialog>
-
-    <PaginationItems
-      v-if="
-        salesStatus.success && salesStore.sales.length && productsStatus.success
-      "
-      :currentPage="pagination.currentPage"
-      :totalPages="pagination.lastPage"
-      :goToPage="(page: number) => { salesStore.fetchSalesOfCustomer(page, props.customerId) }"
-    />
+    <div class="w-full flex justify-center items-center">
+      <PaginationItems v-if="salesStatus.success && salesStore.sales.length && productsStatus.success
+        " :currentPage="pagination.currentPage" :totalPages="pagination.lastPage"
+        :goToPage="(page: number) => { salesStore.fetchSalesOfCustomer(page, props.customerId) }" />
+    </div>
   </div>
 </template>
 
@@ -174,6 +114,7 @@ const removeItem = (id: number) => {
   salesStore.removeProductFromSale(id);
 };
 const createSale = async (data: Sale) => {
+  data.previous_balance = customer.value.balance;
   await salesStore.createSale(data);
 };
 const updateSale = async (data: Sale) => {

@@ -162,13 +162,14 @@ export const useCustomersStore = defineStore('customers', {
             } as Status
         },
         updateBalance(id: number, balance: number, type: TransactionType) {
-            if (this.customer.id === id) {
-                if (type === 'credit') {
-                    this.customer.balance! = balance + this.customer.balance!
-                } else {
-                    this.customer.balance! = parseInt(balance) - parseInt(this.customer.balance!)
-                }
-            }
+            // if (this.customer.id === id) {
+            //     if (type === 'credit') {
+            //         this.customer.balance! = balance + this.customer.balance!
+            //     } else {
+            //         this.customer.balance! = parseInt(balance) - parseInt(this.customer.balance!)
+            //     }
+            // }
+            this.reCalculateBalance(id)
         },
         handleCustomerError(error: any) {
             this.customerStatus.error = true

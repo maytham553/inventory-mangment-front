@@ -1,11 +1,7 @@
 <template>
   <section class="bg-gray-100 py-20 px-10">
     <div class="flex justify-center items-center w-full">
-      <button
-        @click="print"
-        type="button"
-        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
-      >
+      <button @click="print" type="button" class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
         طباعة
       </button>
     </div>
@@ -62,46 +58,25 @@
           <table class="w-full divide-y divide-gray-200 text-sm">
             <thead>
               <tr>
-                <th
-                  scope="col"
-                  class="px-3 py-4 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
                   تسلسل
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-4 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
                   المنتج
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-4 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
                   الكمية
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-4 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
                   السعر
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-3 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
                   الخصم
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-3 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
                   المبلغ الجزئي
                 </th>
-                <th
-                  scope="col"
-                  class="px-3 py-3 text-right font-semibold text-gray-400"
-                >
+                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
                   المبلغ الكلي
                 </th>
               </tr>
@@ -127,12 +102,8 @@
             </tbody>
           </table>
 
-          <div
-            class="space-y-3 flex flex-col justify-between items-center m-10"
-          >
-            <div
-              class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg"
-            >
+          <div class="space-y-3 flex flex-col justify-between items-center m-10">
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">المجموع الجزئي</p>
               </div>
@@ -140,22 +111,38 @@
                 {{ sale.subtotal_amount }}
               </p>
             </div>
-            <div
-              class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg"
-            >
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">خصم</p>
               </div>
               <p class="text-gray-500 text-sm">{{ sale.discount_amount }}</p>
             </div>
-            <div
-              class="flex justify-betwee w-full border-b-2n bg-gray-200 p-2 rounded-lg"
-            >
+            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">المجموع الكلي</p>
               </div>
               <p class="text-gray-500 text-sm">{{ sale.total_amount }}</p>
             </div>
+            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+              <div>
+                <p class="text-gray-500 text-sm">الرصيد السابق</p>
+              </div>
+              <p class="text-gray-500 text-sm">{{ sale.previous_balance }}</p>
+            </div>
+            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+              <div>
+                <p class="text-gray-500 text-sm">اسم السائق</p>
+                <p class="text-gray-500 text-sm">{{ sale.driver_name }}</p>
+              </div>
+            </div>
+            // current balance is the minuse of previous balance and total amount
+            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+              <div>
+                <p class="text-gray-500 text-sm">الرصيد الحالي</p>
+              </div>
+              <p class="text-gray-500 text-sm">{{ (sale.previous_balance || 0) - sale.total_amount }}</p>
+            </div>
+
           </div>
         </div>
       </article>
@@ -192,7 +179,7 @@ const print = () => {
   printJS({
     printable: "print",
     type: "html",
-    css: "src/assets/main.css",
+    css: "./assets/index-60698d9d.css",
     scanStyles: false,
     targetStyles: ["*"],
     style: `

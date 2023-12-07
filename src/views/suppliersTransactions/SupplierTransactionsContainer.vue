@@ -1,8 +1,8 @@
 <template>
-  <div class="h-full w-full flex flex-col justify-between items-center">
+  <div class="w-full flex flex-col gap-1">
     <button
       @click="openCreatePopup"
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 mb-2 max-w-xs px-4 rounded-lg"
     >
       إضافة عملية
     </button>
@@ -29,16 +29,14 @@
       </span>
     </div>
     <SupplierTransactionsList :transactions="supplierTransactions" />
+    <div class="w-full items-center justify-center flex">
     <PaginationItems
       v-if="!supplierTransactionsStatus.error"
-      :currentPage="
-        SupplierTransactionsStore.getSupplierTransactionsPagination.currentPage
-      "
-      :totalPages="
-        SupplierTransactionsStore.getSupplierTransactionsPagination.lastPage
-      "
+      :currentPage="SupplierTransactionsStore.getSupplierTransactionsPagination.currentPage"
+      :totalPages="SupplierTransactionsStore.getSupplierTransactionsPagination.lastPage"
       :goToPage="(page: number) => { SupplierTransactionsStore.fetchSupplierTransactionsBySupplierId(props.supplierId, page) }"
     />
+    </div>
     <EmptyDialog
       v-if="createPopup"
       title="إضافة"

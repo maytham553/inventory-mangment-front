@@ -5,89 +5,44 @@
         كل الموردين
       </h1>
 
-      <div
-      v-if="status.success && suppliers.length"
-    class="flex justify-between items-center gap-5 w-full"
-  >
-        <Search
-          :handleSearch="fetchSuppliers"
-          placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة"
-        />
+      <div v-if="status.success" class="flex justify-between items-center gap-5 w-full">
+        <Search :handleSearch="fetchSuppliers" placeholder="التسلسل , الاسم  , رقم الهاتف , محافظة" />
       </div>
     </div>
-    <div
-      v-if="status.loading"
-      class="flex justify-center items-center  "
-    >
+    <div v-if="status.loading" class="flex justify-center items-center  ">
       <Loading stroke-color="#8f8f8f" />
     </div>
-  
+
     <div v-if="status.error" class="flex justify-center items-center  ">
       <h1 class="text-2xl text-gray-500">{{ status.message }}</h1>
     </div>
     <div v-if="status.success && suppliers.length">
-      <ListSuppliers
-        :suppliers="suppliers"
-        :openUpdateDialog="openUpdateDialog"
-        :openDeleteDialog="openDeleteDialog"
-        :openShowDialog="openShowDialog"
-        :getGovernorateNameById="getGovernorateNameById"
-      />
+      <ListSuppliers :suppliers="suppliers" :openUpdateDialog="openUpdateDialog" :openDeleteDialog="openDeleteDialog"
+        :openShowDialog="openShowDialog" :getGovernorateNameById="getGovernorateNameById" />
     </div>
-    <div
-      v-if="status.success && !suppliers.length"
-      class="flex justify-center items-center my-5 h-full"
-    >
+    <div v-if="status.success && !suppliers.length" class="flex justify-center items-center my-5 ">
       <h1 class="text-2xl text-gray-500">لا يوجد موردين</h1>
     </div>
   </div>
   <div class="flex items-center w-full bg-white justify-center">
 
-  <PaginationItems
-    v-if="status.success && suppliers.length"
-    :totalPages="pagination.lastPage"
-    :currentPage="pagination.currentPage"
-    :goToPage="suppliersStore.fetchSuppliers"
-  />
-</div>
+    <PaginationItems v-if="status.success && suppliers.length" :totalPages="pagination.lastPage"
+      :currentPage="pagination.currentPage" :goToPage="suppliersStore.fetchSuppliers" />
+  </div>
 
-  <EmptyDialog
-    v-if="updatePopup"
-    title="تعديل المورد"
-    :close-dialog="closeUpdateDialog"
-  >
-    <updateSupplier
-      v-if="updatePopup"
-      :supplier="supplier"
-      :governorates="governoratesStore.governorates"
-      :status="suppliersStore.getSupplierStatus"
-      :close-dialog="closeUpdateDialog"
-      :updateSupplier="suppliersStore.updateSupplier"
-    />
+  <EmptyDialog v-if="updatePopup" title="تعديل المورد" :close-dialog="closeUpdateDialog">
+    <updateSupplier v-if="updatePopup" :supplier="supplier" :governorates="governoratesStore.governorates"
+      :status="suppliersStore.getSupplierStatus" :close-dialog="closeUpdateDialog"
+      :updateSupplier="suppliersStore.updateSupplier" />
   </EmptyDialog>
   <EmptyDialog v-if="showPopup" title="" :close-dialog="closeShowDialog">
-    <ShowSupplier
-      v-if="showPopup"
-      :id="supplier.id!"
-      :name="supplier.name"
-      :address="supplier.address"
-      :phone="supplier.phone"
-      :governorate="getGovernorateNameById(supplier.governorate_id)"
-      :balance="supplier.balance!"
-      :reCalculateBalance="suppliersStore.reCalculateBalance"
-    />
+    <ShowSupplier v-if="showPopup" :id="supplier.id!" :name="supplier.name" :address="supplier.address"
+      :phone="supplier.phone" :governorate="getGovernorateNameById(supplier.governorate_id)" :balance="supplier.balance!"
+      :reCalculateBalance="suppliersStore.reCalculateBalance" />
   </EmptyDialog>
 
-  <TrueOrFalseDialog
-    v-if="deletePopup"
-    :title="'حذف'"
-    :message="
-      'وجميع تعاملاته ؟ ' + supplier.name + 'هل انت متاكد انك تريد حذف المورد'
-    "
-    :trueText="'نعم, احذفه'"
-    :falseText="'الغاء'"
-    :selectOption="handleDelete"
-  />
+  <TrueOrFalseDialog v-if="deletePopup" :title="'حذف'" :message="'وجميع تعاملاته ؟ ' + supplier.name + 'هل انت متاكد انك تريد حذف المورد'
+    " :trueText="'نعم, احذفه'" :falseText="'الغاء'" :selectOption="handleDelete" />
 </template>
 
 <script lang="ts" setup>

@@ -138,9 +138,9 @@ export const usePurchasesStore = defineStore('purchases', {
         addRawMaterialToPurchase(rawMaterial: RawMaterial) {
             const id = rawMaterial.id;
             const rawMaterialIndex = this.purchase.raw_materials.findIndex((rawMaterial) => rawMaterial.raw_material_id === id)
-            if (rawMaterialIndex !== -1) {
-                this.purchase.raw_materials[rawMaterialIndex].quantity! += 1
-            } else {
+            // if (rawMaterialIndex !== -1) {
+            //     this.purchase.raw_materials[rawMaterialIndex].quantity! += 1
+            // } else {
                 const purchaseRawMaterial: PurchaseRawMaterial = {
                     ...rawMaterial,
                     raw_material_id: rawMaterial.id,
@@ -153,7 +153,7 @@ export const usePurchasesStore = defineStore('purchases', {
                     discount_percentage: 0,
                 }
                 this.purchase.raw_materials.push(purchaseRawMaterial)
-            }
+            // }
         },
         removeRawMaterialFromPurchase(id: number) {
             const rawMaterialIndex = this.purchase.raw_materials.findIndex((rawMaterial) => rawMaterial.raw_material_id === id)

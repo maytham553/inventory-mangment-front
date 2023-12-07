@@ -30,7 +30,7 @@
     </div>
     <div
       v-if="status.success && !customers.length"
-      class="flex justify-center items-center h-full"
+      class="flex justify-center items-center "
     >
       <h1 class="text-2xl text-gray-500">لا يوجد عملاء</h1>
     </div>

@@ -18,6 +18,7 @@ export interface SaleProduct extends Product {
 
 export interface Sale {
     id: number;
+    user_id: number;
     customer_id: number;
     total_amount: number;
     subtotal_amount: number;
@@ -26,6 +27,8 @@ export interface Sale {
     status: SaleStatus;
     note: string;
     products: SaleProduct[];
+    previous_balance?: number;
+    driver_name?: string;
     created_at: string;
     updated_at: string;
 }

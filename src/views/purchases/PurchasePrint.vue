@@ -202,7 +202,7 @@ const print = () => {
   printJS({
     printable: "print",
     type: "html",
-    css: "src/assets/main.css",
+    css: "./assets/index-60698d9d.css",
     scanStyles: false,
     targetStyles: ["*"],
     style: `
