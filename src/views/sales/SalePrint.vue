@@ -15,7 +15,9 @@
                   <div>
                     <img class="h-16 object-cover mb-4" :src="logo" />
                     <p class="font-bold text-lg">فاتورة بيع</p>
-                    <p class="font-bold">معمل الصفا للاسفنج</p>
+                    <p class="font-bold">معمل الصفا لمنتوجات الاسفنج والديباجات</p>
+                    <p class="font-bold"> العراق - النجف - طريق بحر النجف - شارع المعامل</p>
+                    <p class="font-bold">07859233300</p>
                   </div>
                   <div>
                     <p class="font-medium text-sm text-gray-400">حضرة السيد</p>
@@ -46,7 +48,13 @@
                   <div>
                     <p class="font-medium text-sm text-gray-400">الحالة</p>
                     <p>{{ convertPurchaseStatusToArabic(sale.status) }}</p>
+                  </div> 
+                  <div>
+                    <p class="font-medium text-sm text-gray-400">معرف منظم الفاتورة</p>
+                    <p>{{ sale.user_id
+                     }}</p>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -117,34 +125,32 @@
               </div>
               <p class="text-gray-500 text-sm">{{ sale.discount_amount }}</p>
             </div>
-            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">المجموع الكلي</p>
               </div>
               <p class="text-gray-500 text-sm">{{ sale.total_amount }}</p>
             </div>
-            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">الرصيد السابق</p>
               </div>
-              <p class="text-gray-500 text-sm">{{ sale.previous_balance }}</p>
+              <p class="text-gray-500 text-sm">{{ (sale.previous_balance || 0) * -1 }}</p>
             </div>
-            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">اسم السائق</p>
-                <p class="text-gray-500 text-sm">{{ sale.driver_name }}</p>
-              </div>
-            </div>
-            // current balance is the minuse of previous balance and total amount
-            <div class="flex justify-between w-full border-b-2n bg-gray-200 p-2 rounded-lg">
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
               <div>
                 <p class="text-gray-500 text-sm">الرصيد الحالي</p>
               </div>
-              <p class="text-gray-500 text-sm">{{ (sale.previous_balance || 0) - sale.total_amount }}</p>
+              <p class="text-gray-500 text-sm">{{ ((sale.previous_balance || 0) - sale.total_amount) * -1 }}</p>
             </div>
-
+            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
+              <div>
+                <p class="text-gray-500 text-sm">اسم السائق</p>
+              </div>
+              <p class="text-gray-500 text-sm">{{ sale.driver_name }}</p>
+            </div>
           </div>
-        </div>
+        </div>  
       </article>
     </div>
   </section>
