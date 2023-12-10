@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">{{ name }}</h2>
         <span :class="balanceClass">
-          {{ formatCurrency(balance) }}
+          {{ formatCurrency(balance * -1) }}
           <button
             @click="
               () => {
