@@ -7,4 +7,7 @@ export const auth = {
     logout: () => {
         return axios.post('/auth/logout');
     }, 
+    currentUser: () => {
+        return axios.get('/auth/users/currentUser');
+    }
 };

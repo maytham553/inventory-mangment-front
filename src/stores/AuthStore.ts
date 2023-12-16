@@ -15,6 +15,9 @@ export const useAuthStore = defineStore('auth', {
     }),
     getters: {
         isLoggedIn: (state) => !!state.token,
+        getUserType: (state) => state.user?.type,
+        isUser: (state) => state.user?.type === 'User',
+        isAdmin: (state) => state.user?.type === 'Admin',
     },
     actions: {
         async login(email: string, password: string) {
@@ -42,6 +45,19 @@ export const useAuthStore = defineStore('auth', {
                 this.status.loading = false
                 this.status.error = false
                 router.push({ name: 'Login' })
+            } catch (error: any) {
+                this.handleError(error)
+                throw error
+            }
+        },
+        async fetchCurrentUser() {
+            try {
+                this.status.loading = true
+                const response = await auth.currentUser()
+                this.user = response.data.data
+                this.status.success = true
+                this.status.loading = false
+                this.status.error = false
             } catch (error: any) {
                 this.handleError(error)
                 throw error

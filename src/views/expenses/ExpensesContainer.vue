@@ -8,55 +8,35 @@
       <div class="w-1/2">
         <Search :handleSearch="fetchExpenses" placeholder="التسلسل ,العنوان" />
       </div>
-      <button
-        @click="openCreatePopup"
-        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg w-30"
-      >
+      <button @click="openCreatePopup"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg w-30">
         إضافة عملية
       </button>
     </div>
 
-    <div
-      v-if="expensesStatus.error"
-      class="flex justify-center items-center h-full"
-    >
+    <div v-if="expensesStatus.error" class="flex justify-center items-center h-full">
       <span class="text-red-500 text-center h-5">
         <span>{{ expensesStatus.message }}</span>
       </span>
     </div>
 
     <ExpensesList :expenses="expenses" />
-    <div
-      v-if="expensesStatus.success && !expenses.length"
-      class="flex justify-center items-center mt-10 h-full"
-    >
+    <div v-if="expensesStatus.success && !expenses.length" class="flex justify-center items-center mt-10 h-full">
       <span class="text-gray-500 text-center my-5 h-5">
         <span>لا يوجد تعاملات</span>
       </span>
     </div>
-    <div
-      v-if="expensesStatus.loading"
-      class="flex justify-center items-center mt-10 h-full"
-    >
+    <div v-if="expensesStatus.loading" class="flex justify-center items-center mt-10 h-full">
       <Loading stroke-color="#8f8f8f" />
     </div>
   </div>
   <div class="flex items-center w-full bg-white justify-center">
-    <PaginationItems
-      v-if="!expensesStatus.error"
-      :currentPage="ExpensesStore.getExpensesPagination.currentPage"
-      :totalPages="ExpensesStore.getExpensesPagination.lastPage"
-      :goToPage="fetchExpenses"
-    />
+    <PaginationItems v-if="!expensesStatus.error" :currentPage="ExpensesStore.getExpensesPagination.currentPage"
+      :totalPages="ExpensesStore.getExpensesPagination.lastPage" :goToPage="fetchExpenses" />
   </div>
 
-  <EmptyDialog
-    v-if="createPopup"
-    title="إضافة"
-    :onClose="closeCreatePopup"
-    :closeDialog="closeCreatePopup"
-  >
-    <CreateExpense :createExpense="createExpense" :status="expenseStatus" />
+  <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
+    <CreateExpense />
   </EmptyDialog>
 </template>
 
@@ -74,7 +54,6 @@ import Search from "@/components/Search.vue";
 
 const ExpensesStore = useExpensesStore();
 const createPopup = ref(false);
-const expenseStatus = storeToRefs(ExpensesStore).expenseStatus;
 const expensesStatus = storeToRefs(ExpensesStore).expensesStatus;
 const expenses = storeToRefs(ExpensesStore).expenses;
 const fetchExpenses = ExpensesStore.fetchExpenses;
@@ -86,10 +65,6 @@ const closeCreatePopup = () => {
   createPopup.value = false;
 };
 
-const createExpense = async (data: Expense) => {
-  await ExpensesStore.createExpense(data);
-  createPopup.value = false;
-};
 
 onMounted(async () => {
   await fetchExpenses(1);

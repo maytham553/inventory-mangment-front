@@ -6,21 +6,16 @@
 import { defineProps } from 'vue';
 import { type Status, type Expense } from '../../Types';
 import ExpenseForm from './ExpenseForm.vue';
+import { useExpensesStore } from "../../stores";
 
-const props = defineProps({
-    status: {
-        type: Object as () => Status,
-        required: true,
-    },
-    createExpense: {
-        type: Function,
-        required: true,
-    },
-});
 
+
+const expensesStore = useExpensesStore();
+const status = expensesStore.expenseStatus;
 const createHandler = async (data: Expense) => {
-    await props.createExpense(data);
-};
+    await expensesStore.createExpense(data);
+    expensesStore.expense = {} as Expense;
+}
 </script>
 
 
