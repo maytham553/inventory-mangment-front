@@ -2,7 +2,7 @@ import { useAuthStore } from '@/stores';
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://api.safa-sponge.com/api',
+    baseURL: 'https://apitest.safa-sponge.com/api',
 });
 
 instance.interceptors.request.use(
