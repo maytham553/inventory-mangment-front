@@ -1,8 +1,10 @@
+import router from '@/router';
 import { useAuthStore } from '@/stores';
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://apitest.safa-sponge.com/api',
+    // baseURL: 'https://api.safa-sponge.com/api',
+    baseURL: 'http://127.0.0.1:8000/api',
 });
 
 instance.interceptors.request.use(
@@ -21,9 +23,10 @@ instance.interceptors.response.use(
     },
     (error) => {
         const authStore = useAuthStore();
-        if (error.response && error.response.status === 401) {
+        if (error.response &&
+             error.response.status === 401) {
             authStore.clearAuthToken()
-            window.location.reload();
+            router.push({ name: 'Login' });
         }
         return Promise.reject(error);
     }

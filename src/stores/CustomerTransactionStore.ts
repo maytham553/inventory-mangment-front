@@ -64,6 +64,31 @@ export const useCustomerTransactionsStore = defineStore({
                 this.customerTransactionsStatus.loading = false;
             }
         },
+        async fetchCustomerTransactionsWithDate(id: number, page: number, from: string, to: string) {
+            this.clearCustomerTransactionsStatus();
+            this.customerTransactionsStatus.loading = true;
+            this.customerTransactions = [];
+            try {
+                const { data } = await transactions.getCustomerTransactionsWithDate(id, page, from, to);
+                this.customerTransactions = data.data.data;
+                this.customerTransactionsPagination = {
+                    currentPage: data.data.current_page,
+                    firstPageUrl: data.data.first_page_url,
+                    lastPageUrl: data.data.last_page_url,
+                    nextPageUrl: data.data.next_page_url,
+                    prevPageUrl: data.data.prev_page_url,
+                    lastPage: data.data.last_page,
+                    perPage: data.data.per_page,
+                    total: data.data.total,
+                }
+                this.customerTransactionsStatus.success = true;
+                this.customerTransactionsStatus.loading = false;
+            } catch (error) {
+                this.handleCustomerTransactionsError(error);
+            } finally {
+                this.customerTransactionsStatus.loading = false;
+            }
+        },
         async createCustomerTransaction(data: CustomerTransaction) {
             this.clearCustomerTransactionStatus();
             this.customerTransactionStatus.loading = true;

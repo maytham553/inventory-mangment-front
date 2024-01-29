@@ -16,7 +16,10 @@ const customerTransactions = {
     },
     deleteCustomerTransaction: (id: number) => {
         return axios.delete(`/auth/customer-transactions/${id}`);
-    }
+    },
+    getCustomerTransactionsWithDate: (id: number, page: number, from: string, to: string) => {
+        return axios.get(`/auth/customers/${id}/transactions?from=${from}&to=${to} &page=${page}`);
+    },
 };
 
 

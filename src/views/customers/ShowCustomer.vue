@@ -54,11 +54,9 @@
       </div>
 
       <div class="mt-4 h-full" v-if="operationNav.active === 'transactions'">
-        <!-- <h2 class="text-xl font-semibold">التعاملات</h2> -->
-        <CustomerTransactionContainer :customerId="id" />
+        <CustomerTransactionContainer :customerId="id" :customerName="name" :customerBalance="balance" />
       </div>
       <div class="mt-4 h-full" v-if="operationNav.active === 'sales'">
-        <!-- <h2 class="text-xl font-semibold">مبيعات</h2> -->
         <SaleContainer :customerId="id" :customerName="name" />
       </div>
     </div>

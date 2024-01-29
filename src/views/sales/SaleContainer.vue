@@ -30,14 +30,16 @@
       <CreateSale v-if="createPopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
         :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="createSale"
         submitButtonText="حفظ" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange" :print="openPrintPopup"
-        :clearForm="salesStore.setInitialSale" />
+        :clearForm="salesStore.setInitialSale" :searchProducts="searchProducts" />
     </EmptyDialog>
 
     <EmptyDialog v-if="updatePopup" :title="String(customerId)" :close-dialog="closeUpdatePopup">
       <UpdateSale v-if="updatePopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
         :productsStatus="productsStatus" :addItem="addItem" :removeItem="removeItem" :onSubmit="updateSale"
         submitButtonText="تعديل" :reCalculateSaleAfterChange="salesStore.reCalculateSaleAfterChange"
-        :print="openPrintPopup" :closeDialog="closeUpdatePopup" />
+        :print="openPrintPopup" :closeDialog="closeUpdatePopup" 
+        :searchProducts="searchProducts"
+        />
     </EmptyDialog>
 
     <EmptyDialog v-if="printPopup" :title="customerName" :close-dialog="closePrintPopup">
@@ -84,7 +86,7 @@ const customer = storeToRefs(customersStore).customer;
 
 const createPopup = ref(false);
 const updatePopup = ref(false);
-const printPopup = ref(false);
+const printPopup = ref();
 const openCreatePopup = () => {
   createPopup.value = true;
 };
@@ -114,11 +116,14 @@ const removeItem = (id: number) => {
   salesStore.removeProductFromSale(id);
 };
 const createSale = async (data: Sale) => {
-  data.previous_balance = customer.value.balance;
   await salesStore.createSale(data);
 };
 const updateSale = async (data: Sale) => {
   await salesStore.updateSale(data);
+};
+
+const searchProducts = (search: string) => {
+  productsStore.searchProducts(search);
 };
 
 const props = defineProps({

@@ -137,7 +137,7 @@
         <Loading v-if="status.loading" class="-mr-1 ml-3" />
       </button>
 
-      <button type="button" @click="printWithoutSave"
+      <button v-if="sale.id" type="button" @click="printWithoutSave"
         class="bg-secondary h-auto hover:bg-primary text-white font-bold py-2 px-4 rounded flex justify-center gap-3"
         :class="{ 'bg-blue-300': status.loading }" :disabled="status.loading">
         طباعة
