@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center text-white flex-col h-full w-full sm:w-[20rem] bg-primary">
+  <div class="flex justify-between items-center text-white flex-col h-full w-full sm:w-[20rem]  bg-black">
     <div
       class="flex justify-start items-start flex-col xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 w-full">
       <div class="flex flex-col justify-end items-center px-6 border-b border-gray-200 w-full hover:bg-secondary/70">
