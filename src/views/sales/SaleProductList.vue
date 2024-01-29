@@ -7,14 +7,14 @@
       <Loading stroke-color="#8f8f8f" />
     </div>
     <div v-if="status.success">
+      <div class="flex flex-wrap justify-center mb-5">
+        <input type="text" placeholder="بحث" class="p-1 rounded-lg w-[90%] bg-gray-200 border border-gray-400 "
+          @input="localSearchProducts" />
+      </div>
       <div class="flex flex-wrap justify-center items-stretch gap-2">
-        <div
-          v-for="product in products"
-          @click="() => handleClick(product)"
-          :key="product.id"
-          class="bg-gray-100 hover:bg-gray-600 hover:text-gray-100 transition-all duration-100 w-[40%] rounded-lg justify-center items-center text-center cursor-pointer p-2"
-        >
-          <h2 class="font-black text-xs">{{ product.name }}</h2>
+        <div v-for="product in products" @click="() => handleClick(product)" :key="product.id"
+          class="bg-white hover:bg-gray-600 hover:text-gray-100 transition-all duration-100 w-[90%] rounded-lg justify-center items-center text-center cursor-pointer p-2">
+          <h1 class="font-black">{{ product.name }}</h1>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
+import { defineProps, ref, type Ref } from "vue";
 import type { Product, Status } from "../../Types";
 import Loading from "../../components/icons/Loading.vue";
 const props = defineProps({
@@ -42,7 +42,16 @@ const props = defineProps({
     type: Object as () => Status,
     required: true,
   },
+  searchProducts: {
+    type: Function,
+    required: true,
+  },
 });
+
+
+const localSearchProducts = (event: any) => {
+  props.searchProducts(event.target.value ?? "");
+};
 
 const handleClick = (data: Product) => {
   props.addItem(data);

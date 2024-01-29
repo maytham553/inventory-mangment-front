@@ -1,5 +1,5 @@
 import { sales, customers } from '@/services/api'
-import {  calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
+import { calculateDiscountPercentage, calculateSubtotal, calculateTotal, sumTotal } from '@/services/helper/helperFunctions'
 import { defineStore } from 'pinia'
 import type { Sale, Status, Pagination, Product, SaleProduct } from '@/Types'
 
@@ -106,6 +106,10 @@ export const useSalesStore = defineStore('sales', {
             try {
                 this.saleStatus.loading = true;
                 const { data: response } = await sales.updateSale(sale.id, sale);
+                this.sale = {
+                    ...response.data ,
+                    products: sale.products
+                }
                 this.saleStatus.success = true;
             } catch (error) {
                 this.handleSaleError(error);
@@ -161,13 +165,14 @@ export const useSalesStore = defineStore('sales', {
             const initialNumber = Number();
             if (this.sale.products && this.sale.products.length > 0) {
                 this.sale.products.forEach((product: SaleProduct) => {
-                    if (product.discount_amount) {
-                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, product.discount_amount, 1);
+                    const discountAmount = product.discount_amount * product.quantity!;
+                    if (discountAmount) {
+                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, discountAmount, 1);
                     }
                     if (product.quantity) {
                         product.subtotal = calculateSubtotal(product.quantity, product.unit_price, 1);
-                        product.total = calculateTotal(product.subtotal, product.discount_amount, 1);
-                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, product.discount_amount, 1);
+                        product.total = calculateTotal(product.subtotal, discountAmount, 1);
+                        product.discount_percentage = calculateDiscountPercentage(product.subtotal, discountAmount, 1);
                     }
                 });
                 const total = sumTotal(this.sale.products, 'total');

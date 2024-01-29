@@ -13,7 +13,7 @@ export const ISO8601DateToHumanDate = (date: string) => {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
-    };
+    };    
     const formattedDate = new Intl.DateTimeFormat(undefined, options).format(jsDate);
     return formattedDate;
 }

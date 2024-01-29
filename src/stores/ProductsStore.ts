@@ -6,6 +6,7 @@ import type { Product, Status, Pagination } from '@/Types'
 export const useProductsStore = defineStore('products', {
     state: () => ({
         products: [] as Product[],
+        temporaryProducts: [] as Product[],
         product: {} as Product,
         initialProduct: {} as Product,
         productStatus: {} as Status,
@@ -37,6 +38,7 @@ export const useProductsStore = defineStore('products', {
                 this.productsStatus.loading = true
                 const { data: response } = await products.getProducts(page)
                 this.products = response.data.data
+                this.temporaryProducts = response.data.data ;
                 this.pagination = {
                     currentPage: response.data.current_page,
                     firstPageUrl: response.data.first_page_url,
@@ -103,6 +105,16 @@ export const useProductsStore = defineStore('products', {
             } finally {
                 this.productStatus.loading = false
             }
+        },
+        searchProducts(searchTerm: string) {
+            if (searchTerm === '') {
+                this.products = this.temporaryProducts;
+                return
+            }
+            this.products = this.temporaryProducts;
+            this.products = this.products.filter((product) => {
+                return product.name.includes(searchTerm)
+            })
         },
         clearProductsStatus() {
             this.productsStatus = {

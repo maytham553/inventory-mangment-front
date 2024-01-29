@@ -13,7 +13,6 @@ export const sales = {
         return axios.post('/auth/sales', data);
     },
     updateSale: (id: number, data: Sale) => {
-        console.log(data);
         return axios.put(`/auth/sales/${id}`, data);
     }
 };

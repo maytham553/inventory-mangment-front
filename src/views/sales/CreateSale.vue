@@ -17,6 +17,7 @@
       :status="productsStatus"
       :addItem="addItem"
       :removeItem="removeItem"
+      :searchProducts="searchProducts"
     />
   </div>
 </template>
@@ -77,6 +78,10 @@ const props = defineProps({
     type: Function,
     required: false,
     default: () => {},
+  },
+  searchProducts: {
+    type: Function,
+    required: true,
   },
 });
 </script>

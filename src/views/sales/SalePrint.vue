@@ -8,149 +8,159 @@
     <div id="print" dir="rtl" class="max-w-2xl mx-auto">
       <article class="shadow-none md:shadow-md md:rounded-md overflow-hidden">
         <div class="md:rounded-b-md bg-white">
-          <div class="p-9 border-b border-gray-200">
-            <div class="space-y-6">
-              <div class="flex justify-between items-top">
-                <div class="space-y-4">
-                  <div>
-                    <img class="h-16 object-cover mb-4" :src="logo" />
-                    <p class="font-bold text-lg">فاتورة بيع</p>
-                    <p class="font-bold">معمل الصفا لمنتوجات الاسفنج والديباجات</p>
-                    <p class="font-bold"> العراق - النجف - طريق بحر النجف - شارع المعامل</p>
-                    <p class="font-bold">07859233300</p>
-                  </div>
-                  <div>
-                    <p class="font-medium text-sm text-gray-400">حضرة السيد</p>
-                    <p>{{ customer.name }}</p>
-                    <p v-if="customer.email">{{ customer.email }}</p>
-                    <p>{{ customer.phone }}</p>
-                  </div>
+          <div class="p-9  border-gray-200">
+            <div class="border-b  border-gray-200" >
+              <div class="flex justify-between items-top pb-6 ">
+              <div class="space-y-4 flex-1">
+                <div>
+                  <p class="font-bold ">معمل الصفا لمنتوجات <br>الاسفنج والديباجات</p>
+                  <p class="font-bold">٠٧٨٥٩٢٣٣٣٠٠</p>
+                  <p class="font-bold">٠٧٨٠٥٨٨٣١٧٥</p>
                 </div>
-                <div class="space-y-2">
-                  <div>
-                    <p class="font-medium text-sm text-gray-400">
-                      تسلسل الفاتورة
-                    </p>
-                    <p>{{ sale.id }}</p>
-                  </div>
-                  <div>
-                    <p class="font-medium text-sm text-gray-400">
-                      تاريخ انشاء الفاتورة
-                    </p>
-                    <p>{{ ISO8601DateToHumanDate(sale.created_at) }}</p>
-                  </div>
-                  <div v-if="sale.created_at != sale.updated_at">
-                    <p class="font-medium text-sm text-gray-400">
-                      تاريخ تحديث الفاتورة
-                    </p>
-                    <p>{{ ISO8601DateToHumanDate(sale.updated_at) }}</p>
-                  </div>
-                  <div>
-                    <p class="font-medium text-sm text-gray-400">الحالة</p>
-                    <p>{{ convertPurchaseStatusToArabic(sale.status) }}</p>
-                  </div> 
-                  <div>
-                    <p class="font-medium text-sm text-gray-400">معرف منظم الفاتورة</p>
-                    <p>{{ sale.user_id
-                     }}</p>
-                  </div>
-                  
+              </div>
+              <div class="space-y-2 flex-1 flex justify-center items-center ">
+                <img class="h-24 object-cover mb-4" :src="logo" />
+              </div>
+              <div class="space-y-4 flex-1" :dir="'ltr'">
+                <div>
+                  <p class="font-bold">Al-Safa factory <br>For sponge and brocade</p>
+                  <p class="font-bold">07859233300</p>
+                  <p class="font-bold">07805883175</p>
+                </div>
+              </div>
+            </div>
+            <p class=" text-xs p-1 w-100 text-center text-gray-800 ">  النجف - طريق بحر النجف - شارع المعامل</p>
+            </div>
+            
+            <div class="flex justify-between items-top py-2 gap-1">
+              <div class=" flex flex-col gap-2 flex-1 ">
+                <div class="border-2 p-1 rounded">
+                  <span class="border-l-2 rounded-lg p-1 "> حضرة السيد </span>
+                  <span class="mx-2">{{ customer.name }}</span>
+                </div>
+                <div class="border-2 p-1 rounded">
+                  <span class="border-l-2 rounded-lg p-1 "> العنوان </span>
+                  <span class="mx-2">{{ customer.address }}</span>
+                </div>
+                <div class="border-2 p-1 rounded">
+                  <span class="border-l-2 rounded-lg p-1 "> الهاتف </span>
+                  <span class="mx-2">{{ customer.phone }}</span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 flex-[0.8] ">
+                <div class="border-2 p-1 rounded">
+                  <span class="border-l-2 rounded-lg p-1 "> رقم القائمة </span>
+                  <span class="mx-2">{{ sale.id }}</span>
+                </div>
+                <div class="border-2 p-1 rounded">
+                  <span class="border-l-2 rounded-lg p-1 "> تاريخ الانشاء </span>
+                  <span class="mx-2 text-xs">{{ ISO8601DateToHumanDate(sale.created_at) }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div v-if="sale.note" class="p-9 border-b border-gray-200">
-            <p class="font-medium text-sm text-gray-400">ملاحظات</p>
-            <p class="text-sm">{{ sale.note }}</p>
-          </div>
-          <table class="w-full divide-y divide-gray-200 text-sm">
+
+          <table class="w-full">
             <thead>
               <tr>
-                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
-                  تسلسل
+                <th scope="col" class="px-4 py-4 text-center font-semibold text-gray-400 border ">
+                  #
                 </th>
-                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-4 text-center font-semibold text-gray-400 border ">
                   المنتج
                 </th>
-                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-4 text-center font-semibold text-gray-400 border ">
                   الكمية
                 </th>
-                <th scope="col" class="px-3 py-4 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-4 text-center font-semibold text-gray-400 border ">
                   السعر
                 </th>
-                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-3 text-center font-semibold text-gray-400 border ">
                   الخصم
                 </th>
-                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-3 text-center font-semibold text-gray-400 border ">
                   المبلغ الجزئي
                 </th>
-                <th scope="col" class="px-3 py-3 text-right font-semibold text-gray-400">
+                <th scope="col" class="px-4 py-3 text-center font-semibold text-gray-400 border ">
                   المبلغ الكلي
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody>
               <tr v-for="(product, index) in sale.products" :key="product.id">
-                <td class="px-3 text-gray-600 truncate">{{ index + 1 }}</td>
-                <td class="px-3 py-5 space-x-1 flex items-center">
+                <td class="px-4 text-gray-600 truncate text-center border ">{{ index + 1 }}</td>
+                <td class="px-4 py-2 space-x-1 flex items-center text-center border ">
                   {{ product.name }}
                 </td>
-                <td class="px-3 text-gray-600 truncate">
+                <td class="px-4 text-gray-600 truncate text-center border">
                   {{ product.quantity }}
                 </td>
-                <td class="px-3 text-gray-600 truncate">{{ product.price }}</td>
-                <td class="px-3 text-gray-600 truncate">
+                <td class="px-4 text-gray-600 truncate text-center border">{{ product.unit_price }}</td>
+                <td class="px-4 text-gray-600 truncate text-center border">
                   {{ product.discount_amount }}
                 </td>
-                <td class="px-3 text-gray-600 truncate">
+                <td class="px-4 text-gray-600 truncate text-center border">
                   {{ product.subtotal }}
                 </td>
-                <td class="px-3 text-gray-600 truncate">{{ product.total }}</td>
+                <td class="px-4 text-gray-600 truncate text-center border">{{ product.total }}</td>
+
+              </tr>
+              <tr class="px-4 text-gray-600 truncate text-center border">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  {{ sumDiscount() }}
+                </td>
+                <td class="px-4 text-gray-600 truncate text-center border">{{ sale.subtotal_amount }}</td>
+                <td class="px-4 text-gray-600 truncate text-center border">{{ sale.total_amount }}</td>
               </tr>
             </tbody>
           </table>
 
-          <div class="space-y-3 flex flex-col justify-between items-center m-10">
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">المجموع الجزئي</p>
+          <div class="flex m-2 w-[50%]">
+            <div class="flex-1 flex flex-col gap-2">
+             
+              <div class="flex justify-between w-full border-2 p-2 rounded ">
+                <div>
+                  <p class="text-gray-500 text-sm">المبلغ الكلي</p>
+                </div>
+                <p class="text-gray-500 text-sm">{{ sale.total_amount }}</p>
               </div>
-              <p class="text-gray-500 text-sm">
-                {{ sale.subtotal_amount }}
-              </p>
+              <div class="flex justify-between w-full border-2 p-2 rounded ">
+                <div>
+                  <p class="text-gray-500 text-sm">الرصيد السابق</p>
+                </div>
+                <p class="text-gray-500 text-sm">{{ (sale.previous_balance || 0) * -1 }}</p>
+              </div>
+              <div class="flex justify-between w-full border-2 p-2 rounded ">
+                <div>
+                  <p class="text-gray-500 text-sm">الرصيد الحالي</p>
+                </div>
+                <p class="text-gray-500 text-sm">{{ ((sale.previous_balance || 0) - sale.total_amount) * -1 }}</p>
+              </div>
             </div>
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">خصم</p>
-              </div>
-              <p class="text-gray-500 text-sm">{{ sale.discount_amount }}</p>
+
+          </div>
+
+          <div class="flex flex-col gap-5 m-10  ">
+            <div>
+              <span class="p-1"> اسم السائق :</span>
+              <span class="mx-2">{{ sale.driver_name }}</span>
             </div>
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">المجموع الكلي</p>
-              </div>
-              <p class="text-gray-500 text-sm">{{ sale.total_amount }}</p>
-            </div>
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">الرصيد السابق</p>
-              </div>
-              <p class="text-gray-500 text-sm">{{ (sale.previous_balance || 0) * -1 }}</p>
-            </div>
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">الرصيد الحالي</p>
-              </div>
-              <p class="text-gray-500 text-sm">{{ ((sale.previous_balance || 0) - sale.total_amount) * -1 }}</p>
-            </div>
-            <div class="flex justify-between w-full border-b-2 bg-gray-200 p-2 rounded-lg">
-              <div>
-                <p class="text-gray-500 text-sm">اسم السائق</p>
-              </div>
-              <p class="text-gray-500 text-sm">{{ sale.driver_name }}</p>
+            <div v-if="sale.note">
+              <span class="p-1"> ملاحظات :</span>
+              <span class="mx-2">{{ sale.note }}</span>
             </div>
           </div>
-        </div>  
+          <div class="flex flex-col gap-5 m-10  ">
+            <div>
+              <span class="p-1"> معرف منظم الفاتورة :</span>
+              <span class="mx-2">{{ sale.user_id }}</span>
+            </div>
+          </div>
+        </div>
       </article>
     </div>
   </section>
@@ -181,11 +191,16 @@ const props = defineProps({
   },
 });
 
+const sumDiscount = () => {
+  return props.sale.products.reduce((acc, product) => acc + (product.discount_amount * product.quantity!), 0);
+}
+
 const print = () => {
   printJS({
     printable: "print",
     type: "html",
-    css: "./assets/index-60698d9d.css",
+    css: "./assets/index-60406bbf .css",
+    // css: 'src/assets/main.css',
     scanStyles: false,
     targetStyles: ["*"],
     style: `
