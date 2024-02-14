@@ -59,14 +59,18 @@
         <Dollar iconClasses="fill-primary" iconWidth="20" iconHeight="22" />
       </CardDataStats>
     </div>
-    
-    <div class="mt-6">
-      <div>مبيعات اليوم</div>
-      <SalesList :sales="sales" />
+
+
+    <div class="flex w-full mt-6  bg-gray-200 p-3 rounded-lg ">
+
+      <h2 class="text-title-md font-bold text-black  ">مبيعات اليوم</h2>
     </div>
+    <SalesList :sales="sales" />
+
 
     <div class="mt-6">
-      <div>تعاملات اليوم</div>
+
+     
       <TransactionsList :transactions="transactions" />
     </div>
 
