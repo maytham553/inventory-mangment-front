@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div v-if="isAdmin" class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-secondary/70">
+      <div v-if="isAdmin || isSuperAdmin" class="flex flex-col justify-start items-center px-6 border-b w-full hover:bg-secondary/70">
         <button @click="toggleMenu1" class="flex justify-between items-center w-full py-5">
           <div class="flex items-center justify-start gap-3">
             <Box />
@@ -79,11 +79,18 @@
           </div>
         </div>
       </div>
-      <div v-if="isAdmin"
+      <div v-if="isAdmin || isSuperAdmin"
         class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-secondary/70">
         <RouterLink to="/expenses" class="text-left gap-3 flex justify-start items-center w-full py-5">
           <Money :size="25" fill="white" />
           <p class="text-[1.2rem] leading-5 uppercase">صرفيات</p>
+        </RouterLink>
+      </div>
+      <div v-if="isSuperAdmin"
+        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-secondary/70">
+        <RouterLink to="/dashboard" class="text-left gap-3 flex justify-start items-center w-full py-5">
+          <Money :size="25" fill="white" />
+          <p class="text-[1.2rem] leading-5 uppercase">احصائيات</p>
         </RouterLink>
       </div>
       <div v-if="isUser"
@@ -124,6 +131,7 @@ const menu2Visible = ref(false);
 const menu3Visible = ref(false);
 const isAdmin = useAuthStore().isAdmin;
 const isUser = useAuthStore().isUser;
+const isSuperAdmin = useAuthStore().isSuperAdmin;
 
 const toggleMenu1 = () => {
   menu1Visible.value = !menu1Visible.value;

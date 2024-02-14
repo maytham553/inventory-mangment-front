@@ -59,7 +59,7 @@
       </div>
       <div class="mt-4 h-full" v-if="operationNav.active === 'transactions'">
         <!-- <h2 class="text-xl font-semibold">التعاملات</h2> -->
-        <SupplierTransactionsContainer :supplierId="id" />
+        <SupplierTransactionsContainer :supplierId="id" :supplier-balance="balance" :supplierName="name"  />
       </div>
     </div>
   </div>

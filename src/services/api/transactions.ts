@@ -27,8 +27,8 @@ const supplierTransactions = {
     getSuppliersTransactions: (page: number) => {
         return axios.get(`/auth/supplier-transactions?page=${page}`);
     },
-    getSupplierTransactions: (id: number, page: number) => {
-        return axios.get(`/auth/supplier-transactions/supplier/${id}?page=${page}`);
+    getSupplierTransactions: (id: number, page: number, from = '', to = '') => {
+        return axios.get(`/auth/supplier-transactions/supplier/${id}?page=${page}&from=${from}&to=${to}`);
     },
     createSupplierTransaction: (data: SupplierTransaction) => {
         return axios.post(`/auth/supplier-transactions`, data);
@@ -38,7 +38,10 @@ const supplierTransactions = {
     },
     deleteSupplierTransaction: (id: number) => {
         return axios.delete(`/auth/supplier-transactions/${id}`);
-    }
+    },
+    getSupplierTransactionsWithDate: (id: number, page: number, from: string, to: string) => {
+        return axios.get(`/auth/suppliers/${id}/transactions?from=${from}&to=${to} &page=${page}`);
+    },
 }
 
 export const transactions = {

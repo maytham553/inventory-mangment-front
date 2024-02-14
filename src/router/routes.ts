@@ -1,5 +1,6 @@
 import Login from '@/views/Login.vue';
 import Home from '@/views/Home.vue';
+import Dashboard from '@/views/Dashboard.vue';
 import CustomersContainer from '@/views/customers/CustomersContainer.vue'
 import SuppliersContainer from '@/views/suppliers/SuppliersContainer.vue'
 import CreateCustomer from '@/views/customers/CreateCustomer.vue'
@@ -60,6 +61,11 @@ const routes = [
     path: '/expenses/create',
     name: 'CreateExpense',
     component: CreateExpense,
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
   },
   {
     path: '/:catchAll(.*)',

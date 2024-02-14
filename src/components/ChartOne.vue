@@ -1,6 +1,6 @@
 <template>
     <div
-        class="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-[30px] pb-5 shadow-default  sm:px-[30px] xl:col-span-8">
+        class="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-[30px] pb-5 shadow-default  sm:px-[30px] xl:col-span-8 w-full">
         <div class="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
             <div class="flex w-full flex-wrap gap-3 sm:gap-5">
                 <div class="flex min-w-[11.875rem]">

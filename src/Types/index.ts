@@ -10,3 +10,4 @@ export * from './RawMaterial';
 export * from './Purchase';
 export * from './Sale';
 export * from './Expense';
+export * from './Dashboard';

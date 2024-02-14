@@ -18,6 +18,7 @@ export const useAuthStore = defineStore('auth', {
         getUserType: (state) => state.user?.type,
         isUser: (state) => state.user?.type === 'User',
         isAdmin: (state) => state.user?.type === 'Admin',
+        isSuperAdmin: (state) => state.user?.type === 'SuperAdmin',
     },
     actions: {
         async login(email: string, password: string) {

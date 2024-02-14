@@ -39,12 +39,12 @@ export const useExpensesStore = defineStore({
         },
     },
     actions: {
-        async fetchExpenses(page: number, search = "") {
+        async fetchExpenses(page: number, search = "" , from="" , to="") {
             this.clearExpensesStatus();
             this.expensesStatus.loading = true;
             this.expenses = [];
             try {
-                const { data } = await expenses.getExpenses(page, search);
+                const { data } = await expenses.getExpenses(page, search , from , to);
                 this.expenses = data.data.data;
                 this.expensesPagination = {
                     currentPage: data.data.current_page,
@@ -98,6 +98,29 @@ export const useExpensesStore = defineStore({
             }
             finally {
                 this.expenseStatus.loading = false;
+            }
+        },
+        async downloadReport(search = "" , from="" , to="") {
+            this.clearExpensesStatus();
+            this.expensesStatus.loading = true;
+            try {
+                const { data } = await expenses.printExpenses(search , from , to);
+                const url = window.URL.createObjectURL(new Blob([data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'الصرفيات.xlsx');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                this.expensesStatus.success = true;
+                this.expensesStatus.loading = false;
+            }
+            catch (error) {
+                this.handleExpensesError(error);
+            }
+            finally {
+                this.expensesStatus.loading = false;
             }
         },
         // async updateExpense(data: Expense) {

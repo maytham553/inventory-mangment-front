@@ -17,14 +17,18 @@ router.beforeEach((to, from, next) => {
   const isLoggedIn = authStore.isLoggedIn;
   const isAdmin = userType === 'Admin';
   const isUser = userType === 'User';
+  const isSuperAdmin = userType === 'SuperAdmin';
 
   const publicRoutes = ['Login'];
   const userRoutes = ['Home', 'Customers', 'Suppliers', 'CreateCustomer', 'CreateSupplier' ,  'CreateExpense'];
   const adminRoutes = ['Products', 'RawMaterials', 'Expenses'];
+  const superAdminRoutes = ['Dashboard'];
 
   const isPublicRoute = publicRoutes.includes(to.name as string);
   const isAdminRoute = adminRoutes.includes(to.name as string);
   const isUserRoute = userRoutes.includes(to.name as string);
+  const isSuperAdminRoute = superAdminRoutes.includes(to.name as string);
+  
 
   if (!isLoggedIn && !isPublicRoute) {
     return next({ name: 'Login' });
@@ -34,11 +38,15 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'Home' });
   }
 
-  if (isLoggedIn && !isAdmin && isAdminRoute) {
+  if (isLoggedIn && (!isAdmin && !isSuperAdmin ) && isAdminRoute) {
     return next({ name: 'Home' });
   }
 
-  if (isLoggedIn && !isAdmin && !isUserRoute) {
+  if (isLoggedIn && !isSuperAdmin && isSuperAdminRoute) {
+    return next({ name: 'Home' });
+  }
+
+  if (isLoggedIn && !isAdminRoute && !isUserRoute && !isSuperAdminRoute) {
     return next({ name: 'Home' });
   }
 

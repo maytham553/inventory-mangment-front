@@ -41,12 +41,36 @@ export const useSupplierTransactionsStore = defineStore({
         },
     },
     actions: {
-        async fetchSupplierTransactionsBySupplierId(id: number, page: number) {
+        async fetchSupplierTransactionsBySupplierId(id: number, page: number , from = "" , to = "") {
             this.clearSupplierTransactionsStatus();
             this.supplierTransactionsStatus.loading = true;
             this.supplierTransactions = [];
             try {
-                const { data } = await transactions.getSupplierTransactions(id, page);
+                const { data } = await transactions.getSupplierTransactions(id, page , from , to);
+                this.supplierTransactions = data.data.data;
+                this.supplierTransactionsPagination = {
+                    currentPage: data.data.current_page,
+                    firstPageUrl: data.data.first_page_url,
+                    lastPageUrl: data.data.last_page_url,
+                    nextPageUrl: data.data.next_page_url,
+                    prevPageUrl: data.data.prev_page_url,
+                    lastPage: data.data.last_page,
+                    perPage: data.data.per_page,
+                    total: data.data.total,
+                }
+                this.supplierTransactionsStatus.success = true;
+                this.supplierTransactionsStatus.loading = false;
+            } catch (error) {
+                this.handleSupplierTransactionsError(error);
+            }
+        },
+        // fetch Supplier Transactions with date
+        async fetchSupplierTransactionsBySupplierIdWithDate(id: number, page: number , from = "" , to = "") {
+            this.clearSupplierTransactionsStatus();
+            this.supplierTransactionsStatus.loading = true;
+            this.supplierTransactions = [];
+            try {
+                const { data } = await transactions.getSupplierTransactionsWithDate(id, page , from , to);
                 this.supplierTransactions = data.data.data;
                 this.supplierTransactionsPagination = {
                     currentPage: data.data.current_page,

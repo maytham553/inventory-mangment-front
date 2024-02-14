@@ -4,26 +4,14 @@
       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 mb-2 max-w-xs px-4 rounded-lg">
       إضافة عملية
     </button>
-
-    <div class="flex justify-between items-center gap-2 bg-gray-200 p-3 ">
-      <div class="flex items-center gap-3">
-        <label for="from">من</label>
-        <input v-model="from" type="date" id="from" class="border-2 rounded-lg py-1 px-3" />
-      </div>
-      <div class="flex items-center gap-3">
-        <label for="to">إلى</label>
-        <input v-model="to" type="date" id="to" class="border-2 rounded-lg py-1 px-3" />
-      </div>
-      <button @click="fetchCustomerTransactionsWithDate(props.customerId, 1, from, to)"
-        class="bg-green-500 hover:bg-green-700  text-white font-bold py-2 flex-1 max-w-xs px-4 rounded-lg">
-        بحث
-      </button>
-    </div>
-    <div class="flex justify-end items-center gap-2 bg-gray-200 p-3 ">
+    <DateFilter
+      :filter="(from: string, to: string) => fetchCustomerTransactionsWithDate(props.customerId, 1, from, to)" />
+    <div class="flex flex-col items-end gap-2 bg-gray-200 p-3 ">
       <button @click="openPrintPopup"
-        class="bg-green-500 hover:bg-green-700  text-white font-bold py-2 flex-1 max-w-xs px-4 rounded-lg">
+        class="bg-green-500 hover:bg-green-700  text-white font-bold py-2 w-full max-w-xs px-4 rounded-lg">
         طباعة
       </button>
+      <p class="text-gray-600 text-xs">ملاحظة: يمكن طباعة 200 صف فقط</p>
     </div>
     <div v-if="customerTransactionsStatus.loading" class="flex justify-center items-center h-full">
       <Loading stroke-color="#8f8f8f" />
@@ -54,7 +42,8 @@
   </div>
   <EmptyDialog v-if="printPopup" :close-dialog="closePrintPopup" title="طباعة">
     <CustomerTransactionsPrint :customerTransactions="customerTransactions" :customerName="customerName"
-      :customerBalance="customerBalance" :customerId="customerId" :from="from" :to="to" :closeDialog="closePrintPopup" />
+      :customerBalance="customerBalance" :customerId="customerId" :from="fromDate" :to="toDate"
+      :closeDialog="closePrintPopup" />
   </EmptyDialog>
 </template>
 
@@ -70,6 +59,7 @@ import { storeToRefs } from "pinia";
 import PaginationItems from "../../components/PaginationItems.vue";
 import Loading from "../../components/icons/Loading.vue";
 import CustomerTransactionsPrint from "./CustomerTransactionsPrint.vue";
+import DateFilter from "@/components/DateFilter.vue";
 
 const props = defineProps({
   customerId: {
@@ -86,8 +76,8 @@ const props = defineProps({
   },
 });
 const printPopup = ref();
-const from = ref("");
-const to = ref("");
+const fromDate = ref("");
+const toDate = ref("");
 const CustomerTransactionsStore = useCustomerTransactionsStore();
 const createPopup = ref(false);
 const customerTransactionStatus = storeToRefs(
@@ -120,6 +110,8 @@ const openPrintPopup = () => {
 };
 
 const fetchCustomerTransactionsWithDate = async (customerId: number, page: number, from: string, to: string) => {
+  fromDate.value = from;
+  toDate.value = to;
   await CustomerTransactionsStore.fetchCustomerTransactionsWithDate(
     customerId,
     page,

@@ -9,3 +9,4 @@ export * from './purchases';
 export * from './sales';
 export * from './expenses';
 export * from './users';
+export * from './dashbord';
