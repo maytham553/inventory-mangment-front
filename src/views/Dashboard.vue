@@ -61,10 +61,7 @@
     </div>
 
 
-    <div class="flex w-full mt-6  bg-gray-200 p-3 rounded-lg ">
-
-      <h2 class="text-title-md font-bold text-black  ">مبيعات اليوم</h2>
-    </div>
+    
     <SalesList :sales="sales" />
 
 
