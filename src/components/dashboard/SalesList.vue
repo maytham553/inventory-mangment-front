@@ -30,7 +30,34 @@
                     المجموع</div>
             </div>
             <div v-for="(sale, saleIndex) in sales" :key="saleIndex">
-                <div class="text-center py-2 bg-secondary/10  w-full ">{{ sale.user_name }}</div>
+                <div class="py-1 bg-gray-200  w-full grid grid-cols-3   text-gray-700  text-center ">
+                    <p>
+                        المستخدم:
+                        <span class="font-semibold">
+
+                            {{ sale.user_name }}
+                            
+                        </span>
+                    </p>
+                    <p> 
+                        الزبون:
+                        <span class="font-semibold">
+
+                            
+                            {{ sale.customer_name }}
+                        </span>
+
+                    </p>
+                    <p>
+                        الربح:
+                        <span class="font-semibold">
+
+                            
+                            {{ sale.profit }}
+                        </span>
+                    </p>
+                     
+                    </div>
 
                 <div v-for="(product, productIndex) in sale.products" :key="productIndex" :class="{
                     'grid grid-cols-5 p-2 items-center justify-start gap-10 w-full border-gray-200 border-b': true,
