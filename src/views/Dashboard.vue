@@ -3,12 +3,14 @@
     <div class="mb-5">
       <DateFilter :filter="getSalesStatistics" />
     </div>
-
+    <div   v-if="statistics.sales_count <= 0 && profit <= 0" class="text-center">لايوجد مدخلات اليوم </div>
     <div v-if="status.loading" class="flex justify-center items-center m-10">
       <Loading stroke-color="#8f8f8f" />
     </div>
+  
 
-    <div v-if="status.success" class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-[30px]">
+    <div v-if="status.success && profit > 0"
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-[30px]">
       <CardDataStats title="صافي الأرباح" :total="String(profit)" levelUp>
         <!-- <CartGraph iconClasses="fill-primary" iconWidth="20" iconHeight="22" /> -->
         <Dollar iconClasses="fill-primary" iconWidth="20" iconHeight="22" />
@@ -48,7 +50,8 @@
       <DayFilter :filter="getSalesStatisticsByDay" />
     </div>
 
-    <div v-if="status.success" class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-[30px] mt-10">
+    <div v-if="status.success && statistics.sales_count > 0"
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-[30px] mt-10">
       <CardDataStats title="عدد المبيعات" :total="String(statistics.sales_count)" levelUp>
         <Dollar iconClasses="fill-primary" iconWidth="20" iconHeight="22" />
       </CardDataStats>
@@ -61,14 +64,14 @@
     </div>
 
 
-    
-    <SalesList :sales="sales" />
+
+    <SalesList :sales="sales" v-if="statistics.sales_count > 0" />
 
 
-    <div class="mt-6">
+    <div class="mt-6" v-if="statistics.sales_count > 0" >
 
-     
-      <TransactionsList :transactions="transactions" />
+
+      <TransactionsList :transactions="transactions" :sales="transactions" />
     </div>
 
 
@@ -158,13 +161,14 @@ const getSalesStatisticsByDay = async (date: string) => {
     status.value.error = false;
     const { data } = await dashboardApi.getSalesStatisticsByDay(date);
     const response = data.data;
+
     sales.value = response.sales;
     transactions.value = response.transactions;
     statistics.value = response.statistics;
+
+
     status.value.success = true;
-    console.log(
-      statistics.value,
-    )
+ 
   } catch (error: any) {
     status.value.error = true;
     status.value.message = error.message;

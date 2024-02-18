@@ -12,7 +12,8 @@ export interface DashboardSale {
     profit: number;
     customer_name: string;
     user_name: string;
-    products: DashboardProduct[];
+    products: DashboardProduct[] | any;
+    
 }
 
 export interface DashboardTransaction {
