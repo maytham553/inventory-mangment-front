@@ -32,7 +32,7 @@
       <PaginationItems v-if="!customerTransactionsStatus.error" :currentPage="CustomerTransactionsStore.getCustomerTransactionsPagination
         .currentPage
         " :totalPages="CustomerTransactionsStore.getCustomerTransactionsPagination.lastPage" :goToPage="(page: number) => {
-    CustomerTransactionsStore.fetchCustomerTransactionsWithDate(props.customerId, page, from, to)
+    CustomerTransactionsStore.fetchCustomerTransactionsWithDate(props.customerId, page, fromDate, toDate)
   }" />
     </div>
     <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
@@ -121,6 +121,6 @@ const fetchCustomerTransactionsWithDate = async (customerId: number, page: numbe
 }
 
 onMounted(async () => {
-  await fetchCustomerTransactionsWithDate(props.customerId, 1, from.value, to.value);
+  await fetchCustomerTransactionsWithDate(props.customerId, 1, fromDate.value, toDate.value);
 });
 </script>
