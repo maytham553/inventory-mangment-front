@@ -123,23 +123,25 @@ export const useExpensesStore = defineStore({
                 this.expensesStatus.loading = false;
             }
         },
-        // async updateExpense(data: Expense) {
-        //     this.clearExpenseStatus();
-        //     this.expenseStatus.loading = true;
-        //     try {
-        //         const { data:expense } = await expenses.updateExpense(data);
-        //         this.expense = expense.data;
-        //         this.expenses.unshift(expense.data);
-        //         this.expenseStatus.success = true;
-        //         this.expenseStatus.loading = false;
-        //     }
-        //     catch (error) {
-        //         this.handleExpenseError(error);
-        //     }
-        //     finally {
-        //         this.expenseStatus.loading = false;
-        //     }
-        // },
+        async updateExpense(data: Expense) {
+            this.clearExpenseStatus();
+            this.expenseStatus.loading = true;
+            try {
+                const { data: expense } = await expenses.updateExpense(data);
+                this.expense = expense.data;
+                this.expenses = this.expenses.map((item) =>
+                    item.id === expense.data.id ? expense.data : item
+                );
+                this.expenseStatus.success = true;
+                this.expenseStatus.loading = false;
+            }
+            catch (error) {
+                this.handleExpenseError(error);
+            }
+            finally {
+                this.expenseStatus.loading = false;
+            }
+        },
         clearExpensesStatus() {
             this.expensesStatus = {} as Status;
         },

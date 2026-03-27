@@ -9,6 +9,7 @@
           <th class="px-3 py-4 font-semibold text-gray-400 text-right">الوصف</th>
           <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ الانشاء</th>
           <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ التحديث</th>
+          <th class="px-3 py-4 font-semibold text-gray-400 text-center ">عمليات</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
@@ -16,6 +17,7 @@
           v-for="expense in reversedExpenses"
           :key="expense.id"
           :expense="expense"
+          @edit="(expense: Expense) => emit('edit', expense)"
         />
       </tbody>
     </table>
@@ -33,6 +35,9 @@ const props = defineProps({
     required: true,
   },
 });
+const emit = defineEmits<{
+  (e: "edit", expense: Expense): void
+}>();
 
 const reversedExpenses = computed(() => [...props.expenses].reverse());
 </script>

@@ -11,6 +11,9 @@ export const expenses = {
   createExpense: (data: Expense) => {
     return axios.post("/auth/expenses", data);
   },
+  updateExpense: (data: Expense) => {
+    return axios.put(`/auth/expenses/${data.id}`, data);
+  },
   printExpenses: (search="" , from="" , to="") => {
     return axios.get("/auth/expenses/print?search=" + search + "&from=" + from + "&to=" + to , 
     { responseType: 'blob' });
