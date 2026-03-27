@@ -7,7 +7,7 @@
             </div>
             <div class="mb-4">
                 <label for="amount" class="block text-gray-700 m-1">المبلغ</label>
-                <input type="number" id="amount" v-model="formData.amount" required
+                <input type="number" id="amount" v-model="formData.amount" :required="!disableAmount" :disabled="disableAmount"
                     class="form-input w-full p-1 rounded-lg" />
             </div>
             <div class="mb-4">
@@ -52,6 +52,10 @@ const props = defineProps({
     submitButtonText: {
         type: String,
         required: true,
+    },
+    disableAmount: {
+        type: Boolean,
+        default: false,
     },
 });
 

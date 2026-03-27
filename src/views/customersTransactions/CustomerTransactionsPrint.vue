@@ -30,7 +30,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class=" text-xs p-1 w-100 text-center text-gray-800 "> النجف - طريق بحر النجف - شارع المعامل
+                            <p class=" text-xs p-1 w-100 text-center text-gray-800 "> النجف - طريق بحر النجف - شارع
+                                المعامل
                             </p>
                         </div>
 
@@ -110,7 +111,7 @@
         </div>
     </section>
 </template>
-  
+
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { ISO8601DateToHumanDate, convertTransactionTypeToArabic } from "@/services/helper/helperFunctions";
@@ -153,7 +154,7 @@ const print = () => {
     printJS({
         printable: "print",
         type: "html",
-        css: "./assets/index-60406bbf.css",
+        css: "./assets/index-2b77cb36.css",
         // css: 'src/assets/main.css',
         scanStyles: false,
         targetStyles: ["*"],
@@ -174,4 +175,3 @@ onMounted(() => {
     props.closeDialog();
 });
 </script>
-  

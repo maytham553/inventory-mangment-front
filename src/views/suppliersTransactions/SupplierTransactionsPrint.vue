@@ -30,7 +30,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class=" text-xs p-1 w-100 text-center text-gray-800 "> النجف - طريق بحر النجف - شارع المعامل
+                            <p class=" text-xs p-1 w-100 text-center text-gray-800 "> النجف - طريق بحر النجف - شارع
+                                المعامل
                             </p>
                         </div>
 
@@ -76,7 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(transaction) in  supplierTransactions" :key="transaction.id">
+                            <tr v-for="(transaction) in supplierTransactions" :key="transaction.id">
                                 <td class="px-4 text-gray-600 truncate text-center border ">{{ transaction.id }}</td>
                                 <td class="px-4 py-2 space-x-1 flex items-center text-center border ">
                                     {{ transaction.amount }}
@@ -110,7 +111,7 @@
         </div>
     </section>
 </template>
-  
+
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { ISO8601DateToHumanDate, convertTransactionTypeToArabic } from "@/services/helper/helperFunctions";
@@ -153,8 +154,8 @@ const print = () => {
     printJS({
         printable: "print",
         type: "html",
-        // css: "./assets/index-60406bbf.css",
-        css: 'src/assets/main.css',
+        css: "./assets/index-2b77cb36.css",
+        // css: 'src/assets/main.css',
         scanStyles: false,
         targetStyles: ["*"],
         style: `
@@ -174,4 +175,3 @@ onMounted(() => {
     props.closeDialog();
 });
 </script>
-  

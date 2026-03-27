@@ -20,7 +20,7 @@
     <div class="flex items-center mb-10 px-5 justify-start gap-2 ">
       <div class="w-1/3">
         <Search :handleSearch="(page: number, search: string) => fetchExpenses(page, search, '', '')"
-          placeholder="التسلسل ,العنوان" />
+          placeholder="التسلسل، العنوان، الوصف" />
       </div>
     </div>
     <div class="mb-5">
@@ -33,7 +33,7 @@
       </span>
     </div>
 
-    <ExpensesList :expenses="expenses" />
+    <ExpensesList :expenses="expenses" :canEdit="isSuperAdmin" @edit="openUpdatePopup" />
     <div v-if="expensesStatus.success && !expenses.length" class="flex justify-center items-center mt-10 h-full">
       <span class="text-gray-500 text-center my-5 h-5">
         <span>لا يوجد تعاملات</span>
@@ -51,11 +51,15 @@
   <EmptyDialog v-if="createPopup" title="إضافة" :onClose="closeCreatePopup" :closeDialog="closeCreatePopup">
     <CreateExpense />
   </EmptyDialog>
+  <EmptyDialog v-if="updatePopup" title="تعديل" :onClose="closeUpdatePopup" :closeDialog="closeUpdatePopup">
+    <UpdateExpense :expense="selectedExpense" :onSuccess="closeUpdatePopup" />
+  </EmptyDialog>
 </template>
 
 <script lang="ts" setup>
 import CreateExpense from "./CreateExpense.vue";
-import { useExpensesStore } from "../../stores";
+import UpdateExpense from "./UpdateExpense.vue";
+import { useAuthStore, useExpensesStore } from "../../stores";
 import { onMounted, ref } from "vue";
 import type { Expense } from "../../Types";
 import EmptyDialog from "../../components/EmptyDialog.vue";
@@ -67,7 +71,10 @@ import Search from "@/components/Search.vue";
 import DateFilter from "@/components/DateFilter.vue";
 
 const ExpensesStore = useExpensesStore();
+const isSuperAdmin = useAuthStore().isSuperAdmin;
 const createPopup = ref(false);
+const updatePopup = ref(false);
+const selectedExpense = ref({} as Expense);
 const expensesStatus = storeToRefs(ExpensesStore).expensesStatus;
 const expenses = storeToRefs(ExpensesStore).expenses;
 const searchText = ref('');
@@ -79,6 +86,17 @@ const openCreatePopup = () => {
 };
 const closeCreatePopup = () => {
   createPopup.value = false;
+};
+const openUpdatePopup = (expense: Expense) => {
+  if (!isSuperAdmin) {
+    return;
+  }
+  selectedExpense.value = expense;
+  updatePopup.value = true;
+};
+const closeUpdatePopup = () => {
+  updatePopup.value = false;
+  selectedExpense.value = {} as Expense;
 };
 
 const fetchExpenses = async (page: number, search: string, from: string, to: string) => {

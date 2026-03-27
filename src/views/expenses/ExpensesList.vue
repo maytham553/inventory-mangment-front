@@ -9,6 +9,7 @@
           <th class="px-3 py-4 font-semibold text-gray-400 text-right">الوصف</th>
           <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ الانشاء</th>
           <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ التحديث</th>
+          <th v-if="canEdit" class="px-3 py-4 font-semibold text-gray-400 text-center ">عمليات</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
@@ -16,6 +17,8 @@
           v-for="expense in reversedExpenses"
           :key="expense.id"
           :expense="expense"
+          :canEdit="canEdit"
+          @edit="(expense: Expense) => emit('edit', expense)"
         />
       </tbody>
     </table>
@@ -24,7 +27,7 @@
 
 <script lang="ts" setup>
 import ExpenseTableRow from "../../components/ExpenseTableRow.vue";
-import { defineProps, computed } from "vue";
+import { computed } from "vue";
 import type { Expense } from "../../Types";
 
 const props = defineProps({
@@ -32,7 +35,14 @@ const props = defineProps({
     type: Array as () => Expense[],
     required: true,
   },
+  canEdit: {
+    type: Boolean,
+    default: false,
+  },
 });
+const emit = defineEmits<{
+  (e: "edit", expense: Expense): void
+}>();
 
 const reversedExpenses = computed(() => [...props.expenses].reverse());
 </script>
