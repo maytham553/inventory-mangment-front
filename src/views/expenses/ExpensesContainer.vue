@@ -33,7 +33,7 @@
       </span>
     </div>
 
-    <ExpensesList :expenses="expenses" @edit="openUpdatePopup" />
+    <ExpensesList :expenses="expenses" :canEdit="isSuperAdmin" @edit="openUpdatePopup" />
     <div v-if="expensesStatus.success && !expenses.length" class="flex justify-center items-center mt-10 h-full">
       <span class="text-gray-500 text-center my-5 h-5">
         <span>لا يوجد تعاملات</span>
@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import CreateExpense from "./CreateExpense.vue";
 import UpdateExpense from "./UpdateExpense.vue";
-import { useExpensesStore } from "../../stores";
+import { useAuthStore, useExpensesStore } from "../../stores";
 import { onMounted, ref } from "vue";
 import type { Expense } from "../../Types";
 import EmptyDialog from "../../components/EmptyDialog.vue";
@@ -71,6 +71,7 @@ import Search from "@/components/Search.vue";
 import DateFilter from "@/components/DateFilter.vue";
 
 const ExpensesStore = useExpensesStore();
+const isSuperAdmin = useAuthStore().isSuperAdmin;
 const createPopup = ref(false);
 const updatePopup = ref(false);
 const selectedExpense = ref({} as Expense);
@@ -87,6 +88,9 @@ const closeCreatePopup = () => {
   createPopup.value = false;
 };
 const openUpdatePopup = (expense: Expense) => {
+  if (!isSuperAdmin) {
+    return;
+  }
   selectedExpense.value = expense;
   updatePopup.value = true;
 };
