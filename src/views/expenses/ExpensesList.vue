@@ -1,18 +1,18 @@
 <template>
-  <div class="mb-4 h-auto overflow-y-auto shadow-md bg-gray-200 rounded-xl">
-    <table class="w-full divide-y divide-gray-100 text-xs font-bold">
+  <div class="mb-4 h-auto overflow-x-auto overflow-y-auto shadow-md bg-white rounded-xl border border-slate-200/80">
+    <table class="w-full divide-y divide-slate-100 text-xs font-bold min-w-[640px]">
       <thead>
         <tr>
-          <th class="pr-2 px-3 py-4 font-semibold text-gray-400  w-[20px]">التسلسل</th>
-          <th class="px-3 py-4 font-semibold text-gray-400 text-right">المقدار</th>
-          <th class="px-3 py-4 font-semibold text-gray-400 text-right">العنوان</th>
-          <th class="px-3 py-4 font-semibold text-gray-400 text-right">الوصف</th>
-          <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ الانشاء</th>
-          <th class="px-3 py-4 font-semibold text-gray-400 text-center ">تاريخ التحديث</th>
-          <th v-if="canEdit" class="px-3 py-4 font-semibold text-gray-400 text-center ">عمليات</th>
+          <th class="pr-2 px-3 py-4 font-semibold text-slate-500 w-[20px]">التسلسل</th>
+          <th class="px-3 py-4 font-semibold text-slate-500 text-right">المقدار</th>
+          <th class="px-3 py-4 font-semibold text-slate-500 text-right">العنوان</th>
+          <th class="px-3 py-4 font-semibold text-slate-500 text-right">الوصف</th>
+          <th class="px-3 py-4 font-semibold text-slate-500 text-center">تاريخ الانشاء</th>
+          <th class="px-3 py-4 font-semibold text-slate-500 text-center">تاريخ التحديث</th>
+          <th v-if="canEdit" class="px-3 py-4 font-semibold text-slate-500 text-center">عمليات</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200">
+      <tbody class="divide-y divide-slate-100">
         <ExpenseTableRow
           v-for="expense in reversedExpenses"
           :key="expense.id"
