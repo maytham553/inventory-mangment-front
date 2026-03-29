@@ -3,8 +3,14 @@ import axios from './axios';
 
 export const products = {
 
-    getProducts: (page: number) => {
-        return axios.get('/auth/products?page=' + page);
+    getProducts: (page: number, search = '') => {
+        return axios.get(
+            '/auth/products?page=' + page + '&search=' + encodeURIComponent(search)
+        );
+    },
+    /** Full list for sale/invoice picker (see route `products.sale-picker`). */
+    getProductsSalePicker: () => {
+        return axios.get('/auth/products/sale-picker');
     },
     getProduct: (id: number) => {
         return axios.get(`/auth/products/${id}`);

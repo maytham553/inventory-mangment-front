@@ -140,6 +140,6 @@ const props = defineProps({
 onMounted(async () => {
   salesStore.sale.customer_id = props.customerId;
   await fetchSalesOfCustomer(1, props.customerId);
-  await productsStore.fetchProducts();
+  await productsStore.fetchProductsForSalePicker();
 });
 </script>

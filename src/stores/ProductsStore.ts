@@ -11,6 +11,7 @@ export const useProductsStore = defineStore('products', {
         initialProduct: {} as Product,
         productStatus: {} as Status,
         productsStatus: {} as Status,
+        productListSearch: '',
         pagination: {
             currentPage: 0,
             firstPageUrl: '',
@@ -32,11 +33,14 @@ export const useProductsStore = defineStore('products', {
         getProductsStatus: (state) => state.productsStatus,
     },
     actions: {
-        async fetchProducts(page = 1) {
+        async fetchProducts(page = 1, search?: string) {
+            if (search !== undefined) {
+                this.productListSearch = search
+            }
             this.clearProductsStatus();
             try {
                 this.productsStatus.loading = true
-                const { data: response } = await products.getProducts(page)
+                const { data: response } = await products.getProducts(page, this.productListSearch)
                 this.products = response.data.data
                 this.temporaryProducts = response.data.data ;
                 this.pagination = {
@@ -49,6 +53,22 @@ export const useProductsStore = defineStore('products', {
                     perPage: response.data.per_page,
                     total: response.data.total,
                 }
+                this.productsStatus.success = true
+            } catch (error) {
+                this.handleProductsError(error)
+                throw error
+            } finally {
+                this.productsStatus.loading = false
+            }
+        },
+        async fetchProductsForSalePicker() {
+            this.clearProductsStatus();
+            try {
+                this.productsStatus.loading = true
+                const { data: response } = await products.getProductsSalePicker()
+                const list = response.data as Product[]
+                this.products = list
+                this.temporaryProducts = list
                 this.productsStatus.success = true
             } catch (error) {
                 this.handleProductsError(error)

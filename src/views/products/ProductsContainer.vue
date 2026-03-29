@@ -1,8 +1,13 @@
 <template>
   <div class="container pb-16 pt-10">
-    <div class="flex items-center mb-10 px-5 justify-between">
-      <div></div>
-      <h1 class="text-4xl text-center font-bold  text-secondary">المنتجات</h1>
+    <div class="flex items-center mb-10 px-5 gap-4 justify-between">
+      <h1 class="text-4xl shrink-0 text-right font-bold text-secondary">المنتجات</h1>
+      <div class="flex-1 min-w-0 flex items-center justify-center">
+        <Search
+          :handleSearch="handleProductsSearch"
+          placeholder="التسلسل، الاسم، الكود، الباركود، ملاحظة"
+        />
+      </div>
       <button
         @click="openCreatePopup"
         class="text-green-500 flex items-center justify-center gap-3 hover:text-green-700 font-bold relative"
@@ -84,7 +89,7 @@
       v-if="!productsStatus.error && products.length"
       :currentPage="pagination.currentPage"
       :totalPages="pagination.lastPage"
-      :goToPage="(page: number) => { productsStore.fetchProducts(page) }"
+      :goToPage="(page: number) => productsStore.fetchProducts(page)"
     />
   </div>
 </template>
@@ -102,9 +107,13 @@ import { storeToRefs } from "pinia";
 import PaginationItems from "../../components/PaginationItems.vue";
 import TrueOrFalseDialog from "@/components/TrueOrFalseDialog.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
- 
+import Search from "@/components/Search.vue";
 
 const productsStore = useProductsStore();
+
+const handleProductsSearch = (page: number, search: string) => {
+  productsStore.fetchProducts(page, search);
+};
 const createPopup = ref(false);
 const updatePopup = ref(false);
 const deletePopup = ref(false);
