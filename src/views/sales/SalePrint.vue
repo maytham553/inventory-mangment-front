@@ -171,6 +171,7 @@ import { onMounted } from "vue";
 import {
   ISO8601DateToHumanDate,
   convertPurchaseStatusToArabic,
+  getPrintCssPath,
 } from "@/services/helper/helperFunctions";
 import type { Customer, Sale } from "@/Types";
 import logo from "@/assets/logo.png";
@@ -194,14 +195,6 @@ const props = defineProps({
 const sumDiscount = () => {
   return props.sale.products.reduce((acc, product) => acc + (product.discount_amount * product.quantity!), 0);
 }
-
-const getPrintCssPath = () => {
-  const appCssLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-    .map((link) => (link as HTMLLinkElement).href)
-    .find((href) => href.includes("/assets/") && href.endsWith(".css"));
-
-  return appCssLink || `${window.location.origin}${import.meta.env.BASE_URL}src/assets/main.css`;
-};
 
 const print = () => {
   printJS({

@@ -114,7 +114,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import { ISO8601DateToHumanDate, convertTransactionTypeToArabic } from "@/services/helper/helperFunctions";
+import { ISO8601DateToHumanDate, convertTransactionTypeToArabic, getPrintCssPath } from "@/services/helper/helperFunctions";
 import type { Customer, CustomerTransaction } from "@/Types";
 import logo from "@/assets/logo.png";
 import printJS from "print-js";
@@ -154,8 +154,7 @@ const print = () => {
     printJS({
         printable: "print",
         type: "html",
-        css: "./assets/index-2b77cb36.css",
-        // css: 'src/assets/main.css',
+        css: getPrintCssPath(),
         scanStyles: false,
         targetStyles: ["*"],
         style: `

@@ -63,3 +63,11 @@ export const calculateSubtotal = (quantity: number, unitPrice: number, fractionD
 export const calculateTotal = (subTotal: number, discountAmount: number, fractionDigits: number): number => {
     return Number((subTotal - discountAmount).toFixed(fractionDigits));
 }
+
+export const getPrintCssPath = (): string => {
+    const appCssLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .map((link) => (link as HTMLLinkElement).href)
+        .find((href) => href.includes("/assets/") && href.endsWith(".css"));
+
+    return appCssLink || `${window.location.origin}${import.meta.env.BASE_URL}src/assets/main.css`;
+}

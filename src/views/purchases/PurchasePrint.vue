@@ -178,6 +178,7 @@ import { onMounted } from "vue";
 import {
   ISO8601DateToHumanDate,
   convertPurchaseStatusToArabic,
+  getPrintCssPath,
 } from "@/services/helper/helperFunctions";
 import type { Purchase, Supplier } from "@/Types";
 import logo from "@/assets/logo.png";
@@ -202,7 +203,7 @@ const print = () => {
   printJS({
     printable: "print",
     type: "html",
-    css: "./assets/index-60698d9d.css",
+    css: getPrintCssPath(),
     scanStyles: false,
     targetStyles: ["*"],
     style: `
