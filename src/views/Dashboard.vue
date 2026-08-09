@@ -80,9 +80,6 @@
 
 
 
-    <!-- <div className=" w-full mt-4   md:mt-6  2xl:mt-[30px]">
-        <ChartOne :initialSeries="chartData" />
-      </div> -->
   </div>
 </template>
   
