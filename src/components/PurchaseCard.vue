@@ -14,15 +14,15 @@
         </div>
         <div>
             <span>الحالة : </span>
-            <span>{{ purchase.status }}</span>
+            <span>{{ convertPurchaseStatusToArabic(purchase.status) }}</span>
         </div>
 
         <div class="flex justify-between items-center">
-            <button @click="() => updateHandler(purchase)"
+            <button v-if="purchase.status !== PurchaseStatus.Confirmed" @click="() => updateHandler(purchase)"
                 class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded">
                 تعديل
             </button>
-            <button @click="() => showHandler(purchase.id)"
+            <button @click="() => showHandler(purchase)"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 عرض
             </button>
@@ -32,8 +32,8 @@
 
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import type { Purchase } from '../Types';
-import { ISO8601DateToHumanDate } from '@/services/helper/helperFunctions';
+import { PurchaseStatus, type Purchase } from '../Types';
+import { ISO8601DateToHumanDate, convertPurchaseStatusToArabic } from '@/services/helper/helperFunctions';
 
 const props = defineProps({
     purchase: {
@@ -58,7 +58,7 @@ const updateHandler = (purchase:Purchase) => {
     props.update(purchase);
 }
 
-const showHandler = (id: number) => {
-    props.show(id);
+const showHandler = (purchase: Purchase) => {
+    props.show(purchase);
 }
 </script>

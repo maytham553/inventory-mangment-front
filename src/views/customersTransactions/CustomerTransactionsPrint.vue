@@ -114,7 +114,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import { ISO8601DateToHumanDate, convertTransactionTypeToArabic, getPrintCssPath } from "@/services/helper/helperFunctions";
+import { ISO8601DateToHumanDate, convertTransactionTypeToArabic, getPrintCssPath, printPageStyle } from "@/services/helper/helperFunctions";
 import type { Customer, CustomerTransaction } from "@/Types";
 import logo from "@/assets/logo.png";
 import printJS from "print-js";
@@ -157,15 +157,7 @@ const print = () => {
         css: getPrintCssPath(),
         scanStyles: false,
         targetStyles: ["*"],
-        style: `
-          @media print {
-              .print {
-                  width: 100%;
-                  height: 100%;
-                  overflow: scroll;
-              }
-          }
-          `,
+        style: printPageStyle,
     });
 };
 

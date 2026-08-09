@@ -1,4 +1,4 @@
-import type { RawMaterial } from ".";
+import type { RawMaterial, User } from ".";
 
 export enum PurchaseStatus {
     Pending = 'pending',
@@ -18,6 +18,8 @@ export interface PurchaseRawMaterial extends RawMaterial {
 
 export interface Purchase {
     id: number;
+    user_id: number;
+    user?: User;
     supplier_id: number;
     total_amount: number;
     subtotal_amount: number;

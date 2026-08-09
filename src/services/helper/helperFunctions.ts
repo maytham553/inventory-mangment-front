@@ -92,3 +92,24 @@ export const getPrintCssPath = (): string => {
 
     return appCssLink || `${window.location.origin}${import.meta.env.BASE_URL}src/assets/main.css`;
 }
+
+// Chrome draws its own header and footer — the page URL, the date, "1/1" — in the
+// @page margin. Zeroing that margin leaves it nowhere to put them, so the padding
+// that keeps the receipt off the paper edge has to move onto the body instead.
+export const printPageStyle = `
+    @page {
+        size: auto;
+        margin: 0;
+    }
+    @media print {
+        body {
+            margin: 0;
+            padding: 10mm;
+        }
+        .print {
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+        }
+    }
+`;

@@ -14,18 +14,21 @@
     </div>
     <div>
       <span>الحالة : </span>
-      <span>{{ sale.status }}</span>
+      <span>{{ convertPurchaseStatusToArabic(sale.status) }}</span>
     </div>
 
     <div class="flex justify-between gap-4 mt-5 items-center">
+      <!-- A confirmed sale already moved the customer balance and the stock, so
+           the API refuses to update it. Offer printing only. -->
       <button
+        v-if="sale.status !== SaleStatus.Confirmed"
         @click="() => updateHandler(sale)"
         class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
       >
          تعديل
       </button>
       <button
-        @click="() => showHandler(sale.id)"
+        @click="() => showHandler(sale)"
         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       >
        عرض
@@ -36,8 +39,11 @@
 
 <script lang="ts" setup>
 import { defineProps } from "vue";
-import type { Sale } from "../Types";
-import { ISO8601DateToHumanDate } from "@/services/helper/helperFunctions";
+import { SaleStatus, type Sale } from "../Types";
+import {
+  ISO8601DateToHumanDate,
+  convertPurchaseStatusToArabic,
+} from "@/services/helper/helperFunctions";
 
 const props = defineProps({
   sale: {
@@ -62,7 +68,7 @@ const updateHandler = (sale: Sale) => {
   props.update(sale);
 };
 
-const showHandler = (id: number) => {
-  props.show(id);
+const showHandler = (sale: Sale) => {
+  props.show(sale);
 };
 </script>

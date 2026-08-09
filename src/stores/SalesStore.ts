@@ -102,7 +102,6 @@ export const useSalesStore = defineStore("sales", {
         this.sales.unshift({
           ...response.data,
           products: sale.products,
-          user: sale.user,
         });
         this.saleStatus.success = true;
       } catch (error) {

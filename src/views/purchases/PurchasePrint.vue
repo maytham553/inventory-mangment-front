@@ -1,14 +1,26 @@
 <template>
-  <section class="bg-gray-100 py-20 px-10">
-    <div class="flex justify-center items-center w-full">
+  <!-- Everything here is chrome around the receipt. The printed document is
+       #print and below, so nothing inside it may change. -->
+  <section class="min-h-full px-4 py-6 -mt-8 -mx-8 bg-whiten sm:px-6">
+    <div class="flex flex-wrap items-center justify-between max-w-2xl gap-3 mx-auto mb-4">
+      <p class="text-sm text-body">
+        <span class="font-bold text-black">فاتورة شراء رقم {{ purchase.id }}</span>
+        <span class="mx-2 text-bodydark">|</span>
+        <span>{{ ISO8601DateToHumanDate(purchase.created_at) }}</span>
+      </p>
       <button
         @click="print"
         type="button"
-        class="bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded"
+        class="inline-flex items-center gap-2 px-5 py-2.5 font-bold text-white transition rounded-lg bg-primary shadow-default hover:bg-opacity-90"
       >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+          <path d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v7H6z" />
+        </svg>
         طباعة
       </button>
     </div>
+    <div class="max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-default">
     <div id="print" dir="rtl" class="max-w-2xl mx-auto">
       <article class="shadow-none md:shadow-md md:rounded-md overflow-hidden">
         <div class="md:rounded-b-md bg-white">
@@ -167,8 +179,13 @@
               <p class="text-gray-500 text-sm">{{ purchase.total_amount }}</p>
             </div>
           </div>
+          <div class="p-9 border-t border-gray-200">
+            <p class="font-medium text-sm text-gray-400">منظم الفاتورة</p>
+            <p class="text-sm">{{ purchase.user?.name }}</p>
+          </div>
         </div>
       </article>
+    </div>
     </div>
   </section>
 </template>
@@ -179,6 +196,7 @@ import {
   ISO8601DateToHumanDate,
   convertPurchaseStatusToArabic,
   getPrintCssPath,
+  printPageStyle,
 } from "@/services/helper/helperFunctions";
 import type { Purchase, Supplier } from "@/Types";
 import logo from "@/assets/logo.png";
@@ -197,6 +215,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  autoPrint: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const print = () => {
@@ -206,19 +228,17 @@ const print = () => {
     css: getPrintCssPath(),
     scanStyles: false,
     targetStyles: ["*"],
-    style: `
-        @media print {
-            .print {
-                width: 100%;
-                height: 100%;
-                overflow: scroll;
-            }
-        }
-        `,
+    style: printPageStyle,
   });
 };
 
+// The save-and-print buttons want the browser dialog straight away. Opening a
+// purchase from «عرض» is a preview instead: keep it on screen and let the طباعة
+// button above it decide when to print.
 onMounted(() => {
+  if (!props.autoPrint) {
+    return;
+  }
   print();
   props.closeDialog();
 });

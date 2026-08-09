@@ -127,6 +127,10 @@ export const usePurchasesStore = defineStore('purchases', {
             try {
                 this.purchaseStatus.loading = true
                 const { data: response } = await purchases.updatePurchase(purchase.id, purchase)
+                this.purchase = {
+                    ...response.data,
+                    raw_materials: purchase.raw_materials
+                }
                 this.purchaseStatus.success = true
             } catch (error) {
                 this.handlePurchaseError(error)

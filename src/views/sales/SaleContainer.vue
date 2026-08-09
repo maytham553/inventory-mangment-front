@@ -24,7 +24,7 @@
     </div>
 
     <SalesList v-if="salesStatus.success && productsStatus.success" :sales="salesStore.sales" :customerName="customerName"
-      :update="openUpdatePopup" :show="() => { }" />
+      :update="openUpdatePopup" :show="openShowPopup" />
 
     <EmptyDialog v-if="createPopup" :title="String(customerId)" :close-dialog="closeCreatePopup">
       <CreateSale v-if="createPopup" :sale="salesStore.sale" :saleStatus="saleStatus" :products="products"
@@ -43,7 +43,7 @@
     </EmptyDialog>
 
     <EmptyDialog v-if="printPopup" :title="customerName" :close-dialog="closePrintPopup">
-      <SalePrint :sale="sale" :customer="customer" :closeDialog="closePrintPopup" />
+      <SalePrint :sale="sale" :customer="customer" :autoPrint="autoPrint" :closeDialog="closePrintPopup" />
     </EmptyDialog>
     <div class="w-full flex justify-center items-center">
       <PaginationItems v-if="salesStatus.success && salesStore.sales.length && productsStatus.success
@@ -103,11 +103,22 @@ const closeUpdatePopup = () => {
   updatePopup.value = false;
   salesStore.setInitialSale();
 };
+const autoPrint = ref(true);
 const openPrintPopup = (sale: Sale) => {
+  autoPrint.value = true;
+  printPopup.value = true;
+};
+// View an existing sale. Confirmed sales cannot be opened for editing, so this
+// is the only way back to their receipt — show it instead of printing it, and
+// leave printing to the طباعة button inside the preview.
+const openShowPopup = (sale: Sale) => {
+  salesStore.setSale(sale);
+  autoPrint.value = false;
   printPopup.value = true;
 };
 const closePrintPopup = () => {
   printPopup.value = false;
+  salesStore.setInitialSale();
 };
 const addItem = (product: Product) => {
   salesStore.addProductToSale(product);

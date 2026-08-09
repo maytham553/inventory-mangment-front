@@ -1,10 +1,23 @@
 <template>
-  <section class="px-10 py-20 bg-gray-100">
-    <div class="flex items-center justify-center w-full">
-      <button @click="print" type="button" class="px-4 py-2 font-bold text-white rounded bg-secondary hover:bg-primary">
+  <!-- Everything here is chrome around the receipt. The printed document is
+       #print and below, so nothing inside it may change. -->
+  <section class="min-h-full px-4 py-6 -mt-8 -mx-8 bg-whiten sm:px-6">
+    <div class="flex flex-wrap items-center justify-between max-w-2xl gap-3 mx-auto mb-4">
+      <p class="text-sm text-body">
+        <span class="font-bold text-black">قائمة رقم {{ sale.id }}</span>
+        <span class="mx-2 text-bodydark">|</span>
+        <span>{{ ISO8601DateToHumanDate(sale.created_at) }}</span>
+      </p>
+      <button @click="print" type="button"
+        class="inline-flex items-center gap-2 px-5 py-2.5 font-bold text-white transition rounded-lg bg-primary shadow-default hover:bg-opacity-90">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+          <path d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v7H6z" />
+        </svg>
         طباعة
       </button>
     </div>
+    <div class="max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-default">
     <div id="print" dir="rtl" class="max-w-2xl mx-auto">
       <article class="overflow-hidden shadow-none md:shadow-md md:rounded-md">
         <div class="bg-white md:rounded-b-md">
@@ -163,6 +176,7 @@
         </div>
       </article>
     </div>
+    </div>
   </section>
 </template>
 
@@ -172,6 +186,7 @@ import {
   ISO8601DateToHumanDate,
   convertPurchaseStatusToArabic,
   getPrintCssPath,
+  printPageStyle,
 } from "@/services/helper/helperFunctions";
 import type { Customer, Sale } from "@/Types";
 import logo from "@/assets/logo.png";
@@ -190,6 +205,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  autoPrint: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const sumDiscount = () => {
@@ -203,19 +222,17 @@ const print = () => {
     css: getPrintCssPath(),
     scanStyles: false,
     targetStyles: ["*"],
-    style: `
-        @media print {
-            .print {
-                width: 100%;
-                height: 100%;
-                overflow: scroll;
-            }
-        }
-        `,
+    style: printPageStyle,
   });
 };
 
+// The save-and-print buttons want the browser dialog straight away. Opening a
+// sale from «عرض» is a preview instead: keep it on screen and let the طباعة
+// button above it decide when to print.
 onMounted(() => {
+  if (!props.autoPrint) {
+    return;
+  }
   print();
   props.closeDialog();
 });

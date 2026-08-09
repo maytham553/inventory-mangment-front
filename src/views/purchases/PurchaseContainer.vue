@@ -26,7 +26,7 @@
     </div>
 
     <PurchasesList v-if="purchasesStatus.success && rawMaterialsStatus.success" :purchases="purchasesStore.purchases"
-      :supplierName="supplierName" :update="openUpdatePopup" :show="() => { }" />
+      :supplierName="supplierName" :update="openUpdatePopup" :show="openShowPopup" />
 
     <EmptyDialog v-if="createPopup" :title="String(supplierId)" :close-dialog="closeCreatePopup">
       <CreatePurchase v-if="createPopup" :purchase="purchasesStore.purchase" :purchaseStatus="purchaseStatus"
@@ -44,7 +44,8 @@
     </EmptyDialog>
 
     <EmptyDialog v-if="printPopup" :title="supplierName" :close-dialog="closePrintPopup">
-      <PurchasePrint :purchase="purchase" :supplier="supplier" :closeDialog="closePrintPopup" />
+      <PurchasePrint :purchase="purchase" :supplier="supplier" :autoPrint="autoPrint"
+        :closeDialog="closePrintPopup" />
     </EmptyDialog>
   </div>
   <div class="w-full items-center justify-center flex">
@@ -108,11 +109,22 @@ const closeUpdatePopup = () => {
   updatePopup.value = false;
   purchasesStore.setInitialPurchase();
 };
+const autoPrint = ref(true);
 const openPrintPopup = (purchase: Purchase) => {
+  autoPrint.value = true;
+  printPopup.value = true;
+};
+// View an existing purchase. Confirmed purchases cannot be opened for editing,
+// so this is the only way back to their receipt — show it instead of printing
+// it, and leave printing to the طباعة button inside the preview.
+const openShowPopup = (purchase: Purchase) => {
+  purchasesStore.setPurchase(purchase);
+  autoPrint.value = false;
   printPopup.value = true;
 };
 const closePrintPopup = () => {
   printPopup.value = false;
+  purchasesStore.setInitialPurchase();
 };
 const addItem = (rawMaterial: RawMaterial) => {
   purchasesStore.addRawMaterialToPurchase(rawMaterial);
