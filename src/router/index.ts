@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
   const publicRoutes = ['Login'];
   const userRoutes = ['Home', 'Customers', 'Suppliers', 'CreateCustomer', 'CreateSupplier' ,  'CreateExpense'];
   const adminRoutes = ['Products', 'RawMaterials', 'Expenses'];
-  const superAdminRoutes = ['Dashboard'];
+  const superAdminRoutes = ['Dashboard', 'Users'];
 
   const isPublicRoute = publicRoutes.includes(to.name as string);
   const isAdminRoute = adminRoutes.includes(to.name as string);

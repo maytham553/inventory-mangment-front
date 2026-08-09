@@ -3,7 +3,8 @@ export interface User {
     name: string;
     email: string;
     type: UserType;
-    created_at: string;
-    updated_at: string;
+    password?: string;
+    created_at?: string;
+    updated_at?: string;
 }
-export type UserType = 'Admin' | 'User' | 'SuperAdmin' ; 
+export type UserType = 'Admin' | 'User' | 'SuperAdmin';

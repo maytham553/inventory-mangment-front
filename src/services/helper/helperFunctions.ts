@@ -1,4 +1,4 @@
-import type { Purchase, TransactionType } from "@/Types";
+import type { Purchase, TransactionType, UserType } from "@/Types";
 
 export const formatCurrency = (number: number) => {
     return String(number + " " + 'د.ع')
@@ -29,6 +29,16 @@ export const convertTransactionTypeToArabic = (type: TransactionType) => {
     }
 }
 
+
+export const userTypeOptions: { value: UserType, label: string }[] = [
+    { value: 'User', label: 'مستخدم' },
+    { value: 'Admin', label: 'مدير' },
+    { value: 'SuperAdmin', label: 'مدير عام' },
+]
+
+export const convertUserTypeToArabic = (type: UserType) => {
+    return userTypeOptions.find((option) => option.value === type)?.label ?? 'غير معروف'
+}
 
 export const sumTotal = (array: any[], key: string) => {
     let total = 0;

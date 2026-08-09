@@ -9,6 +9,7 @@ import ProductsContainer from '@/views/products/ProductsContainer.vue'
 import RawMaterialsContainer from '@/views/rawMaterials/RawMaterialsContainer.vue'
 import ExpensesContainer from '@/views/expenses/ExpensesContainer.vue'
 import CreateExpense from '@/views/expenses/CreateExpense.vue';
+import UsersContainer from '@/views/users/UsersContainer.vue';
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: UsersContainer,
   },
   {
     path: '/:catchAll(.*)',

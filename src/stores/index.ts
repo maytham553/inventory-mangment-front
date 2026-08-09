@@ -9,3 +9,4 @@ export * from './RawMaterialsStore';
 export * from './PurchasesStore';
 export * from './SalesStore';
 export * from './ExpensesStore';
+export * from './UsersStore';
