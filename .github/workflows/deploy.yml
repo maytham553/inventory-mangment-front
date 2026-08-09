@@ -1,0 +1,61 @@
+name: Deploy Frontend
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+env:
+  SSH_HOST: 185.245.180.16
+  SSH_USER: safa5451
+  SSH_PORT: '65002'
+  TARGET_DIR: /home/safa5451/public_html
+  VITE_API_BASE_URL: https://api.safa-sponge.com/api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify API URL is baked into the build
+        run: |
+          if ! grep -rq "$VITE_API_BASE_URL" dist/assets/*.js; then
+            echo "::error::API base URL '$VITE_API_BASE_URL' not found in the build — aborting deploy."
+            exit 1
+          fi
+          echo "OK: build points at $VITE_API_BASE_URL"
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Upload dist to Hostinger
+        run: |
+          rsync -rlvz --checksum --delete \
+            --exclude '.well-known/' \
+            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+            dist/ "$SSH_USER@$SSH_HOST:$TARGET_DIR/"
+
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
