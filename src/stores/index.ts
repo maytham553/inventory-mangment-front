@@ -10,3 +10,4 @@ export * from './PurchasesStore';
 export * from './SalesStore';
 export * from './ExpensesStore';
 export * from './UsersStore';
+export * from './BackupStore';

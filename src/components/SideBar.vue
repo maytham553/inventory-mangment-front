@@ -100,6 +100,13 @@
           <p class="text-[1.2rem] leading-5 uppercase">المستخدمين</p>
         </RouterLink>
       </div>
+      <div v-if="isSuperAdmin"
+        class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-secondary/70">
+        <RouterLink to="/backup" class="text-left gap-3 flex justify-start items-center w-full py-5">
+          <Database :size="25" fill="white" />
+          <p class="text-[1.2rem] leading-5 uppercase">النسخ الاحتياطية</p>
+        </RouterLink>
+      </div>
       <div v-if="isUser"
         class="flex flex-col justify-start items-center px-6 border-b border-gray-200 w-full hover:text-white focus:bg-gray-700 focus:text-white hover:bg-secondary/70">
         <RouterLink to="/expenses/create" class="text-left gap-3 flex justify-start items-center w-full py-5">
@@ -128,6 +135,7 @@ import Box from "./icons/Box.vue";
 import Supplier from "./icons/Supplier.vue";
 import Money from "./icons/Money.vue";
 import UserIcon from "./icons/UserIcon.vue";
+import Database from "./icons/Database.vue";
 
 const logout = async () => {
   const auth = useAuthStore();

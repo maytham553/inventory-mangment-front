@@ -30,6 +30,17 @@ export const convertTransactionTypeToArabic = (type: TransactionType) => {
 }
 
 
+export const formatFileSize = (bytes: number) => {
+    if (!bytes) {
+        return '0 KB'
+    }
+    const megabytes = bytes / 1024 / 1024
+
+    return megabytes >= 1
+        ? `${megabytes.toFixed(2)} MB`
+        : `${(bytes / 1024).toFixed(0)} KB`
+}
+
 export const userTypeOptions: { value: UserType, label: string }[] = [
     { value: 'User', label: 'مستخدم' },
     { value: 'Admin', label: 'مدير' },

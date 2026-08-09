@@ -10,6 +10,7 @@ import RawMaterialsContainer from '@/views/rawMaterials/RawMaterialsContainer.vu
 import ExpensesContainer from '@/views/expenses/ExpensesContainer.vue'
 import CreateExpense from '@/views/expenses/CreateExpense.vue';
 import UsersContainer from '@/views/users/UsersContainer.vue';
+import BackupContainer from '@/views/backups/BackupContainer.vue';
 
 const routes = [
   {
@@ -72,6 +73,11 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: UsersContainer,
+  },
+  {
+    path: '/backup',
+    name: 'Backup',
+    component: BackupContainer,
   },
   {
     path: '/:catchAll(.*)',
