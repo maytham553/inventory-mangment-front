@@ -16,11 +16,16 @@
       <div
         class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6 text-sm text-amber-900 leading-6"
       >
-        يُحتفظ بآخر {{ keepLimit  }} نسخة فقط، وتُحذف الأقدم تلقائياً عند إنشاء نسخة جديدة.
+        <span v-if="keepLimit">
+          يُحتفظ بآخر {{ keepLimit }} نسخة فقط، وتُحذف الأقدم تلقائياً عند إنشاء نسخة جديدة.
+        </span>
         الملفات تحتوي بيانات النظام كاملة بما فيها بيانات المستخدمين — لا تشاركها.
       </div>
 
-      <p v-if="backupStatus.error" class="text-red-500 text-sm mb-4">{{ backupStatus.message }}</p>
+      <!-- While the delete dialog is open it shows this same message itself. -->
+      <p v-if="backupStatus.error && !deletePopup" class="text-red-500 text-sm mb-4">
+        {{ backupStatus.message }}
+      </p>
 
       <div v-if="backupsStatus.loading" class="flex justify-center items-center py-10">
         <Loading stroke-color="#8f8f8f" />

@@ -12,10 +12,6 @@ export default {
       type: Number,
       default: 24,
     },
-    strokeColor: {
-      type: String,
-      default: 'currentColor',
-    },
     fill: {
       type: String,
       default: 'currentColor',
